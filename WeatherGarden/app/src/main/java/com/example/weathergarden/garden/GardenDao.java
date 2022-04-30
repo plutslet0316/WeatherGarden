@@ -17,25 +17,38 @@ public interface GardenDao {
     // 땅과 식물이 합쳐서 반환된다.
     @Transaction
     @Query("SELECT * FROM ground")
-    public List<GardenInfo> GardenInfoList();
+    public List<GardenInfo> ReadGardenInfoList();
 
-    // 식물 리스트만 반환된다.
+    // 땅번호로 땅 데이터를 찾아 반환한다.
+    @Query("SELECT * FROM ground WHERE ground_no = :groundNo")
+    public GroundInfo ReadGroundWithGroundNo(int groundNo);
+
+    // 식물코드로 식물 데이터를 찾아 반환한다.
+    @Query("SELECT * FROM plant WHERE plant_code = :plantCode")
+    public GroundInfo ReadPlantWithPlantCode(int plantCode);
+
+    // 식물 리스트가 반환된다.
     @Query("SELECT * FROM plant")
-    public List<PlantInfo> PlantsList();
+    public List<PlantInfo> ReadPlantsList();
 
-    // 땅만 반환된다.
+    // 땅 리스트를 반환된다.
     @Query("SELECT * FROM ground")
-    public List<GroundInfo> GroundList();
+    public List<GroundInfo> ReadGroundList();
 
-    // 데이터 추가 - 이미 해당 기본키가 있으면 덮어쓰기
+    // 땅 데이터 추가 - 이미 해당 기본키가 있으면 덮어쓰기
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void InsertGroundInfo(GroundInfo... groundInfo);
 
+    // 식물 데이터 추가 - 이미 해당 기본키가 있으면 덮어쓰기
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void InsertPlantInfo(PlantInfo... plantInfo);
+
+    // 땅 데이터 업데이트 위에 Insert 만 쓰게 되면 필요 없을 듯하다.
     @Update
     public void UpdateGroundInfo(GroundInfo groundInfo);
 
     // 땅번호를 기준으로 데이터를 삭제한다.
     @Query("DELETE FROM ground WHERE ground_no = :groundNo")
-    public void DeleteGroundByGroundNO(int groundNo);
+    public void DeleteGroundWithGroundNo(int groundNo);
 
 }
