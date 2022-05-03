@@ -15,6 +15,7 @@ import com.example.weathergarden.garden.GardenDao;
 import com.example.weathergarden.garden.GardenDatabase;
 import com.example.weathergarden.garden.GardenInfo;
 import com.example.weathergarden.garden.GroundInfo;
+import com.example.weathergarden.garden.GrowProc;
 import com.example.weathergarden.garden.PlantInfo;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class DBTestActivity extends AppCompatActivity {
     EditText gNoT, pCodeT;
     TextView t;
     Button plant, pull, show;
+    Button water, fert, grow;
     View.OnClickListener cl;
 
     String s;
@@ -48,12 +50,12 @@ public class DBTestActivity extends AppCompatActivity {
             super.run();
             try {
                 GroundInfo g = new GroundInfo();
-                g.SetGroundInfo(
+                g.setGroundInfo(
                         Integer.valueOf(gNoT.getText().toString()),
                         pCodeT.getText().toString(),
                         0,0,0,0,0);
 
-                dao.InsertGroundInfo(g);
+                dao.insertGroundInfo(g);
                 s = g.groundNo + "번 땅에 식물이 심어졌습니다.";
 
                 h.sendEmptyMessage(1);
@@ -69,7 +71,7 @@ public class DBTestActivity extends AppCompatActivity {
             super.run();
             try {
                 int groundNo = Integer.valueOf(gNoT.getText().toString());
-                dao.DeleteGroundByGroundNO(groundNo);
+                dao.deleteGroundWithGroundNo(groundNo);
                 s = groundNo + "번 땅에 있는 식물을 뽑았습니다.";
 
                 h.sendEmptyMessage(1);
@@ -86,19 +88,94 @@ public class DBTestActivity extends AppCompatActivity {
             try {
                 s = "";
 
-                List<GardenInfo> gardenInfo = dao.GardenInfoList();
+                List<GardenInfo> gardenInfo = dao.readGardenInfoList();
                 if(gardenInfo != null) {
                     for (GardenInfo g : gardenInfo) {
                         GroundInfo groundInfo = g.groundInfo;
                         PlantInfo plantInfo = g.plantInfo;
 
-                        s += groundInfo.groundNo + " ";
-                        s += plantInfo.name + " ";
-                        s += "\n";
+                        s += "No." + groundInfo.groundNo;
+                        s += ":" + plantInfo.name + " | ";
+                        s += "Lv:" + groundInfo.growLevel + " | ";
+                        s += "Wa:" + groundInfo.water + " | ";
+                        s += "N:" + groundInfo.nutrient + " | ";
+                        s += "GP" + groundInfo.growPoint + " | ";
+                        s += "Wi" + groundInfo.wither + "\n";
                     }
                 } else {
                     s = "현재 모든 땅이 비어있습니다.";
                 }
+                h.sendEmptyMessage(1);
+            } catch (Exception e) {
+                s = e.getMessage();
+                h.sendEmptyMessage(1);
+            }
+        }
+    }
+
+    public class Watering extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            try {
+                s = "";
+
+                int groundNo = Integer.valueOf(gNoT.getText().toString());
+                int value = Integer.valueOf(pCodeT.getText().toString());
+
+                GrowProc.CarePlant carePlant = new GrowProc(dao).new CarePlant(groundNo);
+
+                if(carePlant.addWater(value) == 1)
+                    s += groundNo + "번 땅에 " + value + "만큼 물을 줍니다.";
+                else
+                    s += groundNo + "번 땅은 물이 충분합니다.";
+
+
+                h.sendEmptyMessage(1);
+            } catch (Exception e) {
+                s = e.getMessage();
+                h.sendEmptyMessage(1);
+            }
+        }
+    }
+
+    public class Feeding extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            try {
+                s = "";
+
+                int groundNo = Integer.valueOf(gNoT.getText().toString());
+                int value = Integer.valueOf(pCodeT.getText().toString());
+
+                GrowProc.CarePlant carePlant = new GrowProc(dao).new CarePlant(groundNo);
+
+                if(carePlant.addNutrient(value) == 1)
+                    s += groundNo + "번 땅에 " + value + "만큼 영양제를 줍니다.";
+                else
+                    s += groundNo + "번 땅은 영양이 충분합니다.";
+                
+                h.sendEmptyMessage(1);
+            } catch (Exception e) {
+                s = e.getMessage();
+                h.sendEmptyMessage(1);
+            }
+        }
+    }
+
+    public class Growing extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            try {
+                s = "";
+
+                GrowProc gp = new GrowProc(dao);
+                gp.startGrowing();
+
+                s += "식물을 성장시킵니다.";
+
                 h.sendEmptyMessage(1);
             } catch (Exception e) {
                 s = e.getMessage();
@@ -120,6 +197,9 @@ public class DBTestActivity extends AppCompatActivity {
         pull = findViewById(R.id.pulling);
         show = findViewById(R.id.showing);
 
+        water = findViewById(R.id.water);
+        fert = findViewById(R.id.fertilizer);
+        grow = findViewById(R.id.growing);
 
         h = new THandler();
         
@@ -153,11 +233,26 @@ public class DBTestActivity extends AppCompatActivity {
                     ShowGarden showGarden = new ShowGarden();
                     showGarden.start();
                     break;
+                case R.id.water:
+                    Watering watering = new Watering();
+                    watering.start();
+                    break;
+                case R.id.fertilizer:
+                    Feeding feeding = new Feeding();
+                    feeding.start();
+                    break;
+                case R.id.growing:
+                    Growing growing = new Growing();
+                    growing.start();
+                    break;
             }
         };
 
         plant.setOnClickListener(cl);
         pull.setOnClickListener(cl);
         show.setOnClickListener(cl);
+        water.setOnClickListener(cl);
+        fert.setOnClickListener(cl);
+        grow.setOnClickListener(cl);
     }
 }
