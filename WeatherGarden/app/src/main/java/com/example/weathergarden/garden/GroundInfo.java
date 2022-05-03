@@ -23,8 +23,8 @@ public class GroundInfo {
     public String plantCode;
     @ColumnInfo(name = "water") @NonNull
     public int water;
-    @ColumnInfo(name = "nutri") @NonNull
-    public int nutri;
+    @ColumnInfo(name = "nutrient") @NonNull
+    public int nutrient;
     @ColumnInfo(name = "wither") @NonNull
     public int wither;
     @ColumnInfo(name = "grow_point") @NonNull
@@ -35,13 +35,13 @@ public class GroundInfo {
     // @Ignore 로 DB 테이블에서 무시되고 메소드로만 사용된다.
     // 값을 넣으면 객체 안에 대입시키는 Setter 다.
     @Ignore
-    public void SetGroundInfo (int gNo, String pCode, int wa, int n, int wh, int gPoint, int gLevel){
-        groundNo = gNo;
-        plantCode = pCode;
-        water = wa;
-        nutri = n;
-        wither = wh;
-        growPoint = gPoint;
-        growLevel = gLevel;
+    public void setGroundInfo (int groundNo, String plantCode, int water, int nutrient, int wither, int growPoint, int growLevel){
+        this.groundNo = groundNo;
+        this.plantCode = plantCode;
+        this.water = water;
+        this.nutrient = nutrient;
+        this.wither = wither;
+        this.growPoint = growPoint;
+        this.growLevel = growLevel;
     }
 }

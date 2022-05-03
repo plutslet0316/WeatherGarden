@@ -14,8 +14,8 @@ public class PlantInfo {
     public String name;
     @ColumnInfo(name = "water_limit") @NonNull
     public int waterLimit;
-    @ColumnInfo(name = "nutri_limit") @NonNull
-    public int nutriLimit;
+    @ColumnInfo(name = "nutrient_limit") @NonNull
+    public int nutrientLimit;
     @ColumnInfo(name = "grow_require") @NonNull
     public int growRequire;
     @ColumnInfo(name = "grow_limit") @NonNull
