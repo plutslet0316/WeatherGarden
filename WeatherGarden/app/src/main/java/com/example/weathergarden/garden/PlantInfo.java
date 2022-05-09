@@ -16,10 +16,14 @@ public class PlantInfo {
     public int waterLimit;
     @ColumnInfo(name = "nutrient_limit") @NonNull
     public int nutrientLimit;
+    @ColumnInfo(name = "wither_limit") @NonNull
+    public int witherLimit;
     @ColumnInfo(name = "grow_require") @NonNull
     public int growRequire;
     @ColumnInfo(name = "grow_limit") @NonNull
     public int growLimit;
+    @ColumnInfo(name = "point") @NonNull
+    public int point;
     @ColumnInfo(name = "img_link") @NonNull
     public String img;
 }
