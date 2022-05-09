@@ -50,13 +50,14 @@ public class DBTestActivity extends AppCompatActivity {
             super.run();
             try {
                 GroundInfo g = new GroundInfo();
-                g.setGroundInfo(
-                        Integer.valueOf(gNoT.getText().toString()),
-                        pCodeT.getText().toString(),
-                        0,0,0,0,0);
+                GrowProc.CarePlant carePlant = new GrowProc().withDao(dao).new CarePlant();
 
-                dao.insertGroundInfo(g);
-                s = g.groundNo + "번 땅에 식물이 심어졌습니다.";
+                int groundNo = Integer.valueOf(gNoT.getText().toString());
+                String plantCode = pCodeT.getText().toString();
+
+                carePlant.planting(groundNo, plantCode);
+
+                s = groundNo + "번 땅에 식물이 심어졌습니다.";
 
                 h.sendEmptyMessage(1);
             } catch (Exception e) {
@@ -70,8 +71,12 @@ public class DBTestActivity extends AppCompatActivity {
         public void run() {
             super.run();
             try {
+                GrowProc.CarePlant carePlant = new GrowProc().withDao(dao).new CarePlant();
+
                 int groundNo = Integer.valueOf(gNoT.getText().toString());
-                dao.deleteGroundWithGroundNo(groundNo);
+
+                carePlant.removePlant(groundNo);
+
                 s = groundNo + "번 땅에 있는 식물을 뽑았습니다.";
 
                 h.sendEmptyMessage(1);
@@ -123,7 +128,9 @@ public class DBTestActivity extends AppCompatActivity {
                 int groundNo = Integer.valueOf(gNoT.getText().toString());
                 int value = Integer.valueOf(pCodeT.getText().toString());
 
-                GrowProc.CarePlant carePlant = new GrowProc(dao).new CarePlant(groundNo);
+                GrowProc.CarePlant carePlant =
+                        new GrowProc().withDao(dao).
+                        new CarePlant().withGroundNo(groundNo);
 
                 if(carePlant.addWater(value) == 1)
                     s += groundNo + "번 땅에 " + value + "만큼 물을 줍니다.";
@@ -149,7 +156,9 @@ public class DBTestActivity extends AppCompatActivity {
                 int groundNo = Integer.valueOf(gNoT.getText().toString());
                 int value = Integer.valueOf(pCodeT.getText().toString());
 
-                GrowProc.CarePlant carePlant = new GrowProc(dao).new CarePlant(groundNo);
+                GrowProc.CarePlant carePlant =
+                        new GrowProc(getApplicationContext()).withDao(dao).
+                        new CarePlant().withGroundNo(groundNo);
 
                 if(carePlant.addNutrient(value) == 1)
                     s += groundNo + "번 땅에 " + value + "만큼 영양제를 줍니다.";
@@ -171,11 +180,16 @@ public class DBTestActivity extends AppCompatActivity {
             try {
                 s = "";
 
-                GrowProc gp = new GrowProc(dao);
-                gp.startGrowing();
-
-                s += "식물을 성장시킵니다.";
-
+                GrowProc gp = new GrowProc(getApplicationContext()).withDao(dao);
+                int check = gp.startGrowing(getApplicationContext());
+                switch (check){
+                    case 1:
+                        s += "식물을 성장시킵니다.";
+                        break;
+                    case 0:
+                        s += "식물이 성장하기엔 너무 이른 시간입니다.";
+                        break;
+                }
                 h.sendEmptyMessage(1);
             } catch (Exception e) {
                 s = e.getMessage();
