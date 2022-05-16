@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 
+import java.io.Serializable;
+
 // 땅 테이블
 // plant_code 가 외래키로 지정되어있다.
 @Entity(
@@ -16,7 +18,7 @@ import androidx.room.Ignore;
         parentColumns = "plant_code",
         childColumns = "plant_code"
     )})
-public class GroundInfo {
+public class GroundInfo implements Serializable {
     @ColumnInfo(name = "ground_no") @NonNull
     public int groundNo;
     @ColumnInfo(name = "plant_code") @NonNull

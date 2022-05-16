@@ -5,9 +5,11 @@ import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
+import java.io.Serializable;
+
 // 식물 정보
 @Entity(tableName = "plant", primaryKeys = "plant_code")
-public class PlantInfo {
+public class PlantInfo implements Serializable {
     @ColumnInfo(name = "plant_code") @NonNull
     public String plantCode;
     @ColumnInfo(name = "name") @NonNull
