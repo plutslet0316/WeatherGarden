@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class WeatherTest {
     //List<VillageWeather> datalist = new ArrayList<VillageWeather>();
@@ -31,9 +32,12 @@ public class WeatherTest {
     public String getVillageWeather() {
 
         try {
+            TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
             DateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
             DateFormat timeFormat = new SimpleDateFormat("HH");
 
+            sdFormat.setTimeZone(timeZone);
+            timeFormat.setTimeZone(timeZone);
 
             Calendar calendar = Calendar.getInstance();
 
