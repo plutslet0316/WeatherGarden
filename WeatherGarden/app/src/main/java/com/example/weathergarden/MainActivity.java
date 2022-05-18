@@ -1,4 +1,4 @@
-package com.example.weather_api;
+package com.example.weathergarden;
 
 import java.util.List;
 import java.util.Locale;
@@ -35,8 +35,6 @@ public class MainActivity extends Activity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv1 = (TextView) findViewById(R.id.textView1);
-        tv2 = (TextView) findViewById(R.id.textView2);
 
 /**위치정보 객체를 생성한다.*/
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

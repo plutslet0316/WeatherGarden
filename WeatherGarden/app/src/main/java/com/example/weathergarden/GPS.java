@@ -1,4 +1,4 @@
-package com.example.weather_gps;
+package com.example.weathergarden;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class GPS extends AppCompatActivity {
 
     int nCurrentPermission = 0;
     static final int PERMISSIONS_REQUEST = 0x0000001;
