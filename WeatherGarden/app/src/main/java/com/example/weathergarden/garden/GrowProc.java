@@ -9,12 +9,14 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class GrowProc {
     GardenDao dao;
@@ -44,18 +46,6 @@ public class GrowProc {
             return this;
         }
 
-        // 식물 심기
-        public void planting(int groundNo, String plantCode) {
-            GroundInfo groundInfo = new GroundInfo();
-            groundInfo.setGroundInfo(groundNo, plantCode, 0, 0, 0, 0, 0);
-            dao.insertGroundInfo(groundInfo);
-        }
-
-        // 식물 뽑기
-        public void removePlant(int groundNo) {
-            dao.deleteGroundWithGroundNo(groundNo);
-        }
-
         // 식물 성장
         private void Growing(int value) {
             groundInfo.growPoint += value;
@@ -75,6 +65,18 @@ public class GrowProc {
 
             // 데이터 업데이트
             dao.updateGroundInfo(groundInfo);
+        }
+
+        // 식물 심기
+        public void planting(int groundNo, String plantCode) {
+            GroundInfo groundInfo = new GroundInfo();
+            groundInfo.setGroundInfo(groundNo, plantCode, 0, 0, 0, 0, 0);
+            dao.insertGroundInfo(groundInfo);
+        }
+
+        // 식물 뽑기
+        public void removePlant(int groundNo) {
+            dao.deleteGroundWithGroundNo(groundNo);
         }
 
 
@@ -147,7 +149,6 @@ public class GrowProc {
             groundInfo.nutrient -= value;
         }
 
-
         // 물 확인
         public boolean checkWater() {
             return groundInfo.water > 0;
@@ -169,8 +170,12 @@ public class GrowProc {
         SharedPreferences.Editor editor = preferences.edit();
 
         // 현재 시간을 형식대로 문자열로 가져온다.
+        TimeZone time = TimeZone.getTimeZone("Asia/Seoul");
         Date now = new Date(System.currentTimeMillis());
-        String nowDate = new SimpleDateFormat("yyyyMMddHHmmss").format(now);
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+
+        df.setTimeZone(time);
+        String nowDate = df.format(now);
 
         // 마지막 성장 시간을 문자열로 가져온다.
         String lastDate = preferences.getString("last_date", "");
@@ -191,7 +196,14 @@ public class GrowProc {
 
         // 두 시간의 차이를 가져온다.
         int differ = (int) ChronoUnit.HOURS.between(lastDateTime, nowDateTime);
+        Log.d("Grow", "Time Differ : " + differ + " " + nowDate + " " + lastDate);
 
+        if(differ < 0){
+            editor.putString("last_date", nowDate);
+            editor.apply();
+
+            return 0;
+        }
         // 시간이 한시간 차이가 나게 되면 1을 리턴
         if (differ >= 1) {
             // 현재 시간으로 설정한다.
@@ -209,7 +221,7 @@ public class GrowProc {
     public int startGrowing(Context context) {
         // 시간차이를 가져온다.
         int differ = checkGrowTime();
-        Log.d("test", String.valueOf(differ));
+        // Log.d("test", String.valueOf(differ));
 
         // 차이가 없거나 적으면 0을 리턴 / 성장하지 않는다.
         if (differ <= 0) return 0;
