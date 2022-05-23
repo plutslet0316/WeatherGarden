@@ -1,112 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#b3f3f3">
 
-    <Button
-        android:id="@+id/refresh"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+    <com.github.matteobattilana.weather.WeatherView
+        android:id="@+id/weather_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="갱신" />
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/info"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <Button
+            android:id="@+id/refresh"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:text="갱신" />
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp" />
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/ground1"
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="1번 땅" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/plant1"
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ems="8"
-                    android:textSize="20dp"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    <Button
+                        android:id="@+id/ground1"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1번 땅" />
 
+                    <TextView
+                        android:id="@+id/plant1"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="8"
+                        android:textSize="20dp"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/ground2"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2번 땅" />
+
+                    <TextView
+                        android:id="@+id/plant2"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="8"
+                        android:textSize="20dp"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/ground3"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3번 땅" />
+
+                    <TextView
+                        android:id="@+id/plant3"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="8"
+                        android:textSize="20dp"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine" />
+
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/ground2"
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="2번 땅" />
-
-                <TextView
-                    android:id="@+id/plant2"
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ems="8"
-                    android:textSize="20dp"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/ground3"
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="3번 땅" />
-
-                <TextView
-                    android:id="@+id/plant3"
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ems="8"
-                    android:textSize="20dp"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </HorizontalScrollView>
-
-</LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+</RelativeLayout>

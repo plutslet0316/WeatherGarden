@@ -23,6 +23,8 @@ import com.example.weathergarden.garden.GardenInfo;
 import com.example.weathergarden.garden.GroundInfo;
 import com.example.weathergarden.garden.GrowProc;
 import com.example.weathergarden.garden.PlantInfo;
+import com.github.matteobattilana.weather.PrecipType;
+import com.github.matteobattilana.weather.WeatherView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,6 +181,14 @@ public class GardenTestActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garden_test);
+
+        WeatherView weatherView = findViewById(R.id.weather_view);
+        weatherView.setWeatherData(PrecipType.SNOW);
+        weatherView.setAngle(15);
+        weatherView.setScaleFactor(1f);
+        weatherView.setEmissionRate(100f);
+        weatherView.setFadeOutPercent(1f);
+        weatherView.setSpeed(200);
 
         g1 = findViewById(R.id.ground1);
         g2 = findViewById(R.id.ground2);
