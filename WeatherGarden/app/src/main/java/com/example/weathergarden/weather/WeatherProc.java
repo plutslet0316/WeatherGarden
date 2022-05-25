@@ -1,10 +1,29 @@
 package com.example.weathergarden.weather;
 
+
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationTokenSource;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.SuccessContinuation;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -21,21 +40,25 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 public class WeatherProc {
     Activity context;
-    WeatherInfo weatherInfo = null;
+
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+
+    WeatherInfo weatherInfo = null;
+
     Gson gson = new Gson();
 
     public WeatherProc(Activity context) {
         this.context = context;
-        preferences = context.getSharedPreferences("weather_data", Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences("player_data", Context.MODE_PRIVATE);
         editor = preferences.edit();
-        getWeather();
     }
+
 
     public WeatherInfo getWeatherInfo(){
         String weatherString = preferences.getString("current_weather","");
@@ -43,13 +66,6 @@ public class WeatherProc {
     }
 
     public int getWeather() {
-        String weatherString = preferences.getString("current_weather","");
-
-        if(weatherString != "")
-            weatherInfo = gson.fromJson(weatherString, WeatherInfo.class);
-        else
-            weatherInfo = new WeatherInfo();
-
         try {
             TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
             DateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
@@ -80,14 +96,38 @@ public class WeatherProc {
             String nx = "60"; // 위도
             String ny = "120"; // 경도
 
-            Log.d("Weather", weatherInfo.time + " " + baseDate+baseTime);
-            if(weatherInfo.time.equals(baseDate+baseTime))
-                return 2;
+            String weatherString = preferences.getString("current_weather","");
 
-            //Log.d("Weather", baseDate + baseTime);
+            Log.d("Weather", baseDate+baseTime);
+
+            LocationData locationData = gson.fromJson(preferences.getString("location_data", ""), LocationData.class);
+            if(locationData != null){
+
+                nx = locationData.nx;
+                ny = locationData.ny;;
+
+            }
+            Log.d("Weather", nx + " " + ny);
+
+            if(weatherString != "") {
+                weatherInfo = gson.fromJson(weatherString, WeatherInfo.class);
+
+                if(weatherInfo.time.equals(baseDate+baseTime)) {
+                    Log.d("Weather", weatherInfo.time + " " + baseDate+baseTime);
+
+                    return 2;
+                }
+            } else {
+                weatherInfo = new WeatherInfo();
+            }
+
+
+
 
             // 전날 23시 부터 153개의 데이터를 조회하면 오늘과 내일의 날씨를 알 수 있음
+
             StringBuilder urlBuilder = new StringBuilder(apiUrl);
+
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
@@ -140,14 +180,11 @@ public class WeatherProc {
             rd[0].close();
             conn.disconnect();
             result = sb.toString();
-            //Log.d("Weather", result());
+            Log.d("Weather", result);
 
             //=======이 밑에 부터는 json에서 데이터 파싱해 오는 부분이다=====//
 
-            String weather = null;
-            String tmperature = null;
-
-            // response 키를 가지고 데이터를 파싱
+            // 먼저 아이템만 배열로 가져온다
             JSONArray jsonArray = new JSONObject(result)
                     .getJSONObject("response")
                     .getJSONObject("body")
@@ -156,6 +193,8 @@ public class WeatherProc {
             JSONObject jsonObj;
 
             /*
+                결과예시
+
                 PTY 0
                 REH 32
                 RN1 0
@@ -166,7 +205,8 @@ public class WeatherProc {
                 WSD 4.7
              */
 
-            weatherInfo.time = baseDate + baseTime;
+            jsonObj = jsonArray.getJSONObject(0);
+            weatherInfo.time = jsonObj.getString("baseDate")+jsonObj.getString("baseTime");
             Log.d("Weather", weatherInfo.time);
 
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -207,39 +247,7 @@ public class WeatherProc {
             editor.putString("current_weather", weatherJson);
             editor.apply();
 
-            Log.d("Weather", preferences.getString("current_weather", ""));
-
-            // 강수형태
-
-            weather = "현재 날씨는 ";
-
-            // 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
-            switch (weatherInfo.rainType) {
-                case "0":
-                    weather += "맑은 상태로";
-                    break;
-                case "1":
-                    weather += "비가 오는 상태로 ";
-                    break;
-                case "2":
-                    weather += "비나 눈이 오는 상태로 ";
-                    break;
-                case "3":
-                    weather += "눈이 오는 상태로 ";
-                    break;
-                case "5":
-                    weather += "빗방울이 떨어지는 상태로 ";
-                    break;
-                case "6":
-                    weather += "빗방울이나 눈이 날리는 상태로";
-                    break;
-                case "7":
-                    weather += "눈이 날리는 상태로";
-                    break;
-            }
-
-
-            tmperature = "기온은 " + weatherInfo.temp + "℃ 입니다.";
+            //Log.d("Weather", preferences.getString("current_weather", ""));
 
             return 1;
         } catch (UnsupportedEncodingException e) {
