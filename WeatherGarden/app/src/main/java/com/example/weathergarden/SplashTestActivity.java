@@ -39,7 +39,7 @@ public class SplashTestActivity extends Activity {
                         // Check if the initial data is ready.
                         if (gps.isGetLocation) {
                             Log.d("SplashActivity", "위치 가져옴");
-                            Intent i = new Intent(SplashTestActivity.this, 여기에 다음화면);
+                            Intent i = new Intent(SplashTestActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
                             content.getViewTreeObserver().removeOnPreDrawListener(this);
