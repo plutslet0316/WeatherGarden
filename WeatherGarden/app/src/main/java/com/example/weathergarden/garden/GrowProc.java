@@ -2,12 +2,16 @@ package com.example.weathergarden.garden;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.weathergarden.weather.WeatherInfo;
+import com.example.weathergarden.weather.WeatherProc;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,22 +49,32 @@ public class GrowProc {
             plantInfo = dao.readPlantWithPlantCode(groundInfo.plantCode);
             return this;
         }
-
+        
         // 식물 성장
-        private void Growing(int value) {
-            groundInfo.growPoint += value;
+        private void Growing(float value) {
+            groundInfo.growPoint += (value / 24);
 
-            // 요구치 가져오고, 0부터 시작하는 레벨에 1 곱해서 요구치 가져옴
-            int growRequire = plantInfo.growRequire * (groundInfo.growLevel + 1);
+            // 요구치 가져오기
+            int growRequire = 0;
+            switch (groundInfo.growLevel) {
+                case 3: growRequire = plantInfo.growLimit;
+                    break;
+                case 2: growRequire += plantInfo.flowerRequire;
+                case 1: growRequire += plantInfo.stemRequire;
+                case 0: growRequire += plantInfo.seedRequire;
+                    break;
+            }
 
-            // 현재 레벨과 성장 요구치를 넘는지 확인해서
-            boolean checkLevel = groundInfo.growLevel < plantInfo.growLimit;
+            // 성장 요구치를 넘는지 확인해서
             boolean checkRequire = groundInfo.growPoint >= growRequire;
 
-            // 현재 포인트를 요구치만큼 지우고, 레벨 증가
-            if (checkLevel && checkRequire) {
-                groundInfo.growPoint -= growRequire;
+            // 레벨 증가
+            if (checkRequire) {
                 groundInfo.growLevel++;
+            }
+            if(groundInfo.growLevel >= 4){
+                groundInfo.growLevel = 4;
+                Withering(100);
             }
 
             // 데이터 업데이트
@@ -70,7 +84,7 @@ public class GrowProc {
         // 식물 심기
         public void planting(int groundNo, String plantCode) {
             GroundInfo groundInfo = new GroundInfo();
-            groundInfo.setGroundInfo(groundNo, plantCode, 0, 0, 0, 0, 0);
+            groundInfo.setGroundInfo(groundNo, plantCode, 0, 0, 0, 0, 0, 0);
             dao.insertGroundInfo(groundInfo);
         }
 
@@ -88,20 +102,9 @@ public class GrowProc {
             0을 반환하면 줄 수 없는 상태
             1을 반환하면 성공적으로 준 것
         */
-        public int addWater(int value) {
-            // 최대치의 1.2가 넘는지 확인
-            int limit = (int) (plantInfo.waterLimit * 1.2);
-            boolean checkLimit = groundInfo.water < limit;
-
-            if (checkLimit)
-                groundInfo.water += value;
-            else
-                return 0;
-
-            if (groundInfo.water > limit) groundInfo.water = limit;
-
+        public void addWater(int value) {
+            groundInfo.water += value;
             dao.updateGroundInfo(groundInfo);
-            return 1;
         }
 
         /*
@@ -110,30 +113,19 @@ public class GrowProc {
             아니면 그냥 최대를 넘지 않는 방식으로 할 지
             고민해봐야한다.
         */
-        public int addNutrient(int value) {
-            int limit = (int) (plantInfo.nutrientLimit * 1.2);
-
-            boolean checkLimit = groundInfo.nutrient < limit;
-
-            if (checkLimit)
-                groundInfo.nutrient += value;
-            else
-                return 0;
-
-            if (groundInfo.nutrient > limit) groundInfo.nutrient = limit;
-
+        public void addNutrient(int value) {
+            groundInfo.nutrient += value;
             dao.updateGroundInfo(groundInfo);
-            return 1;
         }
 
         // 식물 시듦
-        private void Withering(int value) {
+        private void Withering(float value) {
             groundInfo.wither += value;
             
             // 0보다 낮아지면 0으로 고정
             if (groundInfo.wither < 0) groundInfo.wither = 0;
             
-            // 제한보다 높하지만 제한으로 고정
+            // 제한보다 높아지만 제한으로 고정
             if (groundInfo.wither > plantInfo.witherLimit) groundInfo.wither = plantInfo.witherLimit;
 
             dao.updateGroundInfo(groundInfo);
@@ -141,27 +133,114 @@ public class GrowProc {
 
 
         // 물 소모
-        public void consumeWater(int value) {
-            groundInfo.water -= value;
+        public void consumeWater() {
+            groundInfo.water -= plantInfo.waterConsume;
+
+            if(groundInfo.water <= 0) {
+                groundInfo.water = 0;
+            }
+
+            dao.updateGroundInfo(groundInfo);
         }
         // 양분 소모
-        public void consumeNutrient(int value) {
-            groundInfo.nutrient -= value;
+        public void consumeNutrient() {
+            groundInfo.nutrient -= plantInfo.nutrientConsume;
+
+            if (groundInfo.nutrient <= 0) {
+                groundInfo.nutrient = 0;
+            }
+
+            dao.updateGroundInfo(groundInfo);
         }
 
-        // 물 확인
-        public boolean checkWater() {
-            return groundInfo.water > 0;
-        }
-        // 영양 확인
-        public boolean checkNutrient() {
-            return groundInfo.nutrient > 0;
-        }
-        // 시듦 상태 확인
-        public boolean checkWither() {
-            return groundInfo.wither > 0;
+        // 시듦 확인
+        public boolean checkWither(){
+            return plantInfo.witherLimit <= groundInfo.wither;
         }
 
+        // 확인
+        private float check(String type) {
+            float result = 1;
+            float var = 0;
+            int require = 0;
+            int min = 0;
+            int max = 0;
+
+            switch (type){
+                case "Temperature":
+                    try {
+                        WeatherInfo weatherInfo = new WeatherProc((Activity) context).getWeatherInfo();
+                        var = Float.valueOf(weatherInfo.temp);
+                        require = plantInfo.temperatureRequire;
+                        min = plantInfo.temperatureMin;
+                        max = plantInfo.temperatureMax;
+                    } catch (Exception e){
+                        Log.d("GrowProc", e.getMessage());
+                        return 1;
+                    }
+                    break;
+                case "Water":
+                    var = groundInfo.water;
+                    require = plantInfo.waterRequire;
+                    min = plantInfo.waterMin;
+                    max = plantInfo.waterMax;
+                    break;
+                case "Nutrient":
+                    var = groundInfo.nutrient;
+                    require = plantInfo.nutrientRequire;
+                    min = plantInfo.nutrientMin;
+                    max = plantInfo.nutrientMax;
+                    break;
+            }
+
+            float minRange = require - ((require - min) / 2);
+            float maxRange = require + ((max - require) / 2);
+            float rawMin = (minRange / var) / (minRange / require);
+            float rawMax =  (require / maxRange) / (var / maxRange);
+
+
+            // 이탈
+            if (max <= var) {
+                result = (max / var) * 0.1f;
+                Withering(1);
+                Log.d("GrowProc", "max: "+result);
+                return result;
+            } else
+            if (var <= min) {
+                result = (var / min) * 0.1f;
+                Withering(1);
+                Log.d("GrowProc", "min: "+result);
+                return result;
+            }
+
+            Withering(-result);
+
+            // 범위 외
+            if (var <= minRange) {
+                result = (var / minRange);
+                Log.d("GrowProc", "minRange: "+result);
+                return result;
+            } else
+            if (maxRange <= var) {
+                result = (maxRange / var);
+                Log.d("GrowProc", "maxRange: "+result);
+                return result;
+            } else
+
+            // 범위 내
+            if (var <= maxRange) {
+                result = 0.9f + ((rawMin * rawMax) * 0.2f);
+                Log.d("GrowProc", "range: "+result);
+                return result;
+            } else
+            if (minRange <= var){
+                result = 0.9f + (0.2f / (rawMin * rawMax));
+                Log.d("GrowProc", "range: "+result);
+                return result;
+            } else
+
+            return result;
+        }
     }
 
     private int checkGrowTime() {
@@ -236,35 +315,26 @@ public class GrowProc {
             // 시간차이만큼 반복
             for (int i = 0; i < differ; i++) {
                 // 과습, 과영양, 시듦
+                boolean isWither = carePlant.checkWither();
 
                 // 각각 물, 영양, 시듦 상태를 확인해서 boolean 형식으로 가져온다.
-                boolean isHasWater = carePlant.checkWater();
-                boolean isHasNutrient = carePlant.checkNutrient();
-                boolean isHasWither = carePlant.checkWither();
+                float temperature = carePlant.check("Temperature");
+                float water = carePlant.check("Water");
+                float nutrient = carePlant.check("Nutrient");
 
-                // 물이 없으면 시듦수치가 증가하고 아래 무시 반복을 계속한다.
-                if (isHasWater == false) {
-                    carePlant.Withering(2);
-                    continue;
-                }
+                float value = temperature * water * nutrient;
 
-                // 물 소모
-                carePlant.consumeWater(1);
+                // 식물 성장
+                carePlant.Growing(value);
 
-                // 성장,시듦감소 수치를 지정한다.
-                int value = 2;
+                // 소모
+                carePlant.consumeWater();
+                carePlant.consumeNutrient();
 
-                // 영양이 있으면 영양을 소모하고 수치를 증가시킨다.
-                if (isHasNutrient) {
-                    carePlant.consumeNutrient(1);
-                    value = 5;
-                }
 
-                // 시듦상태를 확인하고 맞다면 감소 아니라면 성장한다.
-                if (isHasWither) {
-                    carePlant.Withering(-value); // 시듦수치가 감소한다.
-                } else {
-                    carePlant.Growing(value); // 식물이 성장한다.
+                // 시듦상태를 확인하고 맞다면
+                if (isWither) {
+
                 }
             }
         }

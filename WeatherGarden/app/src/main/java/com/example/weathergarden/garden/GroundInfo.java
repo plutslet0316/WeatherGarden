@@ -30,14 +30,15 @@ public class GroundInfo implements Serializable {
     @ColumnInfo(name = "wither") @NonNull
     public int wither;
     @ColumnInfo(name = "grow_point") @NonNull
-    public int growPoint;
+    public double growPoint;
     @ColumnInfo(name = "grow_level") @NonNull
     public int growLevel;
-
+    @ColumnInfo(name = "year") @NonNull
+    public int year;
     // @Ignore 로 DB 테이블에서 무시되고 메소드로만 사용된다.
     // 값을 넣으면 객체 안에 대입시키는 Setter 다.
     @Ignore
-    public void setGroundInfo (int groundNo, String plantCode, int water, int nutrient, int wither, int growPoint, int growLevel){
+    public void setGroundInfo (int groundNo, String plantCode, int water, int nutrient, int wither, float growPoint, int growLevel, int year){
         this.groundNo = groundNo;
         this.plantCode = plantCode;
         this.water = water;
@@ -45,5 +46,6 @@ public class GroundInfo implements Serializable {
         this.wither = wither;
         this.growPoint = growPoint;
         this.growLevel = growLevel;
+        this.year = year;
     }
 }
