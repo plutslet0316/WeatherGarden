@@ -181,7 +181,7 @@ public class GardenTestActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garden_test);
-
+/*
         WeatherView weatherView = findViewById(R.id.weather_view);
         weatherView.setWeatherData(PrecipType.SNOW);
         weatherView.setAngle(15);
@@ -189,7 +189,7 @@ public class GardenTestActivity extends AppCompatActivity {
         weatherView.setEmissionRate(100f);
         weatherView.setFadeOutPercent(1f);
         weatherView.setSpeed(200);
-
+*/
         g1 = findViewById(R.id.ground1);
         g2 = findViewById(R.id.ground2);
         g3 = findViewById(R.id.ground3);

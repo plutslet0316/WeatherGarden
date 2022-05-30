@@ -132,10 +132,9 @@ public class DBTestActivity extends AppCompatActivity {
                         new GrowProc().withDao(dao).
                         new CarePlant().withGroundNo(groundNo);
 
-                if(carePlant.addWater(value) == 1)
-                    s += groundNo + "번 땅에 " + value + "만큼 물을 줍니다.";
-                else
-                    s += groundNo + "번 땅은 물이 충분합니다.";
+                carePlant.addWater(value);
+
+                s += groundNo + "번 땅에 " + value + "만큼 물을 줍니다.";
 
 
                 h.sendEmptyMessage(1);
@@ -160,11 +159,9 @@ public class DBTestActivity extends AppCompatActivity {
                         new GrowProc(getApplicationContext()).withDao(dao).
                         new CarePlant().withGroundNo(groundNo);
 
-                if(carePlant.addNutrient(value) == 1)
-                    s += groundNo + "번 땅에 " + value + "만큼 영양제를 줍니다.";
-                else
-                    s += groundNo + "번 땅은 영양이 충분합니다.";
-                
+                carePlant.addNutrient(value);
+                s += groundNo + "번 땅에 " + value + "만큼 영양제를 줍니다.";
+
                 h.sendEmptyMessage(1);
             } catch (Exception e) {
                 s = e.getMessage();

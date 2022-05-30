@@ -55,7 +55,7 @@ public class PopupPlantSelectTest extends Activity {
                 Intent intent = new Intent(this, GardenTestActivity.class);
 
                 GroundInfo groundInfo = new GroundInfo();
-                groundInfo.setGroundInfo(groundNo, plantCode, 0, 0, 0, 0, 0);
+                groundInfo.setGroundInfo(groundNo, plantCode, 0, 0, 0, 0, 0, 0);
                 intent.putExtra("ground_info", groundInfo);
 
                 setResult(10, intent);
