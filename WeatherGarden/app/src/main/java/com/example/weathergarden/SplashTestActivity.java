@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import com.example.weathergarden.R;
 import com.example.weathergarden.weather.GPS;
 
 public class SplashTestActivity extends Activity {
@@ -38,7 +39,7 @@ public class SplashTestActivity extends Activity {
                         // Check if the initial data is ready.
                         if (gps.isGetLocation) {
                             Log.d("SplashActivity", "위치 가져옴");
-                            Intent i = new Intent(SplashTestActivity.this,MainActivity.class);
+                            Intent i = new Intent(SplashTestActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
                             content.getViewTreeObserver().removeOnPreDrawListener(this);
