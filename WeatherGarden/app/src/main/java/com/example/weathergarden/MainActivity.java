@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout main;
     BottomNavigationView bottomNavigationView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

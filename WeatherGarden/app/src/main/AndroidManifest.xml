@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.weathergarden">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -23,14 +22,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".weather_gps" />
-        <activity android:name=".weather_add"/>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".GardenTestActivity"></activity>
-        <activity android:name=".PopupPlantSelectTest"
-            android:theme="@style/Theme.WeatherGarden.Dialog"
-            >
         </activity>
 
     </application>
