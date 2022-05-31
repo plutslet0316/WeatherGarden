@@ -23,12 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".GardenTestActivity"></activity>
-        <activity android:name=".PopupPlantSelectTest"
-            android:theme="@style/Theme.WeatherGarden.Dialog"
-            >
-        </activity>
 
     </application>
 
