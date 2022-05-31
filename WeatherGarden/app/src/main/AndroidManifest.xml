@@ -17,16 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Noti">
-
-        <service
-            android:name="com.example.weathergarden.MyService"
-            android:enabled="true"
-            android:exported="true">
-        </service>
+        android:theme="@style/Theme.WeatherGarden">
 
         <activity
-            android:name="com.example.weathergarden.SplashTestActivity"
+            android:name=".SplashTestActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +28,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivityWidget"/>
+        <activity android:name=".GardenTestActivity"/>
+        <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Dialog"/>
+        <activity android:name=".weather_gps" />
+        <activity android:name=".weather_add"/>
+
+        <service
+            android:name="com.example.weathergarden.MyService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
 
         <receiver
             android:name="com.example.weathergarden.NewAppWidget" android:exported="true">
@@ -47,9 +53,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
-        <activity android:name=".MainActivity" android:exported="true" >
 
-        </activity>
     </application>
 
 </manifest>
