@@ -54,6 +54,35 @@ public class MyService extends Service {
 
 //        return super.onStartCommand(intent, flags, startId); //기존 코드
     }
+//
+//    Thread t = new Thread() {
+//
+//        @Override
+//        public void run() {
+//            try {
+//                while (!isInterrupted()) {
+//                    Thread.sleep(1000);
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            updateYOURthing();
+//                        }
+//                    });
+//                }
+//            } catch (InterruptedException e) {
+//            }
+//        }
+//    };
+//
+//        t.start();
+//
+//    private void updateYOURthing() {
+//        now = System.currentTimeMillis();
+//        date = new Date(now);
+//        SimpleDateFormat sdfnow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        String strNow = sdfNow.format(date);
+//        tv.setText(strNow);
+//    }
 
     public String formatDate() {
         long mNow = System.currentTimeMillis(); // 현재 시간 가져옴
@@ -67,7 +96,7 @@ public class MyService extends Service {
 
     // 포그라운드 서비스
     public void initializeNotification() {
-
+        //
 //        WeatherProc weatherProc =new WeatherProc(this);
 //        weatherProc.getWeather();
 //
@@ -88,7 +117,7 @@ public class MyService extends Service {
         builder.setShowWhen(false);
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         builder.setContentIntent(pendingIntent);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
