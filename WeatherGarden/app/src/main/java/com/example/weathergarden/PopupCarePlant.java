@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -136,11 +137,15 @@ public class PopupCarePlant extends PopupWindow {
             thread.join();
 
             int plant = context.getResources().getIdentifier("plant" + index, "id", context.getPackageName());
+            int plant_img = context.getResources().getIdentifier("plant" + index + "_img", "id", context.getPackageName());
 
             textInfo.setText(index + "번 땅의 식물을 뽑아냅니다.");
 
             TextView textView =  context.findViewById(plant);
+            ImageView imageView =  context.findViewById(plant_img);
+
             textView.setText("");
+            imageView.setImageResource(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

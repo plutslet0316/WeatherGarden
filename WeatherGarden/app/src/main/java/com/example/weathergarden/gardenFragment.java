@@ -148,7 +148,7 @@ public class gardenFragment extends Fragment implements View.OnClickListener{
 
             InputStream img = null;
             try {
-                img = getResources().getAssets().open(plantInfo.img+"/" + (groundInfo.growLevel+1) + ".png");
+                img = getResources().getAssets().open(plantInfo.img+"/" + (groundInfo.growLevel) + ".png");
             } catch (IOException e) {
                 e.printStackTrace();
             }
