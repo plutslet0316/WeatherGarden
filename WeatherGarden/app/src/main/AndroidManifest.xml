@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.WeatherGarden">
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashTestActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,6 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".GardenTestActivity"/>
         <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Dialog"/>
-        <activity android:name=".SplashTestActivity"/>
         <activity android:name=".weather_gps" />
         <activity android:name=".weather_add"/>
 

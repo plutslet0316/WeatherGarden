@@ -16,14 +16,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="성남시 중원구 금광동"
-        android:textSize="24dp"
+        android:textAlignment="center"
+        android:textSize="28dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/arrow_down"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.701"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.113" />
+        app:layout_constraintVertical_bias="0.117" />
 
     <ImageButton
         android:id="@+id/add"
@@ -95,163 +96,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
-        android:text="어제보다 2도 높습니다"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/condition"
         app:layout_constraintVertical_bias="0.044" />
-
-    <ImageView
-        android:id="@+id/today_image"
-        android:layout_width="49dp"
-        android:layout_height="58dp"
-        android:src="@drawable/ic_baseline_wb_sunny_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.742" />
-
-    <ImageView
-        android:id="@+id/day4_image"
-        android:layout_width="50dp"
-        android:layout_height="58dp"
-        android:src="@drawable/ic_baseline_cloud_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.818"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.741" />
-
-    <ImageView
-        android:id="@+id/day3_image"
-        android:layout_width="50dp"
-        android:layout_height="57dp"
-        android:layout_marginEnd="72dp"
-        android:src="@drawable/ic_baseline_bolt_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.695"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.741" />
-
-    <ImageButton
-        android:id="@+id/imageView5"
-        android:layout_width="176dp"
-        android:layout_height="198dp"
-        android:layout_marginTop="44dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_baseline_cloud_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/condition"
-        app:layout_constraintHorizontal_bias="0.293"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/day"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/today"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginTop="37dp"
-        android:text="5.31(화)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.663" />
-
-    <TextView
-        android:id="@+id/day2"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:text="6.01(수)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.347"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.679" />
-
-    <ImageView
-        android:id="@+id/day2_image"
-        android:layout_width="50dp"
-        android:layout_height="58dp"
-        android:layout_marginEnd="88dp"
-        android:src="@drawable/ic_baseline_cloud_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.742" />
-
-    <TextView
-        android:id="@+id/day3"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:text="06.02(목)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.591"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.679" />
-
-    <TextView
-        android:id="@+id/day4"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:text="06.03(금)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.836"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.679" />
-
-    <TextView
-        android:id="@+id/today_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="26'c"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.127"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.778" />
-
-    <TextView
-        android:id="@+id/day_temp3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="26'c"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.778" />
-
-    <TextView
-        android:id="@+id/day_temp4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="26'c"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.793"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.779" />
 
     <TextView
         android:id="@+id/week_weather"
@@ -268,17 +119,184 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/day_temp2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="23'c"
+    <ImageButton
+        android:id="@+id/imageView5"
+        android:layout_width="176dp"
+        android:layout_height="198dp"
+        android:layout_marginTop="44dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_baseline_cloud_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintEnd_toStartOf="@+id/condition"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/day"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.779" />
+        app:layout_constraintVertical_bias="0.792">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="64sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/today"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:text="5.31(화)"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:id="@+id/today_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:src="@drawable/ic_baseline_wb_sunny_24" />
+
+                <TextView
+                    android:id="@+id/today_temp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="26'c"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="64sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/day2"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:text="6.01(수)"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:id="@+id/day2_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:src="@drawable/ic_baseline_cloud_24" />
+
+                <TextView
+                    android:id="@+id/day_temp2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="23'c"
+                    android:textAlignment="center" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="64sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day3"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:text="06.02(목)"
+                    android:textAlignment="center"/>
+
+                <ImageView
+                    android:id="@+id/day3_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:src="@drawable/ic_baseline_bolt_24" />
+
+                <TextView
+                    android:id="@+id/day_temp3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="26'c"
+                    android:textAlignment="center"/>
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="64sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day4"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:text="06.03(금)"
+                    android:textAlignment="center"/>
+
+                <ImageView
+                    android:id="@+id/day4_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:src="@drawable/ic_baseline_cloud_24" />
+
+                <TextView
+                    android:id="@+id/day_temp4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="26'c"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="64sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day5"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:text="06.03(금)"
+                    android:textAlignment="center"/>
+
+                <ImageView
+                    android:id="@+id/day5_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:src="@drawable/ic_baseline_cloud_24" />
+
+                <TextView
+                    android:id="@+id/day_temp5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="26'c"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.TimeZone;
 
 public class WeatherProc {
-    Activity context;
+    Context context;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -53,7 +53,7 @@ public class WeatherProc {
 
     Gson gson = new Gson();
 
-    public WeatherProc(Activity context) {
+    public WeatherProc(Context context) {
         this.context = context;
         preferences = context.getSharedPreferences("player_data", Context.MODE_PRIVATE);
         editor = preferences.edit();
@@ -109,6 +109,8 @@ public class WeatherProc {
             }
             Log.d("Weather", nx + " " + ny);
 
+            weatherInfo = new WeatherInfo();
+/*
             if(weatherString != "") {
                 weatherInfo = gson.fromJson(weatherString, WeatherInfo.class);
 
@@ -118,10 +120,9 @@ public class WeatherProc {
                     return 2;
                 }
             } else {
-                weatherInfo = new WeatherInfo();
             }
 
-
+*/
 
 
             // 전날 23시 부터 153개의 데이터를 조회하면 오늘과 내일의 날씨를 알 수 있음
@@ -148,7 +149,7 @@ public class WeatherProc {
             HttpURLConnection conn = null;
 
             url = new URL(urlBuilder.toString());
-            //Log.d("Weather", url.toString());
+            Log.d("Weather", url.toString());
 
             conn = (HttpURLConnection) url.openConnection();
 
