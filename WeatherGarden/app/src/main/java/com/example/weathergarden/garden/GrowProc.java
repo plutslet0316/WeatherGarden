@@ -342,4 +342,49 @@ public class GrowProc {
         // 모든 식물이 성장을 마치면 1 리턴
         return 1;
     }
+
+    public int startGrowing(Context context, int differ) {
+        // 시간차이를 가져온다.
+        // Log.d("test", String.valueOf(differ));
+
+        // 차이가 없거나 적으면 0을 리턴 / 성장하지 않는다.
+        if (differ <= 0) return 0;
+
+        // 리스트에서 하나씩 확인해서 각각 상황에 맞게 성장시킨다.
+        List<Integer> groundNoList = dao.readAllGroundNo();
+
+        // 리스트만큼 반복한다.
+        for (int groundNo : groundNoList) {
+            CarePlant carePlant = new CarePlant().withGroundNo(groundNo);
+
+            // 시간차이만큼 반복
+            for (int i = 0; i < differ; i++) {
+                // 과습, 과영양, 시듦
+                boolean isWither = carePlant.checkWither();
+
+                // 각각 물, 영양, 시듦 상태를 확인해서 boolean 형식으로 가져온다.
+                float temperature = carePlant.check("Temperature");
+                float water = carePlant.check("Water");
+                float nutrient = carePlant.check("Nutrient");
+
+                float value = temperature * water * nutrient;
+
+                // 식물 성장
+                carePlant.Growing(value);
+
+                // 소모
+                carePlant.consumeWater();
+                carePlant.consumeNutrient();
+
+
+                // 시듦상태를 확인하고 맞다면
+                if (isWither) {
+
+                }
+            }
+        }
+
+        // 모든 식물이 성장을 마치면 1 리턴
+        return 1;
+    }
 }
