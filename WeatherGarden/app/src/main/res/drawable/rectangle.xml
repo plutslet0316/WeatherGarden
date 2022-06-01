@@ -3,13 +3,13 @@
     android:shape="rectangle">
 
     <solid
-        android:color="#fff8e1"
+        android:color="#b4ebf4"
         android:background="@android:color/transparent"/>
 
 
     <size
-        android:width="480dp"
-        android:height="70dp"/>
+        android:width="300dp"
+        android:height="150dp"/>
 
 
 </shape>
