@@ -22,14 +22,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WeatherProc weatherProc =new WeatherProc(this);
-        weatherProc.getWeather();
-        WeatherInfo weatherInfo = weatherProc.getWeatherInfo();
-        // t.setText(weatherInfo.temp + "℃ 입니다.");
-
         init(); // 객체 정의
         SettingListener();
-        getSupportFragmentManager().beginTransaction().replace(R.id.main, new gardenFragment() )
+        getSupportFragmentManager().beginTransaction().replace(R.id.main, new weatherFragment() )
                 .commit();
     }
     private void init() {
