@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.weathergarden">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/><!--포그라운드 권한 부여-->
+    <!--<service... android:foregroundServiceType="location"/> <!-포그라운드 서비스가 기기의 위치와 액세스하는 경우-->
+    <!-- 현재 위치값 받기 위해 필요한 코드-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,6 +18,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.WeatherGarden">
+
         <activity
             android:name=".SplashTestActivity"
             android:exported="true"
@@ -27,10 +31,30 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivityWidget"/>
         <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Dialog"/>
         <activity android:name=".PopupPlantDelete" android:theme="@style/Theme.WeatherGarden.Dialog"/>
         <activity android:name=".weather_gps" />
         <activity android:name=".weather_add"/>
+
+        <service
+            android:name="com.example.weathergarden.MyService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <receiver
+            android:name="com.example.weathergarden.NewAppWidget" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.js.example.BUTTON1"/> <!--버튼 액션 추가-->
+
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/new_app_widget_info" />
+        </receiver>
 
     </application>
 

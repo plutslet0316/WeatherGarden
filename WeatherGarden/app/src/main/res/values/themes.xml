@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.WeatherGarden.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>
         <!-- item name="windowSplashScreenAnimatedIcon">@drawable/ic_cloud</item -->
@@ -25,5 +26,20 @@
     </style>
 
     <style name="Theme.WeatherGarden.Dialog" parent="Theme.MaterialComponents.Dialog"/>
+
+    <style name="Theme.Noti.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
+        <!-- Radius of the outer bound of widgets to make the rounded corners -->
+        <item name="appWidgetRadius">16dp</item>
+        <!--
+        Radius of the inner view's bound of widgets to make the rounded corners.
+        It needs to be 8dp or less than the value of appWidgetRadius
+        -->
+        <item name="appWidgetInnerRadius">8dp</item>
+    </style>
+
+    <style name="Theme.Noti.AppWidgetContainer" parent="Theme.Noti.AppWidgetContainerParent">
+        <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
+        <item name="appWidgetPadding">16dp</item>
+    </style>
 
 </resources>
