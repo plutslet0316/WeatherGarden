@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
         init(); // 객체 정의
         SettingListener();
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.main, new gardenFragment() )
+                .commit();
     }
     private void init() {
         main = findViewById(R.id.main);
