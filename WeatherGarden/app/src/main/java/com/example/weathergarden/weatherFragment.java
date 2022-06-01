@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import java.util.TimeZone;
 public class weatherFragment extends Fragment implements View.OnClickListener {
     private View view;
     private TextView loc, day, tem, con;
+    private ImageView wea;
     private ImageButton add;
     WeatherProc weatherProc = null;
     WeatherInfo weatherInfo = null;
@@ -129,24 +131,31 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
         switch (weatherInfo.rainType){
             case "0":
                 rainType = "맑음";
+                wea.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
                 break;
             case "1":
                 rainType = "비";
+                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
                 break;
             case "2":
                 rainType = "비/눈";
+                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
                 break;
             case "3":
                 rainType = "눈";
+                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
                 break;
             case "5":
                 rainType = "빗방울";
+                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
                 break;
             case "6":
                 rainType = "빗방울/눈날림";
+                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
                 break;
             case "7":
                 rainType = "눈날림";
+                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
                 break;
         }
         con.setText(rainType);
@@ -184,6 +193,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
         day = view.findViewById(R.id.day);
         tem = view.findViewById(R.id.temperature);
         con = view.findViewById(R.id.condition);
+        wea = view.findViewById(R.id.imageView5);
 
         add = (ImageButton) view.findViewById(R.id.add);
 
