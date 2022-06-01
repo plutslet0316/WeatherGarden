@@ -91,7 +91,7 @@ public class PopupCarePlant extends PopupWindow {
             @Override
             public void run() {
                 super.run();
-                carePlant.addWater(100);
+                carePlant.addWater(1000);
                 textInfo.setText(index + "번 땅에 물을 줍니다.");
             }
         };
@@ -109,7 +109,7 @@ public class PopupCarePlant extends PopupWindow {
             @Override
             public void run() {
                 super.run();
-                carePlant.addNutrient(100);
+                carePlant.addNutrient(1000);
                 textInfo.setText(index + "번 땅에 영양제를 줍니다.");
             }
         };
