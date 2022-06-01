@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weathergarden.weather.WeatherInfo;
+import com.example.weathergarden.weather.WeatherProc;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,10 +16,16 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout main;
     BottomNavigationView bottomNavigationView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        WeatherProc weatherProc =new WeatherProc(this);
+        weatherProc.getWeather();
+        WeatherInfo weatherInfo = weatherProc.getWeatherInfo();
+        // t.setText(weatherInfo.temp + "℃ 입니다.");
 
         init(); // 객체 정의
         SettingListener();
