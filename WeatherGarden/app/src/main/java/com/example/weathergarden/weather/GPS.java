@@ -133,12 +133,14 @@ public class GPS  extends ViewModel {
                         @Override
                         public void onCanceled() {
                             Log.d("Gps", "취소됨");
+                            isGetLocation = true;
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d("Gps", "실패: " + e.getMessage());
+                            isGetLocation = true;
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<Location>() {

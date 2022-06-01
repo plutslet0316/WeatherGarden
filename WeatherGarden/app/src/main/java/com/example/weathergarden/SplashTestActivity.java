@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
-import com.example.weathergarden.R;
 import com.example.weathergarden.weather.GPS;
 
 public class SplashTestActivity extends Activity {
