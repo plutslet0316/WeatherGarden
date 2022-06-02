@@ -125,7 +125,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
         String dayText = sdFormat.format(now);
         Log.d("WeatherFragment", dayText);
         day.setText(dayText);
-        loc.setText(addresses.get(1).getLocality() + " " + (addresses.get(1).getSubLocality() != null ? addresses.get(1).getSubLocality():"") + " " +  (addresses.get(1).getThoroughfare() != null ? addresses.get(1).getThoroughfare(): ""));
+        loc.setText((addresses.get(1).getLocality() != null ? addresses.get(1).getLocality() : addresses.get(1).getAdminArea()) + " " + (addresses.get(1).getSubLocality() != null ? addresses.get(1).getSubLocality():"") + " " +  (addresses.get(1).getThoroughfare() != null ? addresses.get(1).getThoroughfare(): ""));
         tem.setText(weatherInfo.temp+" ℃");
 
         switch (weatherInfo.rainType){
