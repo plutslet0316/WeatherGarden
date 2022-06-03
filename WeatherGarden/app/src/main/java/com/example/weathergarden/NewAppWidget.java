@@ -42,7 +42,7 @@ public class NewAppWidget extends AppWidgetProvider {
 
         //버튼1 클릭 : 클릭 성공 메세지 출력!
         Intent intent1 = new Intent(ACTION_BUTTON1);
-        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.button1, pendingIntent1);
 
         //Instruct the widget manager to update the widget
@@ -89,7 +89,7 @@ public class NewAppWidget extends AppWidgetProvider {
 
 
             //버튼1 클릭 : 클릭 성공 메세지 출력!
-            remoteViews.setOnClickPendingIntent(R.id.button1, getPendingSelfIntent(context, ACTION_BUTTON1, PendingIntent.FLAG_CANCEL_CURRENT));
+            remoteViews.setOnClickPendingIntent(R.id.button1, getPendingSelfIntent(context, ACTION_BUTTON1, PendingIntent.FLAG_IMMUTABLE));
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         }
@@ -110,7 +110,7 @@ public class NewAppWidget extends AppWidgetProvider {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
 
-        return PendingIntent.getBroadcast(context, 0, intent, flag);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
     }
 
     public String formatDate() {
