@@ -14,13 +14,16 @@ import com.example.weathergarden.weather.WeatherInfo;
 import com.example.weathergarden.weather.WeatherProc;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class GrowProc {
     GardenDao dao;
@@ -266,15 +269,16 @@ public class GrowProc {
             lastDate = preferences.getString("last_date", "");
         }
 
-        // 시간 형식 지정
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-
-        // 시간 형식 대로 문자열을 시간으로 바꾼다.
-        LocalDateTime nowDateTime = LocalDateTime.parse(nowDate, format);
-        LocalDateTime lastDateTime = LocalDateTime.parse(lastDate, format);
-
         // 두 시간의 차이를 가져온다.
-        int differ = (int) ChronoUnit.HOURS.between(lastDateTime, nowDateTime);
+        TimeUnit timeUnit = TimeUnit.HOURS;
+        int differ = 0;
+        try {
+            long diffInMillies = df.parse(lastDate).getTime() - now.getTime();
+            differ = (int) timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Log.d("Grow", "Time Differ : " + differ + " " + nowDate + " " + lastDate);
 
         if(differ < 0){

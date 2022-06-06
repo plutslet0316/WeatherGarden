@@ -93,7 +93,8 @@ public class PopupCarePlant extends PopupWindow {
             public void run() {
                 super.run();
                 carePlant.addWater(1000);
-                textInfo.setText(index + "번 땅에 물을 줍니다.");
+                setInfoText(index + "번 땅에 물을 줍니다.");
+
             }
         };
         thread.start();
@@ -111,7 +112,9 @@ public class PopupCarePlant extends PopupWindow {
             public void run() {
                 super.run();
                 carePlant.addNutrient(1000);
-                textInfo.setText(index + "번 땅에 영양제를 줍니다.");
+
+                setInfoText(index + "번 땅에 영양제를 줍니다.");
+
             }
         };
         thread.start();
@@ -139,15 +142,29 @@ public class PopupCarePlant extends PopupWindow {
             int plant = context.getResources().getIdentifier("plant" + index, "id", context.getPackageName());
             int plant_img = context.getResources().getIdentifier("plant" + index + "_img", "id", context.getPackageName());
 
-            textInfo.setText(index + "번 땅의 식물을 뽑아냅니다.");
+            setInfoText(index + "번 땅의 식물을 뽑아냅니다.");
 
-            TextView textView =  context.findViewById(plant);
-            ImageView imageView =  context.findViewById(plant_img);
+            TextView textView = context.findViewById(plant);
+            ImageView imageView = context.findViewById(plant_img);
 
-            textView.setText("");
-            imageView.setImageResource(0);
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    textView.setText("");
+                    imageView.setImageResource(0);
+                }
+            });
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    void setInfoText(String text){
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textInfo.setText(text);
+            }
+        });
     }
 }
