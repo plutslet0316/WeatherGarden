@@ -87,14 +87,14 @@ public class GPS  extends ViewModel {
             Gson gson = new Gson();
             LocationData locationData = new LocationData(x, y, nx, ny);
             String locationString = gson.toJson(locationData);
-            //Log.d("Gps", locationString);
+            Log.d("Gps", locationString);
 
             editor.putString("location_data", locationString);
             editor.apply();
         }
         finally {
             isGetLocation = true;
-            Log.d("Gps", "좌표값 변환 완료" + isGetLocation);
+            Log.d("Gps", "좌표값 변환 완료");
         }
     }
 
@@ -133,12 +133,14 @@ public class GPS  extends ViewModel {
                         @Override
                         public void onCanceled() {
                             Log.d("Gps", "취소됨");
+                            setGridXY(37.5666805, 126.9784147);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d("Gps", "실패: " + e.getMessage());
+                            setGridXY(37.5666805, 126.9784147);
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<Location>() {
