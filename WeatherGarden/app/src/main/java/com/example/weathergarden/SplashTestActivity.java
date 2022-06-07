@@ -18,7 +18,6 @@ import com.example.weathergarden.weather.GPS;
 public class SplashTestActivity extends Activity {
     GPS gps;
     boolean isAllow;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,27 +61,26 @@ public class SplashTestActivity extends Activity {
     }
 
     public void OnCheckPermission() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            String[] permissionList = new String[] {
+
+            String[] permissionList = new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION };
+                    Manifest.permission.ACCESS_COARSE_LOCATION};
 
             ActivityCompat.requestPermissions((Activity) this,
                     permissionList,
                     1);
-            // }
-        } else {
+            //}
+        }
+        else {
             isAllow = true;
         }
     }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         isAllow = true;
     }
