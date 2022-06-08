@@ -1,6 +1,6 @@
 package com.example.weathergarden.weather;
 
-public class TomorrowWeatherInfo {
+public class WeatherFastInfo {
     public String fcstDate;       // 예보시각
     public String fcstTime;       // 예보시각
     public String rainType;       // 강수 형태

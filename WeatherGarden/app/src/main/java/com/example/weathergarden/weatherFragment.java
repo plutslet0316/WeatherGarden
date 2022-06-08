@@ -1,6 +1,5 @@
 package com.example.weathergarden;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,21 +12,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.weathergarden.weather.LocationData;
-import com.example.weathergarden.weather.TomorrowWeatherInfo;
+import com.example.weathergarden.weather.WeatherFastInfo;
 import com.example.weathergarden.weather.WeatherInfo;
 import com.example.weathergarden.weather.WeatherProc;
+import com.example.weathergarden.weather.WeatherUltraFastInfo;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -39,7 +36,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.zip.Inflater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,8 +48,8 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
     private ImageView wea;
     private ImageButton add;
     WeatherProc weatherProc = null;
-    WeatherInfo weatherInfo = null;
-    ArrayList<TomorrowWeatherInfo> tomorrowWeatherList = null;
+    ArrayList<WeatherUltraFastInfo> weatherList = null;
+    ArrayList<WeatherFastInfo> tomorrowWeatherList = null;
 
     /*
     <작성해야될 코드> // 날씨 메인 화면에서
@@ -102,11 +98,12 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
 
     public void setWeather() {
         Gson gson = new Gson();
-        Geocoder geocoder = new Geocoder(getContext(), Locale.KOREAN);
+        Geocoder geocoder = new Geocoder(view.getContext(), Locale.KOREAN);
         List<Address> addresses = null;
-
+        WeatherUltraFastInfo weatherInfo = weatherList.get(0);
+        Log.d("WeatherFragment", weatherList.get(0).sky + " " + weatherList.get(0).temp);
         // 위치 가져오기
-        SharedPreferences preferences = getContext().getSharedPreferences("player_data", Context.MODE_PRIVATE);
+        SharedPreferences preferences = view.getContext().getSharedPreferences("player_data", Context.MODE_PRIVATE);
         LocationData locationData = gson.fromJson(preferences.getString("location_data", ""), LocationData.class);
 
         // 위치 주소로 변환하기
@@ -117,9 +114,9 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                     7);
         } catch (IOException ioException) {
             //네트워크 문제
-            Toast.makeText(getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
         } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
         }
 
 
@@ -142,39 +139,57 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
       눈 : #e0f7fa , 안개 : #efebe9
          */
         switch (weatherInfo.rainType){
+            //없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+
             case "0":
-                rainType = "맑음";
-                wea.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
-                view.setBackgroundColor(Color.parseColor("#ffccbc"));
+                switch (weatherInfo.sky) {
+                    //맑음(1), 구름많음(3), 흐림(4)
+
+                    case "1":
+                        rainType = "맑음";
+                        wea.setImageResource(R.drawable.ic_sun);
+                        view.setBackgroundColor(Color.parseColor("#ffccbc"));
+                        break;
+                    case "3":
+                        rainType = "구름많음";
+                        wea.setImageResource(R.drawable.ic_cloud);
+                        view.setBackgroundColor(Color.parseColor("#e0e0e0"));
+                        break;
+                    case "4":
+                        rainType = "흐림";
+                        wea.setImageResource(R.drawable.ic_cloud);
+                        view.setBackgroundColor(Color.parseColor("#e0e0e0"));
+                        break;
+                }
                 break;
             case "1":
                 rainType = "비";
-                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
+                wea.setImageResource(R.drawable.ic_rain);
                 view.setBackgroundColor(Color.parseColor("#b2dfdb"));
                 break;
             case "2":
                 rainType = "비/눈";
-                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
+                wea.setImageResource(R.drawable.ic_rain);
                 view.setBackgroundColor(Color.parseColor("#b2dfdb"));
                 break;
             case "3":
                 rainType = "눈";
-                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
+                wea.setImageResource(R.drawable.ic_snow);
                 view.setBackgroundColor(Color.parseColor("#e0f7fa"));
                 break;
             case "5":
                 rainType = "빗방울";
-                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
+                wea.setImageResource(R.drawable.ic_rain);
                 view.setBackgroundColor(Color.parseColor("#b2dfdb"));
                 break;
             case "6":
                 rainType = "빗방울/눈날림";
-                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
+                wea.setImageResource(R.drawable.ic_rain);
                 view.setBackgroundColor(Color.parseColor("#b2dfdb"));
                 break;
             case "7":
                 rainType = "눈날림";
-                wea.setImageResource(R.drawable.ic_baseline_cloud_24);
+                wea.setImageResource(R.drawable.ic_snow);
                 view.setBackgroundColor(Color.parseColor("#e0f7fa"));
                 break;
         }
@@ -184,19 +199,28 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
 
     public void setTomorrowWeather() {
         TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
-        DateFormat sdFormat = new SimpleDateFormat("MM-dd hh:mm a");
-        sdFormat.setTimeZone(timeZone);
+        DateFormat timeFormat = new SimpleDateFormat("HH");
+        timeFormat.setTimeZone(timeZone);
         Calendar calendar = Calendar.getInstance();
-        Date now = new Date(System.currentTimeMillis());
 
         LinearLayout tomorrowFrame = view.findViewById(R.id.tomorrow_frame);
         tomorrowFrame.removeAllViews();
+
+
+        int hour = Integer.parseInt(timeFormat.format(calendar.getTime()));
+        int index = (Integer.valueOf(hour) % 3) + 6;
         int i = 0;
         int k = 0;
         Log.d("weatherFragment", tomorrowWeatherList.size() + "");
 
         do {
-            String date = tomorrowWeatherList.get(i).fcstDate;
+            String date = "";
+            if(i < index){
+                date = weatherList.get(i).fcstDate;
+            }else{
+                date = tomorrowWeatherList.get(i).fcstDate;
+            }
+
             View tomorrowView = view.inflate(view.getContext(), R.layout.tomorrow_weather, null);
             TextView weatherDate = tomorrowView.findViewById(R.id.tomorrow_date);
             LinearLayout tomorrowList = tomorrowView.findViewById(R.id.tomorrow_weather_list);
@@ -204,6 +228,28 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
             weatherDate.setText(date.substring(4,5).replace("0","") + date.substring(5,6) +
                     "." + date.substring(6,7).replace("0", "") + date.substring(7));
             for (k = i; k < tomorrowWeatherList.size(); k++) {
+                String sky = "";
+                String rainType = "";
+                String timeText = "";
+                String tempText = "";
+
+                if(k < index - (Integer.valueOf(hour) % 3)){
+                    if(k == 0)
+                        timeText = "지금";
+                    else
+                        timeText = weatherList.get(k).fcstTime;
+
+                    sky = weatherList.get(k).sky;
+                    rainType = weatherList.get(k).rainType;
+                    tempText = weatherList.get(k).temp;
+                }
+                else if(k < index) continue;
+                else{
+                    sky = tomorrowWeatherList.get(k).sky;
+                    rainType = tomorrowWeatherList.get(k).rainType;
+                    timeText = tomorrowWeatherList.get(k).fcstTime;
+                    tempText = tomorrowWeatherList.get(k).temp;
+                }
                 if(!date.equals(tomorrowWeatherList.get(k).fcstDate)) {
                     Log.d("weather", date);
                     break;
@@ -214,38 +260,32 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                 TextView time = tomorrowItem.findViewById(R.id.weather_date);
                 TextView temp = tomorrowItem.findViewById(R.id.weather_temp);
 
-                String timeText = tomorrowWeatherList.get(k).fcstTime;
+                if(timeText != "지금") timeText = timeText.substring(0,2) + ":" + timeText.substring(2);
 
-                time.setText(timeText.substring(0,2) + ":" + timeText.substring(2));
-                temp.setText(tomorrowWeatherList.get(k).temp + " ℃");
+                time.setText(timeText);
+                temp.setText(tempText + " ℃");
 
-                switch (tomorrowWeatherList.get(k).rainType){
+                switch (rainType){
                     // 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4)
                     case "0":
-                        switch (tomorrowWeatherList.get(k).sky){
+                        switch (sky){
                             // 맑음(1), 구름많음(3), 흐림(4)
                             case "1":
-                                tomorrowImage.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
+                                tomorrowImage.setImageResource(R.drawable.ic_sun);
                                 break;
                             case "3":
-                                tomorrowImage.setImageResource(R.drawable.ic_baseline_cloud_24);
-                                break;
                             case "4":
-                                tomorrowImage.setImageResource(R.drawable.ic_baseline_cloud_24);
+                                tomorrowImage.setImageResource(R.drawable.ic_cloud);
                                 break;
                         }
                         break;
                     case "1":
-                        tomorrowImage.setImageResource(R.drawable.ic_baseline_cloud_24);
-                        break;
                     case "2":
-                        tomorrowImage.setImageResource(R.drawable.ic_baseline_cloud_24);
+                    case "4":
+                        tomorrowImage.setImageResource(R.drawable.ic_rain);
                         break;
                     case "3":
-                        tomorrowImage.setImageResource(R.drawable.ic_baseline_cloud_24);
-                        break;
-                    case "4":
-                        tomorrowImage.setImageResource(R.drawable.ic_baseline_cloud_24);
+                        tomorrowImage.setImageResource(R.drawable.ic_snow);
                         break;
                 }
 
@@ -270,44 +310,6 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
 
-        weatherProc = new WeatherProc(view.getContext());
-
-        Handler handler = new Handler();
-        tomorrowWeatherList = weatherProc.getTomorrowWeatherInfo();
-        if(tomorrowWeatherList != null)
-            setTomorrowWeather();
-
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                weatherProc.getTomorrowWeather();
-                tomorrowWeatherList = weatherProc.getTomorrowWeatherInfo();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setTomorrowWeather();
-                    }
-                });
-            }
-        }.start();
-        
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                weatherProc.getWeather();
-                weatherInfo = weatherProc.getWeatherInfo();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setWeather();
-                    }
-                });
-            }
-        }.start();
-
-
     }
 
     @Override
@@ -325,6 +327,48 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
         add = (ImageButton) view.findViewById(R.id.add);
 
         add.setOnClickListener(this);
+
+        weatherProc = new WeatherProc(view.getContext());
+
+        Handler handler = new Handler();
+        weatherList = weatherProc.getWeatherUltraFastInfo();
+        if (weatherList != null)
+            setWeather();
+
+        tomorrowWeatherList = weatherProc.getWeatherFastInfo();
+        if (tomorrowWeatherList != null)
+            setTomorrowWeather();
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                weatherProc.getWeatherUltraFast();
+                weatherList = weatherProc.getWeatherUltraFastInfo();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setWeather();
+                    }
+                });
+            }
+        }.start();
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                weatherProc.getWeatherFast();
+                tomorrowWeatherList = weatherProc.getWeatherFastInfo();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setTomorrowWeather();
+                    }
+                });
+            }
+        }.start();
+
         return view;
     }
 

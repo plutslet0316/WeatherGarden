@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.example.weathergarden.weather.GPS;
+import com.example.weathergarden.weather.WeatherProc;
 
 public class SplashTestActivity extends Activity {
     GPS gps;
@@ -30,6 +31,8 @@ public class SplashTestActivity extends Activity {
         gps = new GPS(this);
 
         OnCheckPermission();
+        WeatherProc weatherProc = new WeatherProc(this);
+        weatherProc.getWeather();
 
         final View content = findViewById(android.R.id.content);
         content.getViewTreeObserver().addOnPreDrawListener(
