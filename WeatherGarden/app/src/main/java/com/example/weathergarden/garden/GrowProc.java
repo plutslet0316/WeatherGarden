@@ -206,13 +206,13 @@ public class GrowProc {
             if (max <= var) {
                 result = (max / var) * 0.1f;
                 Withering(1);
-                Log.d("GrowProc", "max: "+result);
+                //Log.d("GrowProc", "max: "+result);
                 return result;
             } else
             if (var <= min) {
                 result = (var / min) * 0.1f;
                 Withering(1);
-                Log.d("GrowProc", "min: "+result);
+                //Log.d("GrowProc", "min: "+result);
                 return result;
             }
 
@@ -221,24 +221,24 @@ public class GrowProc {
             // 범위 외
             if (var <= minRange) {
                 result = (var / minRange);
-                Log.d("GrowProc", "minRange: "+result);
+                //Log.d("GrowProc", "minRange: "+result);
                 return result;
             } else
             if (maxRange <= var) {
                 result = (maxRange / var);
-                Log.d("GrowProc", "maxRange: "+result);
+                //Log.d("GrowProc", "maxRange: "+result);
                 return result;
             } else
 
             // 범위 내
             if (var <= maxRange) {
                 result = 0.9f + ((rawMin * rawMax) * 0.2f);
-                Log.d("GrowProc", "range: "+result);
+                //Log.d("GrowProc", "range: "+result);
                 return result;
             } else
             if (minRange <= var){
                 result = 0.9f + (0.2f / (rawMin * rawMax));
-                Log.d("GrowProc", "range: "+result);
+                //Log.d("GrowProc", "range: "+result);
                 return result;
             } else
 
