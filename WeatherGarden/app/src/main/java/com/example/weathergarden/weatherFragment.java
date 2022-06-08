@@ -190,7 +190,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
         Date now = new Date(System.currentTimeMillis());
 
         LinearLayout tomorrowFrame = view.findViewById(R.id.tomorrow_frame);
-
+        tomorrowFrame.removeAllViews();
         int i = 0;
         int k = 0;
         Log.d("weatherFragment", tomorrowWeatherList.size() + "");
@@ -273,6 +273,9 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
         weatherProc = new WeatherProc(view.getContext());
 
         Handler handler = new Handler();
+        tomorrowWeatherList = weatherProc.getTomorrowWeatherInfo();
+        if(tomorrowWeatherList != null)
+            setTomorrowWeather();
 
         new Thread() {
             @Override
