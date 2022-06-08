@@ -112,10 +112,6 @@ public class GardenTestActivity extends AppCompatActivity {
 
             info = "이름: " + plantInfo.name + "\n\n";
 
-            info += "성장\n";
-            info += "  - 단계:  " + groundInfo.growLevel + "\n";
-            info += "  - 수치:  " + groundInfo.growPoint + "\n\n";
-
             info += "상태\n";
             info += "  - 수분:  " + groundInfo.water + "\n";
             info += "  - 영양:  " + groundInfo.nutrient + "\n";
@@ -239,7 +235,7 @@ public class GardenTestActivity extends AppCompatActivity {
                 if(index == 0) return;
 
                 if(checkGround(index)) {
-                    PopupCarePlant popupCarePlant = new PopupCarePlant(this, v, growProc, index);
+                    PopupCarePlant popupCarePlant = new PopupCarePlant(this, v, growProc, gardenDao, index);
                     popupCarePlant.displayPopupWindow();
                 }
             }

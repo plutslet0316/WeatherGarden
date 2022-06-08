@@ -57,7 +57,6 @@
                 android:id="@+id/info"
                 android:layout_marginLeft="10sp"
                 android:layout_marginRight="10sp"
-                android:layout_marginBottom="10sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp" />
@@ -91,7 +90,7 @@
                                 android:layout_margin="10sp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:ems="8"
+                                android:ems="10"
                                 android:textSize="18sp"
                                 android:gravity="start|top"
                                 android:inputType="textMultiLine" />
@@ -100,11 +99,32 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
+                                <TextView
+                                    android:id="@+id/plant1_level"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:text=""
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/plant1_progressBar"
+                                    app:layout_constraintStart_toStartOf="@+id/plant1_progressBar" />
+
+                                <ProgressBar
+                                    android:id="@+id/plant1_progressBar"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="76sp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="28dp"
+                                    android:visibility="invisible"
+                                    app:layout_constraintBottom_toTopOf="@+id/plant1_img"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+
                                 <ImageView
                                     android:id="@+id/plant1_img"
                                     android:layout_width="50sp"
                                     android:layout_height="100sp"
-                                    android:scaleType="fitCenter"
+                                    android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
                                     app:layout_constraintBottom_toTopOf="@+id/dump1"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -116,9 +136,14 @@
                                 <LinearLayout
                                     android:id="@+id/dump1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="80sp"
+                                    android:layout_height="120sp"
+                                    android:background="#6f4f28"
                                     android:orientation="vertical"
-                                    app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                </LinearLayout>
+
+
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </RelativeLayout>
 
@@ -147,19 +172,41 @@
                                 android:layout_margin="10sp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:ems="8"
+                                android:ems="10"
                                 android:textSize="18sp"
                                 android:gravity="start|top"
                                 android:inputType="textMultiLine" />
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/plant2_level"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:text=""
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/plant2_progressBar"
+                                    app:layout_constraintStart_toStartOf="@+id/plant2_progressBar" />
+
+                                <ProgressBar
+                                    android:id="@+id/plant2_progressBar"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="76sp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="28dp"
+                                    android:visibility="invisible"
+                                    app:layout_constraintBottom_toTopOf="@+id/plant2_img"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
 
                                 <ImageView
                                     android:id="@+id/plant2_img"
                                     android:layout_width="50sp"
                                     android:layout_height="100sp"
-                                    android:scaleType="fitCenter"
+                                    android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
                                     app:layout_constraintBottom_toTopOf="@+id/dump2"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -171,7 +218,8 @@
                                 <LinearLayout
                                     android:id="@+id/dump2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="80sp"
+                                    android:layout_height="120sp"
+                                    android:background="#6f4f28"
                                     android:orientation="vertical"
                                     app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -199,19 +247,41 @@
                                 android:layout_margin="10sp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:ems="8"
+                                android:ems="10"
                                 android:textSize="18sp"
                                 android:gravity="start|top"
                                 android:inputType="textMultiLine" />
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/plant3_level"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:text=""
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/plant3_progressBar"
+                                    app:layout_constraintStart_toStartOf="@+id/plant3_progressBar" />
+
+                                <ProgressBar
+                                    android:id="@+id/plant3_progressBar"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="76sp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="28dp"
+                                    android:visibility="invisible"
+                                    app:layout_constraintBottom_toTopOf="@+id/plant3_img"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
 
                                 <ImageView
                                     android:id="@+id/plant3_img"
                                     android:layout_width="50sp"
                                     android:layout_height="100sp"
-                                    android:scaleType="fitCenter"
+                                    android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
                                     app:layout_constraintBottom_toTopOf="@+id/dump3"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -223,7 +293,8 @@
                                 <LinearLayout
                                     android:id="@+id/dump3"
                                     android:layout_width="match_parent"
-                                    android:layout_height="80sp"
+                                    android:layout_height="120sp"
+                                    android:background="#6f4f28"
                                     android:orientation="vertical"
                                     app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
                             </androidx.constraintlayout.widget.ConstraintLayout>

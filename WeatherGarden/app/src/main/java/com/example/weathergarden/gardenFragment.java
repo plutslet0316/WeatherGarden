@@ -1,7 +1,10 @@
 package com.example.weathergarden;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,6 +27,8 @@ import com.example.weathergarden.garden.GardenInfo;
 import com.example.weathergarden.garden.GroundInfo;
 import com.example.weathergarden.garden.GrowProc;
 import com.example.weathergarden.garden.PlantInfo;
+import com.example.weathergarden.weather.WeatherInfo;
+import com.example.weathergarden.weather.WeatherProc;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -126,26 +132,85 @@ public class gardenFragment extends Fragment implements View.OnClickListener{
             String info;
 
             int plant = getResources().getIdentifier("plant" + groundInfo.groundNo, "id", getContext().getPackageName());
+            int plant_level = getResources().getIdentifier("plant" + groundInfo.groundNo+"_level", "id", getContext().getPackageName());
             int plant_img = getResources().getIdentifier("plant" + groundInfo.groundNo+"_img", "id", getContext().getPackageName());
+            int plant_bar = getResources().getIdentifier("plant" + groundInfo.groundNo+"_progressBar", "id", getContext().getPackageName());
+
+            int growMax = 0;
+            int growMin = 0;
+
+            switch (groundInfo.growLevel) {
+                case 3:
+                    growMax = plantInfo.growLimit;
+                    break;
+                case 2:
+                    growMax += plantInfo.flowerRequire;
+                case 1:
+                    growMax += plantInfo.stemRequire;
+                case 0:
+                    growMax += plantInfo.seedRequire;
+                    break;
+            }
+            switch (groundInfo.growLevel) {
+                case 3:
+                    growMin = plantInfo.flowerRequire;
+                    break;
+                case 2:
+                    growMin = plantInfo.stemRequire;
+                    break;
+                case 1:
+                    growMin = plantInfo.seedRequire;
+                    break;
+                case 0:
+                    growMin = 0;
+                    break;
+            }
+
+            String plantState = "";
+            switch (groundInfo.growLevel){
+                case 0:
+                    plantState = "새싹";
+                    break;
+                case 1:
+                    plantState = "성장기";
+                    break;
+                case 2:
+                    plantState = "꽃봉우리";
+                    break;
+                case 3:
+                    plantState = "꽃";
+                    break;
+                case 4:
+                    plantState = "열매";
+                    break;
+            }
 
 
             info = "이름: " + plantInfo.name + "\n\n";
 
-            info += "성장\n";
-            info += "  - 단계:  " + groundInfo.growLevel + "\n";
-            info += "  - 수치:  " + groundInfo.growPoint + "\n\n";
-
             info += "상태\n";
-            info += "  - 수분:  " + groundInfo.water + "\n";
-            info += "  - 영양:  " + groundInfo.nutrient + "\n";
-            info += "  - 시듦:  " + groundInfo.wither;
+            info += "  - 수분이 " + check("Water", plantInfo, groundInfo) + "\n";
+            info += "  - 영양이 " + check("Nutrient", plantInfo, groundInfo) + "\n";
+            info += "  - " + checkWither(plantInfo, groundInfo);
 
             TextView plantText =  view.findViewById(plant);
+            TextView plantLevel = view.findViewById(plant_level);
             ImageView plantImg =  view.findViewById(plant_img);
+            ProgressBar plantBar = view.findViewById(plant_bar);
 
             plantText.setText("");
             plantText.setText(info);
 
+            plantLevel.setText(plantState);
+
+            plantBar.setVisibility(View.VISIBLE);
+            plantBar.getProgressDrawable().setTint(Color.GREEN);//.setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+            plantBar.setScaleY(2);
+            plantBar.setMax(growMax);
+            plantBar.setMin(growMin);
+            plantBar.setProgress((int) groundInfo.growPoint);
+
+            Log.d("Garden", growMax + " " + growMin + " " + (int) groundInfo.growPoint);
             InputStream img = null;
             try {
                 img = getResources().getAssets().open(plantInfo.img+"/" + (groundInfo.growLevel) + ".png");
@@ -156,6 +221,91 @@ public class gardenFragment extends Fragment implements View.OnClickListener{
 
             plantImg.setImageDrawable(drawable);
         }
+    }
+    private String checkWither(PlantInfo plantInfo, GroundInfo groundInfo) {
+        String result = "건강해요.";
+
+        int limit = plantInfo.witherLimit;
+        int wither = groundInfo.wither;
+
+        if (limit * 0.25 <= wither) {
+            result = "시들고 있어요.";
+        } else if (limit * 0.5 <= wither) {
+            result = "조금 시들었어요.";
+        }else if (limit * 0.75 <= wither) {
+            result = "많이 시들었어요.";
+        }else if (limit <= wither){
+            result = "완전 시들었어요.";
+        }
+
+        return result;
+    }
+    private String check(String type, PlantInfo plantInfo, GroundInfo groundInfo) {
+        String result = "없음";
+        float var = 0;
+        int require = 0;
+        int min = 0;
+        int max = 0;
+
+        switch (type) {
+            case "Temperature":
+                try {
+                    WeatherInfo weatherInfo = new WeatherProc(view.getContext()).getWeatherInfo();
+                    var = Float.valueOf(weatherInfo.temp);
+                    require = plantInfo.temperatureRequire;
+                    min = plantInfo.temperatureMin;
+                    max = plantInfo.temperatureMax;
+                } catch (Exception e) {
+                    Log.d("GrowProc", e.getMessage());
+                }
+                break;
+            case "Water":
+                var = groundInfo.water;
+                require = plantInfo.waterRequire;
+                min = plantInfo.waterMin;
+                max = plantInfo.waterMax;
+                break;
+            case "Nutrient":
+                var = groundInfo.nutrient;
+                require = plantInfo.nutrientRequire;
+                min = plantInfo.nutrientMin;
+                max = plantInfo.nutrientMax;
+                break;
+        }
+
+        float minRange = require - ((require - min) / 2);
+        float maxRange = require + ((max - require) / 2);
+
+
+        // 이탈
+        if (max <= var) {
+            result = "너무 많아요.";
+            return result;
+        } else if (var <= min) {
+            result = "너무 부족해요.";
+            return result;
+        }
+
+
+        // 범위 외
+        if (var <= minRange) {
+            result = "조금 부족해요.";
+            return result;
+        } else if (maxRange <= var) {
+            result = "조금 많아요.";
+            return result;
+        } else
+
+            // 범위 내
+            if (var <= maxRange) {
+                result = "적당해요.";
+                return result;
+            } else if (minRange <= var) {
+                result = "적당해요.";
+                return result;
+            }
+
+        return result;
     }
 
     boolean checkGround(int groundNo) {
@@ -335,7 +485,7 @@ public class gardenFragment extends Fragment implements View.OnClickListener{
             if (index == 0) return;
 
             if (checkGround(index)) {
-                PopupCarePlant popupCarePlant = new PopupCarePlant(getActivity(), view, growProc, index);
+                PopupCarePlant popupCarePlant = new PopupCarePlant(getActivity(), view, growProc, gardenDao, index);
                 popupCarePlant.displayPopupWindow();
             }
         }
