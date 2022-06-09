@@ -17,7 +17,9 @@
         android:theme="@style/Theme.WeatherGarden">
         <activity
             android:name=".SplashTestActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.WeatherGarden.Splash">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

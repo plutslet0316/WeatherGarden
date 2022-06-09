@@ -12,6 +12,7 @@ import android.view.ViewTreeObserver;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.splashscreen.SplashScreen;
 
 import com.example.weathergarden.weather.GPS;
 import com.example.weathergarden.weather.WeatherProc;
@@ -19,6 +20,8 @@ import com.example.weathergarden.weather.WeatherProc;
 public class SplashTestActivity extends Activity {
     GPS gps;
     boolean isAllow;
+    SplashScreen splashScreen;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
