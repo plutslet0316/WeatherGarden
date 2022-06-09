@@ -1,17 +1,15 @@
 package com.example.weathergarden;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -30,10 +28,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link gardenFragment#newInstance} factory method to
+ * Use the {@link gardenTestFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class gardenFragment extends Fragment {
+public class gardenTestFragment extends Fragment implements View.OnClickListener {
     View view = null;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,9 +42,13 @@ public class gardenFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    GestureDetector detector;
 
-    Button g1, g2, g3;
+    public gardenTestFragment() {
+        // Required empty public constructor
+    }
+
+    Button g1, g2, g3, refresh, grow;
+    TextView infoText;
     EditText differText;
 
     GardenDatabase gardenDatabase;
@@ -56,15 +58,10 @@ public class gardenFragment extends Fragment {
     ShowGarden showGarden;
 
     ArrayList<PlantInfo> plantInfoList;
-
-    int index;
+    List<GardenInfo> gardenList;
 
 
     boolean check = true;
-
-    public gardenFragment() {
-        // Required empty public constructor
-    }
 
     // 액티비티 인텐트 핸들러
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -78,7 +75,6 @@ public class gardenFragment extends Fragment {
                             @Override
                             public void run() {
                                 super.run();
-                                assert intentGet != null;
                                 GroundInfo groundInfoGet = (GroundInfo) intentGet.getSerializableExtra("ground_info");
 
                                 if (groundInfoGet != null)
@@ -133,6 +129,11 @@ public class gardenFragment extends Fragment {
             public void run() {
                 super.run();
                 GrowProc gp = new GrowProc(getContext()).withDao(gardenDao);
+                if(gp.startGrowing(getContext()) == 1){
+                    infoText.setText("식물을 성장시킵니다.");
+                }else {
+                    infoText.setText("식물이 성장하기엔 시간이 이릅니다.");
+                }
             }
         };
         thread.start();
@@ -144,7 +145,29 @@ public class gardenFragment extends Fragment {
         }
     }
 
+    void growing(int differ)
+    {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                GrowProc gp = new GrowProc(getContext()).withDao(gardenDao);
+                if(gp.startGrowing(getContext(), differ) == 1){
+                    infoText.setText("식물을 성장시킵니다.");
+                }else {
+                    infoText.setText("식물이 성장하기엔 시간이 이릅니다.");
+                }
+            }
+        };
+        thread.start();
 
+        try {
+            thread.join();
+            showGarden.show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -154,8 +177,8 @@ public class gardenFragment extends Fragment {
      * @return A new instance of fragment gardenFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static gardenFragment newInstance(String param1, String param2) {
-        gardenFragment fragment = new gardenFragment();
+    public static gardenTestFragment newInstance(String param1, String param2) {
+        gardenTestFragment fragment = new gardenTestFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -173,90 +196,27 @@ public class gardenFragment extends Fragment {
 
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_garden, container, false);
+        view = inflater.inflate(R.layout.fragment_garden_test, container, false);
 
+        infoText = view.findViewById(R.id.info);
         differText = view.findViewById(R.id.time_differ);
 
         g1 = view.findViewById(R.id.ground1);
         g2 = view.findViewById(R.id.ground2);
         g3 = view.findViewById(R.id.ground3);
 
-        g1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                index = 1;
-                detector.onTouchEvent(motionEvent);
-                return false;
-            }
-        });
-        g2.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                index = 2;
-                detector.onTouchEvent(motionEvent);
-                return false;
-            }
-        });
-        g3.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                index = 3;
-                detector.onTouchEvent(motionEvent);
-                return false;
-            }
-        });
-        detector = new GestureDetector(view.getContext(), new GestureDetector.OnGestureListener() {
+        refresh = view.findViewById(R.id.refresh);
+        grow = view.findViewById(R.id.growup);
 
-            @Override
-            public boolean onDown(MotionEvent motionEvent) {
-                return false;
-            }
-
-            //화면이 눌렸다 떼어지는 경우
-            @Override
-            public void onShowPress(MotionEvent e) {
-
-            }
-
-            //화면이 한 손가락으로 눌렸다 떼어지는 경우
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                //e.get
-                Log.d("Popup", e.getX() + " " + e.getY() + " " + index);
-                if (index == 0) return false;
-
-                int x = (int) e.getX() + (g1.getWidth() * (index-1));
-                int y = (int) e.getY();
-
-                if (checkGround(index)) {
-                    PopupCarePlant popupCarePlant = new PopupCarePlant((Activity) view.getContext(), view, growProc, gardenDao, index, x, y);
-                    popupCarePlant.displayPopupWindow();
-                }
-                return true;
-            }
-
-            //화면이 눌린채 일정한 속도와 방향으로 움직였다 떼어지는 경우
-            @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                return false;
-            }
-
-            //화면을 손가락으로 오랫동안 눌렀을 경우
-            @Override
-            public void onLongPress(MotionEvent e) {
-            }
-
-            //화면이 눌린채 손가락이 가속해서 움직였다 떼어지는 경우
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                return true;
-            }
-        });
+        g1.setOnClickListener(this);
+        g2.setOnClickListener(this);
+        g3.setOnClickListener(this);
+        refresh.setOnClickListener(this);
+        grow.setOnClickListener(this);
 
         // DB 연동
         Thread t = new Thread() {
@@ -286,5 +246,39 @@ public class gardenFragment extends Fragment {
             e.printStackTrace();
         }
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        int index = 0;
+        try {
+            infoText.setText("");
+
+            switch (view.getId()) {
+                case R.id.ground1:
+                    index = 1;
+                    break;
+                case R.id.ground2:
+                    index = 2;
+                    break;
+                case R.id.ground3:
+                    index = 3;
+                    break;
+                case R.id.refresh:
+                    showGarden.show();
+                    break;
+                case R.id.growup:
+                    growing(Integer.valueOf(differText.getText().toString()));
+                    break;
+            }
+        } finally {
+            if (index == 0) return;
+
+            if (checkGround(index)) {
+                PopupCarePlantTest popupCarePlant = new PopupCarePlantTest((Activity) view.getContext(), view, growProc, gardenDao, index);
+                popupCarePlant.displayPopupWindow();
+            }
+        }
+
     }
 }

@@ -235,7 +235,7 @@ public class GardenTestActivity extends AppCompatActivity {
                 if(index == 0) return;
 
                 if(checkGround(index)) {
-                    PopupCarePlant popupCarePlant = new PopupCarePlant(this, v, growProc, gardenDao, index);
+                    PopupCarePlantTest popupCarePlant = new PopupCarePlantTest(this, v, growProc, gardenDao, index);
                     popupCarePlant.displayPopupWindow();
                 }
             }

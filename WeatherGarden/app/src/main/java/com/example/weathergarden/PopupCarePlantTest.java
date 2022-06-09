@@ -1,12 +1,8 @@
 package com.example.weathergarden;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,34 +13,27 @@ import android.widget.TextView;
 
 import com.example.weathergarden.garden.GardenDao;
 import com.example.weathergarden.garden.GardenInfo;
-import com.example.weathergarden.garden.GroundInfo;
 import com.example.weathergarden.garden.GrowProc;
-import com.example.weathergarden.garden.PlantInfo;
 import com.example.weathergarden.garden.ShowGarden;
-import com.example.weathergarden.weather.WeatherInfo;
-import com.example.weathergarden.weather.WeatherProc;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
-public class PopupCarePlant extends PopupWindow {
+public class PopupCarePlantTest extends PopupWindow {
     private View anchorView;
     private int index;
     private Activity context;
     private GrowProc.CarePlant carePlant;
+    TextView textInfo;
     GardenDao gardenDao;
     List<GardenInfo> gardenList;
     ShowGarden showGarden;
-    int x, y;
 
-    public PopupCarePlant(Activity context, View anchorView, GrowProc growProc, GardenDao gardenDao, int index, int x, int y) {
+    public PopupCarePlantTest(Activity context, View anchorView, GrowProc growProc, GardenDao gardenDao, int index) {
         this.context = context;
         this.anchorView = anchorView;
         this.index = index;
+        textInfo = context.findViewById(R.id.info);
         this.gardenDao = gardenDao;
-        this.x = x;
-        this.y = y;
         showGarden = new ShowGarden(anchorView, context, gardenDao);
 
         Thread thread = new Thread(){
@@ -107,8 +96,8 @@ public class PopupCarePlant extends PopupWindow {
         popup.setFocusable(true);
 
         // Show anchored to button
-        popup.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        popup.showAtLocation(anchorView, Gravity.NO_GRAVITY, x, y);
+        popup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.showAsDropDown(anchorView);
     }
 
     private void addWater() {
@@ -117,6 +106,7 @@ public class PopupCarePlant extends PopupWindow {
             public void run() {
                 super.run();
                 carePlant.addWater(1000);
+                setInfoText(index + "번 땅에 물을 줍니다.");
 
             }
         };
@@ -136,6 +126,9 @@ public class PopupCarePlant extends PopupWindow {
             public void run() {
                 super.run();
                 carePlant.addNutrient(1000);
+
+                setInfoText(index + "번 땅에 영양제를 줍니다.");
+
             }
         };
         thread.start();
@@ -166,6 +159,8 @@ public class PopupCarePlant extends PopupWindow {
             int plant_img = context.getResources().getIdentifier("plant" + index + "_img", "id", context.getPackageName());
             int plant_bar = context.getResources().getIdentifier("plant" + index +"_progressBar", "id", context.getPackageName());
 
+            setInfoText(index + "번 땅의 식물을 뽑아냅니다.");
+
             TextView textView = context.findViewById(plant);
             TextView plantLevel = context.findViewById(plant_level);
             ImageView imageView = context.findViewById(plant_img);
@@ -184,5 +179,14 @@ public class PopupCarePlant extends PopupWindow {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    void setInfoText(String text){
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textInfo.setText(text);
+            }
+        });
     }
 }
