@@ -29,10 +29,9 @@ public class SplashTestActivity extends Activity {
         // 이건 스플레시 화면이 뜨고 나서 좌표값을 가져오고,
         // 이후 모든 처리가 끝나면 다음 화면으로 넘어가는 부분입니다.
         gps = new GPS(this);
+        WeatherProc weatherProc = new WeatherProc(this);
 
         OnCheckPermission();
-        WeatherProc weatherProc = new WeatherProc(this);
-        weatherProc.getWeather();
 
         final View content = findViewById(android.R.id.content);
         content.getViewTreeObserver().addOnPreDrawListener(
@@ -42,6 +41,7 @@ public class SplashTestActivity extends Activity {
                         // Check if the initial data is ready.
                         if (gps.isGetLocation) {
                             Log.d("SplashActivity", "위치 가져옴");
+                            weatherProc.getWeather();
                             Intent i = new Intent(SplashTestActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();

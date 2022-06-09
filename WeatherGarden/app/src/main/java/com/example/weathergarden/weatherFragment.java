@@ -215,7 +215,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
 
         do {
             String date = "";
-            if(i < index){
+            if(i < index - (Integer.valueOf(hour) % 3)){
                 date = weatherList.get(i).fcstDate;
             }else{
                 date = tomorrowWeatherList.get(i).fcstDate;
@@ -242,6 +242,11 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                     sky = weatherList.get(k).sky;
                     rainType = weatherList.get(k).rainType;
                     tempText = weatherList.get(k).temp;
+                    //Log.d("weather", sky + " " + rainType + " " + tempText);
+                    if(!date.equals(weatherList.get(k).fcstDate)) {
+                        Log.d("weather", date);
+                        break;
+                    }
                 }
                 else if(k < index) continue;
                 else{
@@ -249,11 +254,12 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                     rainType = tomorrowWeatherList.get(k).rainType;
                     timeText = tomorrowWeatherList.get(k).fcstTime;
                     tempText = tomorrowWeatherList.get(k).temp;
+                    if(!date.equals(tomorrowWeatherList.get(k).fcstDate)) {
+                        Log.d("weather", date);
+                        break;
+                    }
                 }
-                if(!date.equals(tomorrowWeatherList.get(k).fcstDate)) {
-                    Log.d("weather", date);
-                    break;
-                }
+
                 View tomorrowItem = View.inflate(view.getContext(), R.layout.item_weather, null);
 
                 ImageView tomorrowImage = tomorrowItem.findViewById(R.id.weather_image);
@@ -274,13 +280,16 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                                 tomorrowImage.setImageResource(R.drawable.ic_sun);
                                 break;
                             case "3":
+
                             case "4":
                                 tomorrowImage.setImageResource(R.drawable.ic_cloud);
                                 break;
                         }
                         break;
                     case "1":
+
                     case "2":
+
                     case "4":
                         tomorrowImage.setImageResource(R.drawable.ic_rain);
                         break;
