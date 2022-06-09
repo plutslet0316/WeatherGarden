@@ -273,7 +273,7 @@ public class GrowProc {
         TimeUnit timeUnit = TimeUnit.HOURS;
         int differ = 0;
         try {
-            long diffInMillies = df.parse(lastDate).getTime() - now.getTime();
+            long diffInMillies = now.getTime() - df.parse(lastDate).getTime();
             differ = (int) timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
         } catch (ParseException e) {
             e.printStackTrace();

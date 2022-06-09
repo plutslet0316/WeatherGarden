@@ -147,7 +147,7 @@ public class ShowGarden {
                     plantBar.setMax(limit);
                     plantBar.setProgress((int) groundInfo.growPoint - growMin);
 
-                    Log.d("Garden", limit + " " + ((int) groundInfo.growPoint- growMin));
+                    //Log.d("Garden", limit + " " + ((int) groundInfo.growPoint- growMin));
                     InputStream img = null;
                     try {
                         img = activity.getResources().getAssets().open(plantInfo.img + "/" + (groundInfo.growLevel) + ".png");
@@ -167,11 +167,13 @@ public class ShowGarden {
         int limit = plantInfo.witherLimit;
         int wither = groundInfo.wither;
 
-        if (limit * 0.25 <= wither) {
+        if (0 >= wither) return result;
+
+        if (limit * 0.25 >= wither) {
             result = "시들고 있어요.";
-        } else if (limit * 0.5 <= wither) {
+        } else if (limit * 0.5 >= wither) {
             result = "조금 시들었어요.";
-        } else if (limit * 0.75 <= wither) {
+        } else if (limit * 0.75 >= wither) {
             result = "많이 시들었어요.";
         } else if (limit <= wither) {
             result = "완전 시들었어요.";
