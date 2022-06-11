@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -132,7 +133,10 @@ public class gardenFragment extends Fragment {
             @Override
             public void run() {
                 super.run();
-                GrowProc gp = new GrowProc(getContext()).withDao(gardenDao);
+                GrowProc gp = new GrowProc(view.getContext()).withDao(gardenDao);
+                if(gp.startGrowing(getContext()) == 1) {
+                    Toast.makeText(view.getContext(), "식물이 성장합니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         };
         thread.start();
