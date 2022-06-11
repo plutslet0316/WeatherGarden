@@ -72,6 +72,7 @@ public class ShowGarden {
                     limit = 0;
                     growPoint = 0;
                     switch (groundInfo.growLevel) {
+                        case 4:
                         case 3:
                             growMax = plantInfo.growLimit;
                             break;
@@ -84,6 +85,7 @@ public class ShowGarden {
                             break;
                     }
                     switch (groundInfo.growLevel) {
+                        case 4:
                         case 3:
                             growMin = plantInfo.flowerRequire;
                             break;
@@ -152,7 +154,7 @@ public class ShowGarden {
                     //Log.d("Garden", limit + " " + ((int) groundInfo.growPoint- growMin));
                     InputStream img = null;
                     try {
-                        img = activity.getResources().getAssets().open(plantInfo.img + "/" + (groundInfo.growLevel) + ".png");
+                        img = activity.getResources().getAssets().open("image/" + plantInfo.img + "/" + (groundInfo.growLevel + 1) + ".png");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -178,7 +180,10 @@ public class ShowGarden {
         } else if (limit * 0.75 >= wither) {
             result = "많이 시들었어요.";
         } else if (limit <= wither) {
-            result = "완전 시들었어요.";
+            if (groundInfo.growLevel == 4)
+                result = "모두 성장했어요.";
+            else
+                result = "완전 시들었어요.";
         }
 
         return result;

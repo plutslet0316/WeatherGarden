@@ -62,6 +62,7 @@
                 android:textSize="20sp" />
 
             <HorizontalScrollView
+                android:layout_marginBottom="120sp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
@@ -126,23 +127,12 @@
                                     android:layout_height="100sp"
                                     android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
-                                    app:layout_constraintBottom_toTopOf="@+id/dump1"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.496"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintVertical_bias="1.0" />
-
-                                <LinearLayout
-                                    android:id="@+id/dump1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="120sp"
-                                    android:background="#6f4f28"
-                                    android:orientation="vertical"
-                                    app:layout_constraintBottom_toBottomOf="parent">
-
-                                </LinearLayout>
-
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </RelativeLayout>
@@ -208,20 +198,13 @@
                                     android:layout_height="100sp"
                                     android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
-                                    app:layout_constraintBottom_toTopOf="@+id/dump2"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.496"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintVertical_bias="1.0" />
 
-                                <LinearLayout
-                                    android:id="@+id/dump2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="120sp"
-                                    android:background="#6f4f28"
-                                    android:orientation="vertical"
-                                    app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -283,25 +266,24 @@
                                     android:layout_height="100sp"
                                     android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
-                                    app:layout_constraintBottom_toTopOf="@+id/dump3"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.496"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintVertical_bias="1.0" />
 
-                                <LinearLayout
-                                    android:id="@+id/dump3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="120sp"
-                                    android:background="#6f4f28"
-                                    android:orientation="vertical"
-                                    app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="128sp"
+            android:layout_alignParentBottom="true"
+            android:background="#6f4f28"
+            android:orientation="horizontal" />
     </RelativeLayout>
 </FrameLayout>
