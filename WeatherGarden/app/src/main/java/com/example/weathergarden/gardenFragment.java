@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -35,7 +36,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class gardenFragment extends Fragment {
-    View view = null;
+    View view = null, frame;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -183,6 +184,7 @@ public class gardenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_garden, container, false);
+        frame = view.findViewById(R.id.garden_frame);
 
         differText = view.findViewById(R.id.time_differ);
 
@@ -230,11 +232,10 @@ public class gardenFragment extends Fragment {
             //화면이 한 손가락으로 눌렸다 떼어지는 경우
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                //e.get
-                Log.d("Popup", e.getX() + " " + e.getY() + " " + index);
+                //Log.d("Popup", e.getX() + " " + e.getY() + " " + index + " " + frame.getScrollX());
                 if (index == 0) return false;
 
-                int x = (int) e.getX() + (g1.getWidth() * (index-1));
+                int x = (int) e.getX() + (g1.getWidth() * (index-1)) - frame.getScrollX();
                 int y = (int) e.getY();
 
                 if (checkGround(index)) {

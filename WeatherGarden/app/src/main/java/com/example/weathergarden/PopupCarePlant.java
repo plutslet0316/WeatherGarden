@@ -1,11 +1,7 @@
 package com.example.weathergarden;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,15 +13,9 @@ import android.widget.TextView;
 
 import com.example.weathergarden.garden.GardenDao;
 import com.example.weathergarden.garden.GardenInfo;
-import com.example.weathergarden.garden.GroundInfo;
 import com.example.weathergarden.garden.GrowProc;
-import com.example.weathergarden.garden.PlantInfo;
 import com.example.weathergarden.garden.ShowGarden;
-import com.example.weathergarden.weather.WeatherInfo;
-import com.example.weathergarden.weather.WeatherProc;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class PopupCarePlant extends PopupWindow {
@@ -69,9 +59,9 @@ public class PopupCarePlant extends PopupWindow {
     void displayPopupWindow() {
         PopupWindow popup = new PopupWindow(context.getApplicationContext());
         View layout = context.getLayoutInflater().inflate(R.layout.popup_care_plant_test, null);
+
         popup.setContentView(layout);
         View.OnClickListener cl;
-
         // 기능
         Button watering = layout.findViewById(R.id.watering_test);
         Button nutrient = layout.findViewById(R.id.nutrient_test);
@@ -101,6 +91,7 @@ public class PopupCarePlant extends PopupWindow {
         // Set content width and height
         popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        //Log.d("Popup", anchorView.getHeight()/4 + " " + anchorView.getWidth()/4);
 
         // Closes the popup window when touch outside of it - when looses focus
         popup.setOutsideTouchable(true);
@@ -108,7 +99,7 @@ public class PopupCarePlant extends PopupWindow {
 
         // Show anchored to button
         popup.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        popup.showAtLocation(anchorView, Gravity.NO_GRAVITY, x, y);
+        popup.showAtLocation(anchorView, Gravity.NO_GRAVITY, x + (anchorView.getHeight()/16), y + (anchorView.getWidth()/6));
     }
 
     private void addWater() {
