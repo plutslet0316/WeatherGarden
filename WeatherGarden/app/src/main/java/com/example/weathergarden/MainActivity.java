@@ -44,26 +44,18 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main, new weatherFragment() )
                             .commit();
                     return true;
-            }
-            switch (item.getItemId() ) {
                 case R.id.garden:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main, new gardenFragment() )
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main, new gardenTestFragment() )
                             .commit();
                     return true;
-            }
-            switch (item.getItemId() ) {
                 case R.id.settings:
                     getSupportFragmentManager().beginTransaction().replace(R.id.main, new settingsFragment() )
                             .commit();
                     return true;
-            }
-            switch (item.getItemId() ) {
                 case R.id.notice:
                     getSupportFragmentManager().beginTransaction().replace(R.id.main, new noticeFragment() )
                             .commit();
                     return true;
-            }
-            switch (item.getItemId() ) {
                 case R.id.store:
                     getSupportFragmentManager().beginTransaction().replace(R.id.main, new storeFragment() )
                             .commit();

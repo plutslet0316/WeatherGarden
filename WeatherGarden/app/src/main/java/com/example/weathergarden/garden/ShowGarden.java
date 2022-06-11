@@ -23,7 +23,7 @@ public class ShowGarden {
     List<GardenInfo> gardenList;
 
     String info, plantState;
-    int growMax, growMin, limit;
+    int growMax, growMin, growPoint, limit;
 
     public ShowGarden(View view, Activity activity, GardenDao gardenDao) {
         this.view = view;
@@ -70,6 +70,7 @@ public class ShowGarden {
                     growMax = 0;
                     growMin = 0;
                     limit = 0;
+                    growPoint = 0;
                     switch (groundInfo.growLevel) {
                         case 3:
                             growMax = plantInfo.growLimit;
@@ -115,7 +116,8 @@ public class ShowGarden {
                             plantState = "열매";
                             break;
                     }
-                    limit = growMax - growMin;
+                    limit = (growMax - growMin) * 10;
+                    growPoint = (int) ((groundInfo.growPoint - growMin) * 10);
 
                     info = "";
                     info = "이름: " + plantInfo.name + "\n\n";
@@ -145,7 +147,7 @@ public class ShowGarden {
                     plantBar.getProgressDrawable().setTint(Color.GREEN);//.setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
                     plantBar.setScaleY(2);
                     plantBar.setMax(limit);
-                    plantBar.setProgress((int) groundInfo.growPoint - growMin);
+                    plantBar.setProgress(growPoint);
 
                     //Log.d("Garden", limit + " " + ((int) groundInfo.growPoint- growMin));
                     InputStream img = null;
@@ -181,6 +183,7 @@ public class ShowGarden {
 
         return result;
     }
+
     private String check(String type, PlantInfo plantInfo, GroundInfo groundInfo) {
         String result = "없음";
         float var = 0;

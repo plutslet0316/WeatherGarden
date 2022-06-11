@@ -199,7 +199,8 @@ public class WeatherProc {
             weatherInfo.time = jsonObj.getString("baseDate")+jsonObj.getString("baseTime");
             Log.d("Weather", weatherInfo.time);
 
-            for (int i = 0; i < jsonArray.length(); i++) {
+            int size = jsonArray.length();
+            for (int i = 0; i < size; i++) {
                 jsonObj = jsonArray.getJSONObject(i);
                 String category = jsonObj.getString("category");
                 String obsrValue = jsonObj.getString("obsrValue");
@@ -370,7 +371,8 @@ public class WeatherProc {
             }
 
             int index = 0;
-            for (int i = 0; i < jsonArray.length(); i++) {
+            int size = jsonArray.length();
+            for (int i = 0; i < size; i++) {
                 // 6으로 나눠서 각 시간마다 10개씩 담기도록한다.
                 index = i % 6;
 
@@ -560,25 +562,25 @@ public class WeatherProc {
              */
 
             ArrayList<WeatherFastInfo> tomorrowWeatherList = new ArrayList<>();
-            jsonObj = jsonArray.getJSONObject(0);
+            // jsonObj = jsonArray.getJSONObject(0);
             int i = 0;
-            //Log.d("WeatherFast", jsonArray.length()+"");
-
+            // Log.d("WeatherFast", jsonArray.length()+"");
+            int size = jsonArray.length();
             do {
                 WeatherFastInfo tomorrowWeather = new WeatherFastInfo();
                 tomorrowWeather.fcstDate = jsonArray.getJSONObject(i).getString("fcstDate");
                 tomorrowWeather.fcstTime = jsonArray.getJSONObject(i).getString("fcstTime");
                 int k = i;
-                String s = tomorrowWeather.fcstTime + " ";
+                //String s = tomorrowWeather.fcstTime + " ";
 
-                for(k = i; k < jsonArray.length(); k++) {
+                for(k = i; k < size; k++) {
                     jsonObj = jsonArray.getJSONObject(k);
 
                     if(!tomorrowWeather.fcstTime.equals(jsonObj.getString("fcstTime"))) break;
 
                     String category = jsonObj.getString("category");
                     String fcstValue = jsonObj.getString("fcstValue");
-                    s += category + " " + fcstValue +" ";
+                    //s += category + " " + fcstValue +" ";
 
                     // Log.d("WeatherFast", category + " " + fcstValue);
                 /*

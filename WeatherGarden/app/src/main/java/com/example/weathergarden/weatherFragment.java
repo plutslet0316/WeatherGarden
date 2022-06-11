@@ -117,6 +117,8 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(view.getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
         } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(view.getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+        } catch (Exception e){
+            Log.d("weatherFragment", e.getMessage());
         }
 
 
@@ -138,8 +140,13 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
       흐림 : #e0e0e0 ,바람 : #bbdefb, 번개 : #ffecb3
       눈 : #e0f7fa , 안개 : #efebe9
          */
+
+        int imageId = 0;
+        int color = 0;
+
         switch (weatherInfo.rainType){
             //없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+
 
             case "0":
                 switch (weatherInfo.sky) {
@@ -147,54 +154,56 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
 
                     case "1":
                         rainType = "맑음";
-                        wea.setImageResource(R.drawable.ic_sun);
-                        view.setBackgroundColor(Color.parseColor("#ffccbc"));
+                        imageId = R.drawable.ic_sun;
+                        color = Color.parseColor("#ffccbc");
                         break;
                     case "3":
                         rainType = "구름많음";
-                        wea.setImageResource(R.drawable.ic_cloud);
-                        view.setBackgroundColor(Color.parseColor("#e0e0e0"));
+                        imageId = R.drawable.ic_cloud;
+                        color = Color.parseColor("#e0e0e0");
                         break;
                     case "4":
                         rainType = "흐림";
-                        wea.setImageResource(R.drawable.ic_cloud);
-                        view.setBackgroundColor(Color.parseColor("#e0e0e0"));
+                        imageId = R.drawable.ic_cloud;
+                        color = Color.parseColor("#e0e0e0");
                         break;
                 }
                 break;
             case "1":
                 rainType = "비";
-                wea.setImageResource(R.drawable.ic_rain);
-                view.setBackgroundColor(Color.parseColor("#b2dfdb"));
+                imageId = R.drawable.ic_rain;
+                color = Color.parseColor("#b2dfdb");
                 break;
             case "2":
                 rainType = "비/눈";
-                wea.setImageResource(R.drawable.ic_rain);
-                view.setBackgroundColor(Color.parseColor("#b2dfdb"));
+                imageId = R.drawable.ic_rain;
+                color = Color.parseColor("#b2dfdb");
                 break;
             case "3":
                 rainType = "눈";
-                wea.setImageResource(R.drawable.ic_snow);
-                view.setBackgroundColor(Color.parseColor("#e0f7fa"));
+                imageId = R.drawable.ic_snow;
+                color = Color.parseColor("#e0f7fa");
                 break;
             case "5":
                 rainType = "빗방울";
-                wea.setImageResource(R.drawable.ic_rain);
-                view.setBackgroundColor(Color.parseColor("#b2dfdb"));
+                imageId = R.drawable.ic_rain;
+                color = Color.parseColor("#b2dfdb");
                 break;
             case "6":
                 rainType = "빗방울/눈날림";
-                wea.setImageResource(R.drawable.ic_rain);
-                view.setBackgroundColor(Color.parseColor("#b2dfdb"));
+                imageId = R.drawable.ic_rain;
+                color = Color.parseColor("#b2dfdb");
                 break;
             case "7":
                 rainType = "눈날림";
-                wea.setImageResource(R.drawable.ic_snow);
-                view.setBackgroundColor(Color.parseColor("#e0f7fa"));
+                imageId = R.drawable.ic_snow;
+                color = Color.parseColor("#e0f7fa");
                 break;
         }
-        con.setText(rainType);
 
+        con.setText(rainType);
+        wea.setImageResource(imageId);
+        view.setBackgroundColor(color);
     }
 
     public void setTomorrowWeather() {
@@ -233,7 +242,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                 String timeText = "";
                 String tempText = "";
 
-                if(k < index - (Integer.valueOf(hour) % 3)){
+                if(k < index - (hour % 3)){
                     if(k == 0)
                         timeText = "지금";
                     else
@@ -270,34 +279,31 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
 
                 time.setText(timeText);
                 temp.setText(tempText + " ℃");
-
+                int imageId = 0;
                 switch (rainType){
                     // 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4)
                     case "0":
                         switch (sky){
                             // 맑음(1), 구름많음(3), 흐림(4)
                             case "1":
-                                tomorrowImage.setImageResource(R.drawable.ic_sun);
+                                imageId = R.drawable.ic_sun;
                                 break;
                             case "3":
-
                             case "4":
-                                tomorrowImage.setImageResource(R.drawable.ic_cloud);
+                                imageId = R.drawable.ic_cloud;
                                 break;
                         }
                         break;
                     case "1":
-
                     case "2":
-
                     case "4":
-                        tomorrowImage.setImageResource(R.drawable.ic_rain);
+                        imageId = R.drawable.ic_rain;
                         break;
                     case "3":
-                        tomorrowImage.setImageResource(R.drawable.ic_snow);
+                        imageId = R.drawable.ic_snow;
                         break;
                 }
-
+                tomorrowImage.setImageResource(imageId);
                 tomorrowList.addView(tomorrowItem);
             }
 
