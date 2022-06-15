@@ -135,9 +135,7 @@ public class gardenFragment extends Fragment {
             public void run() {
                 super.run();
                 GrowProc gp = new GrowProc(view.getContext()).withDao(gardenDao);
-                if(gp.startGrowing(getContext()) == 1) {
-                    Toast.makeText(view.getContext(), "식물이 성장합니다.", Toast.LENGTH_SHORT).show();
-                }
+                gp.startGrowing(getContext());
             }
         };
         thread.start();
