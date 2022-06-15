@@ -4,19 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#b3f3f3"
     tools:context=".gardenFragment">
 
     <RelativeLayout
-        android:layout_marginTop="40sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <com.github.matteobattilana.weather.WeatherView
+            android:id="@+id/weather_view"
+            android:background="#b3f3f3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <HorizontalScrollView
             android:id="@+id/garden_frame"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="40sp"
             android:layout_marginBottom="160sp"
             android:scrollbars="none"
             android:overScrollMode="never">
@@ -90,7 +95,6 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintVertical_bias="1.0" />
-
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>

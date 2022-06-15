@@ -9,8 +9,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.weathergarden.R;
 import com.example.weathergarden.weather.WeatherInfo;
 import com.example.weathergarden.weather.WeatherProc;
+import com.example.weathergarden.weather.WeatherUltraFastInfo;
+import com.github.matteobattilana.weather.PrecipType;
+import com.github.matteobattilana.weather.WeatherView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +25,7 @@ public class ShowGarden {
     Activity activity;
     GardenDao gardenDao;
     List<GardenInfo> gardenList;
+    WeatherUltraFastInfo weatherInfo;
 
     String info, plantState;
     int growMax, growMin, growPoint, limit;
@@ -29,6 +34,7 @@ public class ShowGarden {
         this.view = view;
         this.activity = activity;
         this.gardenDao = gardenDao;
+        weatherInfo = new WeatherProc(activity).getWeatherUltraFastInfo().get(0);
     }
     public void show(){
         // 정원 정보 가져오기
@@ -58,6 +64,8 @@ public class ShowGarden {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                setWeather();
+
                 for (GardenInfo gardenInfo : gardenList) {
                     GroundInfo groundInfo = gardenInfo.groundInfo;
                     PlantInfo plantInfo = gardenInfo.plantInfo;
@@ -118,6 +126,7 @@ public class ShowGarden {
                             plantState = "열매";
                             break;
                     }
+
                     limit = (growMax - growMin) * 10;
                     growPoint = (int) ((groundInfo.growPoint - growMin) * 10);
 
@@ -189,6 +198,98 @@ public class ShowGarden {
         return result;
     }
 
+    public void setWeather(){
+        int weather = activity.getResources().getIdentifier("weather_view", "id", activity.getPackageName());
+        WeatherView weatherView = view.findViewById(weather);
+        if(weatherView == null){
+            weatherView = activity.findViewById(weather);
+        }
+        Log.d("ShowGarden", "" + weather);
+
+        int color = 0;
+
+        // 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+        switch (weatherInfo.rainType){
+            //없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+            case "0":
+                color = Color.parseColor("#b3f3f3");
+                weatherView.setWeatherData(PrecipType.CLEAR);
+                break;
+            case "1":
+                color = Color.parseColor("#b2dfdb");
+                weatherView.setWeatherData(PrecipType.RAIN);
+                break;
+            case "2":
+                color = Color.parseColor("#b2dfdb");
+                weatherView.setWeatherData(PrecipType.RAIN);
+                break;
+            case "3":
+                color = Color.parseColor("#e0f7fa");
+                weatherView.setWeatherData(PrecipType.SNOW);
+                break;
+            case "5":
+                color = Color.parseColor("#b2dfdb");
+                weatherView.setWeatherData(PrecipType.RAIN);
+                weatherView.setEmissionRate(20f);
+                break;
+            case "6":
+                color = Color.parseColor("#b2dfdb");
+                weatherView.setWeatherData(PrecipType.RAIN);
+                weatherView.setEmissionRate(20f);
+                break;
+            case "7":
+                color = Color.parseColor("#e0f7fa");
+                weatherView.setWeatherData(PrecipType.SNOW);
+                weatherView.setEmissionRate(5f);
+                break;
+        }
+        weatherView.setBackgroundColor(color);
+    }
+    public void setWeather(String weatherType){
+        int weather = activity.getResources().getIdentifier("weather_view", "id", activity.getPackageName());
+        WeatherView weatherView = view.findViewById(weather);
+        if(weatherView == null){
+            weatherView = activity.findViewById(weather);
+        }
+        Log.d("ShowGarden", "" + weather);
+
+        int color = 0;
+
+        // 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+        switch (weatherType){
+            //없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+
+            case "0":
+                color = Color.parseColor("#b3f3f3");
+                weatherView.setWeatherData(PrecipType.CLEAR);
+                break;
+            case "1":
+                color = Color.parseColor("#b2dfdb");
+                weatherView.setWeatherData(PrecipType.RAIN);
+                break;
+            case "2":
+                color = Color.parseColor("#b2dfdb");
+                weatherView.setWeatherData(PrecipType.RAIN);
+                break;
+            case "3":
+                color = Color.parseColor("#e0f7fa");
+                weatherView.setWeatherData(PrecipType.SNOW);
+                break;
+            case "5":
+            case "6":
+                color = Color.parseColor("#b2dfdb");
+                weatherView.setWeatherData(PrecipType.RAIN);
+                weatherView.setEmissionRate(20f);
+                break;
+            case "7":
+                color = Color.parseColor("#e0f7fa");
+                weatherView.setWeatherData(PrecipType.SNOW);
+                weatherView.setEmissionRate(2.5f);
+                weatherView.setSpeed(150);
+                break;
+        }
+        weatherView.setBackgroundColor(color);
+    }
     private String check(String type, PlantInfo plantInfo, GroundInfo groundInfo) {
         String result = "없음";
         float var = 0;

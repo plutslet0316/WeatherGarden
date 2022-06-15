@@ -47,9 +47,9 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
         // Required empty public constructor
     }
 
-    Button g1, g2, g3, refresh, grow;
+    Button g1, g2, g3, refresh, grow, weather;
     TextView infoText;
-    EditText differText;
+    EditText differText, weatherText;
 
     GardenDatabase gardenDatabase;
     GardenDao gardenDao;
@@ -204,6 +204,7 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
 
         infoText = view.findViewById(R.id.info);
         differText = view.findViewById(R.id.time_differ);
+        weatherText = view.findViewById(R.id.weather_test);
 
         g1 = view.findViewById(R.id.ground1);
         g2 = view.findViewById(R.id.ground2);
@@ -211,12 +212,14 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
 
         refresh = view.findViewById(R.id.refresh);
         grow = view.findViewById(R.id.growup);
+        weather = view.findViewById(R.id.weather_change);
 
         g1.setOnClickListener(this);
         g2.setOnClickListener(this);
         g3.setOnClickListener(this);
         refresh.setOnClickListener(this);
         grow.setOnClickListener(this);
+        weather.setOnClickListener(this);
 
         // DB 연동
         Thread t = new Thread() {
@@ -269,6 +272,9 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
                     break;
                 case R.id.growup:
                     growing(Integer.valueOf(differText.getText().toString()));
+                    break;
+                case R.id.weather_change:
+                    showGarden.setWeather(weatherText.getText().toString());
                     break;
             }
         } finally {
