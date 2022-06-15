@@ -159,7 +159,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                         break;
                     case "3":
                         rainType = "구름많음";
-                        imageId = R.drawable.ic_cloud;
+                        imageId = R.drawable.ic_cloudy;
                         color = Color.parseColor("#e0e0e0");
                         break;
                     case "4":
@@ -281,7 +281,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                 temp.setText(tempText + " ℃");
                 int imageId = 0;
                 switch (rainType){
-                    // 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4)
+                    // 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
                     case "0":
                         switch (sky){
                             // 맑음(1), 구름많음(3), 흐림(4)
@@ -289,6 +289,8 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                                 imageId = R.drawable.ic_sun;
                                 break;
                             case "3":
+                                imageId = R.drawable.ic_cloudy;
+                                break;
                             case "4":
                                 imageId = R.drawable.ic_cloud;
                                 break;
@@ -297,9 +299,12 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
                     case "1":
                     case "2":
                     case "4":
+                    case "5":
                         imageId = R.drawable.ic_rain;
                         break;
                     case "3":
+                    case "6":
+                    case "7":
                         imageId = R.drawable.ic_snow;
                         break;
                 }
