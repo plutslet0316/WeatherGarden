@@ -208,6 +208,7 @@ public class ShowGarden {
 
         int color = 0;
 
+        weatherView.setFadeOutPercent(1.5f);
         // 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
         switch (weatherInfo.rainType){
             //없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
@@ -255,6 +256,7 @@ public class ShowGarden {
 
         int color = 0;
 
+        weatherView.setFadeOutPercent(1.5f);
         // 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
         switch (weatherType){
             //없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)

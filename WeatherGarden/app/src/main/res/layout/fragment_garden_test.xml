@@ -146,8 +146,8 @@
 
                                 <ImageView
                                     android:id="@+id/plant1_img"
-                                    android:layout_width="50sp"
-                                    android:layout_height="100sp"
+                                    android:layout_width="100sp"
+                                    android:layout_height="200sp"
                                     android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -217,8 +217,8 @@
 
                                 <ImageView
                                     android:id="@+id/plant2_img"
-                                    android:layout_width="50sp"
-                                    android:layout_height="100sp"
+                                    android:layout_width="100sp"
+                                    android:layout_height="200sp"
                                     android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -285,8 +285,8 @@
 
                                 <ImageView
                                     android:id="@+id/plant3_img"
-                                    android:layout_width="50sp"
-                                    android:layout_height="100sp"
+                                    android:layout_width="100sp"
+                                    android:layout_height="200sp"
                                     android:scaleType="fitEnd"
                                     app:layout_constraintBaseline_toBottomOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
