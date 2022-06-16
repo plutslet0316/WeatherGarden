@@ -1,6 +1,7 @@
 package com.example.weathergarden;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResultLauncher;
 
 import com.example.weathergarden.garden.GardenDao;
 import com.example.weathergarden.garden.GardenInfo;
@@ -23,17 +26,19 @@ public class PopupCarePlantTest extends PopupWindow {
     private int index;
     private Activity context;
     private GrowProc.CarePlant carePlant;
+    ActivityResultLauncher<Intent> mStartForResult;
     TextView textInfo;
     GardenDao gardenDao;
     List<GardenInfo> gardenList;
     ShowGarden showGarden;
 
-    public PopupCarePlantTest(Activity context, View anchorView, GrowProc growProc, GardenDao gardenDao, int index) {
+    public PopupCarePlantTest(Activity context, View anchorView, GrowProc growProc, GardenDao gardenDao, ActivityResultLauncher<Intent> mStartForResult, int index) {
         this.context = context;
         this.anchorView = anchorView;
         this.index = index;
         textInfo = context.findViewById(R.id.info);
         this.gardenDao = gardenDao;
+        this.mStartForResult = mStartForResult;
         showGarden = new ShowGarden(anchorView, context, gardenDao);
 
         Thread thread = new Thread(){
@@ -77,7 +82,8 @@ public class PopupCarePlantTest extends PopupWindow {
                     popup.dismiss();
                     break;
                 case R.id.pulling_test:
-                    removePlant();
+                    Intent intent = new Intent(anchorView.getContext(), PopupPlantDelete.class);
+                    mStartForResult.launch(intent);
                     popup.dismiss();
                     break;
             }
@@ -141,7 +147,7 @@ public class PopupCarePlantTest extends PopupWindow {
         }
     }
 
-    private void removePlant() {
+    public void removePlant() {
         Thread thread = new Thread(){
             @Override
             public void run() {

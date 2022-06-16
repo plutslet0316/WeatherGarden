@@ -1,7 +1,9 @@
 package com.example.weathergarden;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,8 +13,12 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.example.weathergarden.garden.GardenDao;
 import com.example.weathergarden.garden.GardenInfo;
+import com.example.weathergarden.garden.GroundInfo;
 import com.example.weathergarden.garden.GrowProc;
 import com.example.weathergarden.garden.ShowGarden;
 
@@ -23,18 +29,20 @@ public class PopupCarePlant extends PopupWindow {
     private int index;
     private Activity context;
     private GrowProc.CarePlant carePlant;
+    ActivityResultLauncher<Intent> mStartForResult;
     GardenDao gardenDao;
     List<GardenInfo> gardenList;
     ShowGarden showGarden;
     int x, y;
 
-    public PopupCarePlant(Activity context, View anchorView, GrowProc growProc, GardenDao gardenDao, int index, int x, int y) {
+    public PopupCarePlant(Activity context, View anchorView, GrowProc growProc, GardenDao gardenDao, ActivityResultLauncher<Intent> mStartForResult, int index, int x, int y) {
         this.context = context;
         this.anchorView = anchorView;
         this.index = index;
         this.gardenDao = gardenDao;
         this.x = x;
         this.y = y;
+        this.mStartForResult = mStartForResult;
         showGarden = new ShowGarden(anchorView, context, gardenDao);
 
         Thread thread = new Thread(){
@@ -54,6 +62,7 @@ public class PopupCarePlant extends PopupWindow {
             e.printStackTrace();
         }
     }
+
 
     // 팝업 윈도우를 메뉴처럼 띄우는 부분
     void displayPopupWindow() {
@@ -78,7 +87,8 @@ public class PopupCarePlant extends PopupWindow {
                     popup.dismiss();
                     break;
                 case R.id.pulling_test:
-                    removePlant();
+                    Intent intent = new Intent(anchorView.getContext(), PopupPlantDelete.class);
+                    mStartForResult.launch(intent);
                     popup.dismiss();
                     break;
             }
@@ -139,7 +149,7 @@ public class PopupCarePlant extends PopupWindow {
         }
     }
 
-    private void removePlant() {
+    public void removePlant() {
         Thread thread = new Thread(){
             @Override
             public void run() {

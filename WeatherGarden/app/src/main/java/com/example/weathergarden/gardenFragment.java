@@ -56,6 +56,7 @@ public class gardenFragment extends Fragment {
     GrowProc growProc;
 
     ShowGarden showGarden;
+    PopupCarePlant popupCarePlant;
 
     ArrayList<PlantInfo> plantInfoList;
 
@@ -85,6 +86,31 @@ public class gardenFragment extends Fragment {
 
                                 if (groundInfoGet != null)
                                     gardenDao.insertGroundInfo(groundInfoGet);
+                            }
+                        };
+                        thread.start();
+                        thread.join();
+
+                        // 기다렸다가 정원 갱신
+                        showGarden.show();
+                    } catch (Exception e) {
+                        Log.d("test", e.getMessage());
+                    } finally {
+                        return;
+                    }
+                }
+                else if (result.getResultCode() == 20) {
+                    try {
+                        Intent intentGet = result.getData();
+
+                        // Delete
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                super.run();
+                                if(intentGet.getIntExtra("delete", 0) == 1) {
+                                    popupCarePlant.removePlant();
+                                }
                             }
                         };
                         thread.start();
@@ -237,7 +263,7 @@ public class gardenFragment extends Fragment {
                 int y = (int) e.getY();
 
                 if (checkGround(index)) {
-                    PopupCarePlant popupCarePlant = new PopupCarePlant((Activity) view.getContext(), view, growProc, gardenDao, index, x, y);
+                    popupCarePlant = new PopupCarePlant((Activity) view.getContext(), view, growProc, gardenDao, mStartForResult, index, x, y);
                     popupCarePlant.displayPopupWindow();
                 }
                 return true;

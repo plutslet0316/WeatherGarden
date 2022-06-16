@@ -56,6 +56,7 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
     GrowProc growProc;
 
     ShowGarden showGarden;
+    PopupCarePlantTest popupCarePlant;
 
     ArrayList<PlantInfo> plantInfoList;
     List<GardenInfo> gardenList;
@@ -79,6 +80,31 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
 
                                 if (groundInfoGet != null)
                                     gardenDao.insertGroundInfo(groundInfoGet);
+                            }
+                        };
+                        thread.start();
+                        thread.join();
+
+                        // 기다렸다가 정원 갱신
+                        showGarden.show();
+                    } catch (Exception e) {
+                        Log.d("test", e.getMessage());
+                    } finally {
+                        return;
+                    }
+                }
+                else if (result.getResultCode() == 20) {
+                    try {
+                        Intent intentGet = result.getData();
+
+                        // Delete
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                super.run();
+                                if(intentGet.getIntExtra("delete", 0) == 1) {
+                                    popupCarePlant.removePlant();
+                                }
                             }
                         };
                         thread.start();
@@ -281,7 +307,7 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
             if (index == 0) return;
 
             if (checkGround(index)) {
-                PopupCarePlantTest popupCarePlant = new PopupCarePlantTest((Activity) view.getContext(), view, growProc, gardenDao, index);
+                popupCarePlant = new PopupCarePlantTest((Activity) view.getContext(), view, growProc, gardenDao, mStartForResult, index);
                 popupCarePlant.displayPopupWindow();
             }
         }
