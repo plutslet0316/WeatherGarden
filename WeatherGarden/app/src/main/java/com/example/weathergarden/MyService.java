@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
@@ -38,19 +37,18 @@ public class MyService extends Service {
         // 구현 시 클라이언트가 이 서비스와 커뮤니케이션할 때 사용할 수 있는 인터페이스인 IBinder 객체 반환, or null 반환
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 반복작업 부분
         // mainactivity에서 startService() 메소드를 통해 서비스를 시작할 때 callback 호출
-
         task = new BackgroundTask();
         task.execute();
 
         initializeNotification(); // 포그라운드 생성
         return START_NOT_STICKY; // 서비스가 죽어도 시스템에서 재생성 x
-
 
 //        return super.onStartCommand(intent, flags, startId); //기존 코드
     }
@@ -64,38 +62,46 @@ public class MyService extends Service {
         return formatDate;
     }
 
-
     // 포그라운드 서비스
     public void initializeNotification() {
+        // 날씨 사용
+        WeatherProc weatherProc =new WeatherProc(this);
 
-//        WeatherProc weatherProc =new WeatherProc(this);
-//        weatherProc.getWeather();
-//
-//        WeatherInfo weatherInfo = weatherProc.getWeatherInfo();
-        //
+        WeatherInfo weatherInfo = weatherProc.getWeatherInfo();
+
+        //타임 스탬프 setWhen() 사용하면 된다
+
+        // 버전 오레오 이상일 경우
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
-        builder.setSmallIcon(R.drawable.sunny);
+        // 알림창 아이콘 사이즈 24x24
+        builder.setSmallIcon(R.drawable.cloud_weather_icon);
+
         NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
-        style.bigText("날씨 세부 내용"); // 내용 표시
-        style.setBigContentTitle(null);
+        // !! 81번줄 현재 위치 들어갈 부분입니다!!
+        style.setBigContentTitle("금광동 " + weatherInfo.temp + " ℃");
+        style.bigText("강수량: " + weatherInfo.rainAmount + "  습도: " + weatherInfo.hum + "%"); // 내용 표시
         style.setSummaryText(formatDate()); // 패키지 이름 옆에 조금 큰 텍스트뷰
         // 알림으로 표시 (홈화면-메뉴-앱 세부정보에서 정보 표시)
-        builder.setContentText("포그라운드 서비스 정상");
-        builder.setContentTitle("날씨정원"); // 날씨정원 포그라운드서비스 정상 오른쪽 이미지 형태 표시
+
+        // !! 88번줄이 현재 위치 들어가는 부분입니다!!
+        builder.setContentTitle("날씨정원"); // 제목
+        builder.setContentText("금광동 " + weatherInfo.temp + " ℃"); // 본문 텍스트
+
         builder.setOngoing(true);
-        builder.setStyle(style);
+        builder.setStyle(style);  // 알림 더 길게 설정, 스타일 템플릿 추가하여 확장 가능한 알림
         builder.setWhen(0);
         builder.setShowWhen(false);
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
         builder.setContentIntent(pendingIntent);
+
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             manager.createNotificationChannel(new NotificationChannel("1", "포그라운드 서비스", NotificationManager.IMPORTANCE_NONE));
         }
-        Notification notification = builder.build();
-        startForeground(1, notification);
+        Notification notification = builder.build(); // 알림창 아이콘 2
+        startForeground(1, notification); // 알림창 실행
     }
 
     class BackgroundTask extends AsyncTask<Integer, String, Integer> {
