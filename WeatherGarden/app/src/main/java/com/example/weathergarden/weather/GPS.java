@@ -1,22 +1,15 @@
 package com.example.weathergarden.weather;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModel;
-
 import android.Manifest;
-import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -28,8 +21,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
-
-import java.util.HashMap;
 
 public class GPS extends ViewModel {
     Context context;
@@ -124,6 +115,7 @@ public class GPS extends ViewModel {
                         @Override
                         public void onSuccess(Location location) {
                             // Log.d("Gps", (location != null) + "");
+                            isGetLocation = true;
                             if (location != null) {
                                 setGridXY(location.getLatitude(), location.getLongitude());
                             }

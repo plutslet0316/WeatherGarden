@@ -22,7 +22,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.weathergarden.weather.LocationData;
 import com.example.weathergarden.weather.WeatherFastInfo;
-import com.example.weathergarden.weather.WeatherInfo;
 import com.example.weathergarden.weather.WeatherProc;
 import com.example.weathergarden.weather.WeatherUltraFastInfo;
 import com.google.gson.Gson;
@@ -220,7 +219,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
         int index = (Integer.valueOf(hour) % 3) + 6;
         int i = 0;
         int k = 0;
-        Log.d("weatherFragment", tomorrowWeatherList.size() + "");
+        //Log.d("weatherFragment", tomorrowWeatherList.size() + "");
 
         do {
             String date = "";
