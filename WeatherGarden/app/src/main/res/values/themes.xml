@@ -16,7 +16,7 @@
 
     <style name="Theme.WeatherGarden.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>
-        <!-- item name="windowSplashScreenAnimatedIcon">@drawable/ic_cloud</item -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_weather_garden</item>
         <item name="postSplashScreenTheme">@style/Theme.WeatherGarden</item>
 
         <item name="windowActionBar">false</item>
