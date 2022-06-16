@@ -114,8 +114,7 @@ public class GPS extends ViewModel {
                     .addOnSuccessListener(new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-                            // Log.d("Gps", (location != null) + "");
-                            isGetLocation = true;
+                            Log.d("Gps", (location != null) + "");
                             if (location != null) {
                                 setGridXY(location.getLatitude(), location.getLongitude());
                             }

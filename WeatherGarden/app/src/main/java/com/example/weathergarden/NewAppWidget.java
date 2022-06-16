@@ -6,16 +6,26 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.weathergarden.weather.LocationData;
 import com.example.weathergarden.weather.WeatherInfo;
 import com.example.weathergarden.weather.WeatherProc;
+import com.example.weathergarden.weather.WeatherUltraFastInfo;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Implementation of App Widget functionality.
@@ -40,7 +50,6 @@ public class NewAppWidget extends AppWidgetProvider {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //intent.addCategory(Intent.CATEGORY_LAUNCHER);
         //intent.setComponent(new ComponentName(context, MainActivity.class));
-        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
         views.setOnClickPendingIntent(R.id.location_tv, PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE));
         views.setOnClickPendingIntent(R.id.temp, PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE));
         views.setOnClickPendingIntent(R.id.updatetime, PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE));
@@ -87,11 +96,46 @@ public class NewAppWidget extends AppWidgetProvider {
 
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
 
+            Gson gson = new Gson();
+            Geocoder geocoder = new Geocoder(context, Locale.KOREAN);
+            List<Address> addresses = null;
+
+            // 위치 가져오기
+            SharedPreferences preferences = context.getSharedPreferences("player_data", Context.MODE_PRIVATE);
+            LocationData locationData = gson.fromJson(preferences.getString("location_data", ""), LocationData.class);
+
+            // 위치 주소로 변환하기
+            try {
+                addresses = geocoder.getFromLocation(
+                        Double.parseDouble(locationData.x),
+                        Double.parseDouble(locationData.y),
+                        7);
+            } catch (IOException ioException) {
+                //네트워크 문제
+                Toast.makeText(context, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            } catch (IllegalArgumentException illegalArgumentException) {
+                Toast.makeText(context, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            } catch (Exception e){
+                Log.d("weatherFragment", e.getMessage());
+            }
+
+
+
             remoteViews.setTextViewText(R.id.updatetime, "업데이트 " + formatDate());
+
+
             // !!현재 위치 지역명 들어가는 곳입니다.!!
-            remoteViews.setTextViewText(R.id.location_tv, "금광동 ");
+            remoteViews.setTextViewText(R.id.location_tv, (addresses.get(1).getThoroughfare() != null ? addresses.get(1).getThoroughfare(): (addresses.get(1).getSubLocality() != null ? addresses.get(1).getSubLocality():(addresses.get(1).getLocality() != null ? addresses.get(1).getLocality() : addresses.get(1).getAdminArea()))));
             //remoteViews.setTextViewText(R.id.temp, String.format("℃"));
             remoteViews.setTextViewText(R.id.temp, String.format(weatherInfo.temp + "º"));
+
+            Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.example.weathergarden");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            //intent.setComponent(new ComponentName(context, MainActivity.class));
+            remoteViews.setOnClickPendingIntent(R.id.location_tv, PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE));
+            remoteViews.setOnClickPendingIntent(R.id.temp, PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE));
+            remoteViews.setOnClickPendingIntent(R.id.updatetime, PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE));
 
             //버튼1 클릭 : 클릭 성공 메세지 출력!
             remoteViews.setOnClickPendingIntent(R.id.button1, getPendingSelfIntent(context, ACTION_BUTTON1, PendingIntent.FLAG_IMMUTABLE));
