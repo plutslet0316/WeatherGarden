@@ -7,18 +7,27 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.weathergarden.weather.LocationData;
 import com.example.weathergarden.weather.WeatherInfo;
 import com.example.weathergarden.weather.WeatherProc;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 // 서비스 구현 부분
 // 서비스 안에서 반복작업을 할 수 있는 스레드 구현
@@ -78,14 +87,37 @@ public class MyService extends Service {
 
         NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
         // !! 81번줄 현재 위치 들어갈 부분입니다!!
-        style.setBigContentTitle("금광동 " + weatherInfo.temp + " ℃");
+        Gson gson = new Gson();
+        Geocoder geocoder = new Geocoder(this, Locale.KOREAN);
+        List<Address> addresses = null;
+
+        // 위치 가져오기
+        SharedPreferences preferences = this.getSharedPreferences("player_data", Context.MODE_PRIVATE);
+        LocationData locationData = gson.fromJson(preferences.getString("location_data", ""), LocationData.class);
+
+        // 위치 주소로 변환하기
+        try {
+            addresses = geocoder.getFromLocation(
+                    Double.parseDouble(locationData.x),
+                    Double.parseDouble(locationData.y),
+                    7);
+        } catch (IOException ioException) {
+            //네트워크 문제
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+        } catch (Exception e){
+            Log.d("weatherFragment", e.getMessage());
+        }
+
+        style.setBigContentTitle((addresses.get(1).getThoroughfare() != null ? addresses.get(1).getThoroughfare(): (addresses.get(1).getSubLocality() != null ? addresses.get(1).getSubLocality():(addresses.get(1).getLocality() != null ? addresses.get(1).getLocality() : addresses.get(1).getAdminArea()))) + " " + weatherInfo.temp + " ℃");
         style.bigText("강수량: " + weatherInfo.rainAmount + "  습도: " + weatherInfo.hum + "%"); // 내용 표시
         style.setSummaryText(formatDate()); // 패키지 이름 옆에 조금 큰 텍스트뷰
         // 알림으로 표시 (홈화면-메뉴-앱 세부정보에서 정보 표시)
 
         // !! 88번줄이 현재 위치 들어가는 부분입니다!!
         builder.setContentTitle("날씨정원"); // 제목
-        builder.setContentText("금광동 " + weatherInfo.temp + " ℃"); // 본문 텍스트
+        builder.setContentText((addresses.get(1).getThoroughfare() != null ? addresses.get(1).getThoroughfare(): (addresses.get(1).getSubLocality() != null ? addresses.get(1).getSubLocality():(addresses.get(1).getLocality() != null ? addresses.get(1).getLocality() : addresses.get(1).getAdminArea()))) + " " + weatherInfo.temp + " ℃"); // 본문 텍스트
 
         builder.setOngoing(true);
         builder.setStyle(style);  // 알림 더 길게 설정, 스타일 템플릿 추가하여 확장 가능한 알림

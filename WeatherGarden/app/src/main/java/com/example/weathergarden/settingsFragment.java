@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class settingsFragment extends Fragment implements View.OnClickListener {
-    private Switch not_swi;
+    //private Switch not_swi;
     private TextView loc_set, loc_tit, loc_swi_sma, loc_int, loc_int_sma, not_tit, not_swi_sma,
             not_wea, not_wea_sma, gui_tit, gui_menu, gui_sma;
     private ImageView set_icon;
@@ -42,14 +42,14 @@ public class settingsFragment extends Fragment implements View.OnClickListener {
         loc_int = view.findViewById(R.id.local_interest);
         loc_int_sma = view.findViewById(R.id.local_interest_small);
         not_tit = view.findViewById(R.id.noti_title);
-        not_swi_sma = view.findViewById(R.id.noti_switch_small);
+        //not_swi_sma = view.findViewById(R.id.noti_switch_small);
         not_wea = view.findViewById(R.id.noti_weather);
         not_wea_sma = view.findViewById(R.id.noti_weather_small);
         gui_tit = view.findViewById(R.id.guide_title);
         gui_menu = view.findViewById(R.id.guide_menu);
         gui_sma = view.findViewById(R.id.guide_small);
 
-        not_swi = view.findViewById(R.id.noti_switch);
+        //not_swi = view.findViewById(R.id.noti_switch);
 
         set_icon = view.findViewById(R.id.setting_icon);
 

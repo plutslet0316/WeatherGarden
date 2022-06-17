@@ -86,33 +86,7 @@
         android:textColor="@color/black"
         android:textSize="14dp" />
 
-    <Button
-        android:id="@+id/noti_on"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignTop="@+id/local_box"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="66dp"
-        android:background="#00ff0000"
-        android:text="ON"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14dp" />
 
-    <Button
-        android:id="@+id/noti_off"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignTop="@+id/local_box"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="-9dp"
-        android:background="#00ff0000"
-        android:text="OFF"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14dp" />
 
     <View
         android:id="@+id/local_line"
@@ -160,7 +134,7 @@
         android:layout_marginLeft="60dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="120dp"
-        android:layout_marginBottom="277dp"
+        android:layout_marginBottom="278dp"
         android:background="@drawable/bg_settings"
         android:textColor="#ffffff" />
 
@@ -176,7 +150,7 @@
         android:textColor="@color/black"
         android:textSize="24dp" />
 
-    <Switch
+    <TextView
         android:id="@+id/noti_switch"
         android:layout_width="423dp"
         android:layout_height="wrap_content"
@@ -198,6 +172,34 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="55dp"
         android:text="상단바에 상태 표시를 나타냄"
+        android:textColor="@color/black"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/noti_off"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/noti_switch"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-3dp"
+        android:layout_marginEnd="21dp"
+        android:background="#00ff0000"
+        android:text="OFF"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/noti_on"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/noti_switch"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-3dp"
+        android:layout_marginEnd="95dp"
+        android:background="#00ff0000"
+        android:text="ON"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14dp" />
 
