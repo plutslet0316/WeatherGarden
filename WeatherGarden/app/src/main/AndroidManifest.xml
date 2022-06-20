@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,7 +23,6 @@
             android:name=".SplashTestActivity"
             android:exported="true"
             android:theme="@style/Theme.WeatherGarden.Splash">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,6 +54,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
+
 
     </application>
 

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModel;
 
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
 public class GPS extends ViewModel {
+
     Context context;
 
     SharedPreferences preferences;
@@ -51,6 +53,7 @@ public class GPS extends ViewModel {
             Double OLAT = 38.0; // 기준점 위도(degree)
             int XO = 43; // 기준점 X좌표(GRID)
             int YO = 136; // 기준점 Y좌표(GRID)
+
             Double DEGRAD = Math.PI / 180.0;
             Double re = RE / GRID;
             Double slat1 = SLAT1 * DEGRAD;
@@ -72,6 +75,7 @@ public class GPS extends ViewModel {
                 theta -= 2.0 * Math.PI;
             if (theta < -Math.PI)
                 theta += 2.0 * Math.PI;
+
             theta *= sn;
 
             int nx = (int) (ra * Math.sin(theta) + XO + 0.5);
@@ -87,6 +91,7 @@ public class GPS extends ViewModel {
         } finally {
             isGetLocation = true;
             Log.d("Gps", "좌표값 변환 완료");
+
         }
     }
 
@@ -115,6 +120,7 @@ public class GPS extends ViewModel {
                         @Override
                         public void onSuccess(Location location) {
                             Log.d("Gps", (location != null) + "");
+
                             if (location != null) {
                                 setGridXY(location.getLatitude(), location.getLongitude());
                             }
@@ -125,6 +131,7 @@ public class GPS extends ViewModel {
                         public void onCanceled() {
                             Log.d("Gps", "취소됨");
                             setGridXY(37.5666805, 126.9784147);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -132,6 +139,7 @@ public class GPS extends ViewModel {
                         public void onFailure(@NonNull Exception e) {
                             Log.d("Gps", "실패: " + e.getMessage());
                             setGridXY(37.5666805, 126.9784147);
+
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<Location>() {

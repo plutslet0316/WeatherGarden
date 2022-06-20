@@ -9,6 +9,7 @@ import com.example.weathergarden.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,12 +30,14 @@ import java.util.TimeZone;
 public class WeatherProc {
     Context context;
 
+
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
     Gson gson = new Gson();
 
     public WeatherProc(Context context) {
+
         this.context = context;
         preferences = context.getSharedPreferences("player_data", Context.MODE_PRIVATE);
         editor = preferences.edit();
@@ -77,6 +80,7 @@ public class WeatherProc {
             String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
             // 홈페이지에서 받은 키
             String serviceKey = context.getResources().getString(R.string.shot_weather_api);
+
             String pageNo = "1";
             String numOfRows = "10"; // 한 페이지 결과 수
             String data_type = "JSON"; // 타입 xml, json 등등 ..
@@ -105,6 +109,7 @@ public class WeatherProc {
 
                 if (weatherInfo.time.equals(baseDate + baseTime)) {
                     Log.d("Weather", weatherInfo.time + " " + baseDate + baseTime);
+
 
                     return 2;
                 }
@@ -138,6 +143,7 @@ public class WeatherProc {
 
             url = new URL(urlBuilder.toString());
             Log.d("Weather", url.toString());
+
 
             conn = (HttpURLConnection) url.openConnection();
 
@@ -201,6 +207,7 @@ public class WeatherProc {
 
             int size = jsonArray.length();
             for (int i = 0; i < size; i++) {
+
                 jsonObj = jsonArray.getJSONObject(i);
                 String category = jsonObj.getString("category");
                 String obsrValue = jsonObj.getString("obsrValue");
@@ -637,4 +644,5 @@ public class WeatherProc {
 
         return 0;
     }
+
 }
