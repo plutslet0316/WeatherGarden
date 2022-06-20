@@ -1,22 +1,16 @@
 package com.example.weathergarden.weather;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModel;
-
 import android.Manifest;
-import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModel;
+
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -29,9 +23,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
-import java.util.HashMap;
+public class GPS extends ViewModel {
 
-public class GPS  extends ViewModel {
     Context context;
 
     SharedPreferences preferences;
@@ -52,14 +45,15 @@ public class GPS  extends ViewModel {
 
     private void setGridXY(Double x, Double y) {
         try {
-            Double RE = 6371.00877;     // 지구 반경(km)
-            Double GRID = 5.0;          // 격자 간격(km)
-            Double SLAT1 = 30.0;        // 투영 위도1(degree)
-            Double SLAT2 = 60.0;        // 투영 위도2(degree)
-            Double OLON = 126.0;        // 기준점 경도(degree)
-            Double OLAT = 38.0;         // 기준점 위도(degree)
-            int XO = 43;             // 기준점 X좌표(GRID)
-            int YO = 136;            // 기준점 Y좌표(GRID)
+            Double RE = 6371.00877; // 지구 반경(km)
+            Double GRID = 5.0; // 격자 간격(km)
+            Double SLAT1 = 30.0; // 투영 위도1(degree)
+            Double SLAT2 = 60.0; // 투영 위도2(degree)
+            Double OLON = 126.0; // 기준점 경도(degree)
+            Double OLAT = 38.0; // 기준점 위도(degree)
+            int XO = 43; // 기준점 X좌표(GRID)
+            int YO = 136; // 기준점 Y좌표(GRID)
+
             Double DEGRAD = Math.PI / 180.0;
             Double re = RE / GRID;
             Double slat1 = SLAT1 * DEGRAD;
@@ -77,8 +71,11 @@ public class GPS  extends ViewModel {
             Double ra = Math.tan(Math.PI * 0.25 + (x) * DEGRAD * 0.5);
             ra = re * sf / Math.pow(ra, sn);
             Double theta = y * DEGRAD - olon;
-            if (theta > Math.PI) theta -= 2.0 * Math.PI;
-            if (theta < -Math.PI) theta += 2.0 * Math.PI;
+            if (theta > Math.PI)
+                theta -= 2.0 * Math.PI;
+            if (theta < -Math.PI)
+                theta += 2.0 * Math.PI;
+
             theta *= sn;
 
             int nx = (int) (ra * Math.sin(theta) + XO + 0.5);
@@ -87,14 +84,14 @@ public class GPS  extends ViewModel {
             Gson gson = new Gson();
             LocationData locationData = new LocationData(x, y, nx, ny);
             String locationString = gson.toJson(locationData);
-            //Log.d("Gps", locationString);
+            Log.d("Gps", locationString);
 
             editor.putString("location_data", locationString);
             editor.apply();
-        }
-        finally {
+        } finally {
             isGetLocation = true;
-            Log.d("Gps", "좌표값 변환 완료" + isGetLocation);
+            Log.d("Gps", "좌표값 변환 완료");
+
         }
     }
 
@@ -108,7 +105,6 @@ public class GPS  extends ViewModel {
             int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(context,
                     Manifest.permission.ACCESS_COARSE_LOCATION);
 
-
             if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
                     hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
 
@@ -120,10 +116,11 @@ public class GPS  extends ViewModel {
             CancellationTokenSource cts = new CancellationTokenSource();
 
             fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, cts.getToken())
-                    .addOnSuccessListener( new OnSuccessListener<Location>() {
+                    .addOnSuccessListener(new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-                            //Log.d("Gps", (location != null) + "");
+                            Log.d("Gps", (location != null) + "");
+
                             if (location != null) {
                                 setGridXY(location.getLatitude(), location.getLongitude());
                             }
@@ -133,12 +130,16 @@ public class GPS  extends ViewModel {
                         @Override
                         public void onCanceled() {
                             Log.d("Gps", "취소됨");
+                            setGridXY(37.5666805, 126.9784147);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d("Gps", "실패: " + e.getMessage());
+                            setGridXY(37.5666805, 126.9784147);
+
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -147,31 +148,34 @@ public class GPS  extends ViewModel {
                         }
                     });
 
-/*
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener( new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            Log.d("Gps", (location != null) + "");
-                            if (location != null) {
-                                getGridXY(location.getLatitude(), location.getLongitude());
-                            }
-                        }
-                    })
-                    .addOnCanceledListener(new OnCanceledListener() {
-                        @Override
-                        public void onCanceled() {
-                            Log.d("Gps", "취소됨");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("Gps", "실패: " + e.getMessage());
-                        }
-                    });
- */
-        } catch (Exception e){
+            /*
+             * fusedLocationClient.getLastLocation()
+             * .addOnSuccessListener( new OnSuccessListener<Location>() {
+             * 
+             * @Override
+             * public void onSuccess(Location location) {
+             * Log.d("Gps", (location != null) + "");
+             * if (location != null) {
+             * getGridXY(location.getLatitude(), location.getLongitude());
+             * }
+             * }
+             * })
+             * .addOnCanceledListener(new OnCanceledListener() {
+             * 
+             * @Override
+             * public void onCanceled() {
+             * Log.d("Gps", "취소됨");
+             * }
+             * })
+             * .addOnFailureListener(new OnFailureListener() {
+             * 
+             * @Override
+             * public void onFailure(@NonNull Exception e) {
+             * Log.d("Gps", "실패: " + e.getMessage());
+             * }
+             * });
+             */
+        } catch (Exception e) {
             Log.d("Gps", e.getMessage());
         }
     }

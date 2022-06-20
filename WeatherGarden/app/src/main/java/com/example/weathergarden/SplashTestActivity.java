@@ -12,13 +12,17 @@ import android.view.ViewTreeObserver;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.splashscreen.SplashScreen;
 
-import com.example.weathergarden.R;
 import com.example.weathergarden.weather.GPS;
+import com.example.weathergarden.weather.WeatherProc;
+
 
 public class SplashTestActivity extends Activity {
     GPS gps;
     boolean isAllow;
+    SplashScreen splashScreen;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,7 @@ public class SplashTestActivity extends Activity {
         // 이건 스플레시 화면이 뜨고 나서 좌표값을 가져오고,
         // 이후 모든 처리가 끝나면 다음 화면으로 넘어가는 부분입니다.
         gps = new GPS(this);
+        WeatherProc weatherProc = new WeatherProc(this);
 
         OnCheckPermission();
 
@@ -39,6 +44,8 @@ public class SplashTestActivity extends Activity {
                         // Check if the initial data is ready.
                         if (gps.isGetLocation) {
                             Log.d("SplashActivity", "위치 가져옴");
+                            weatherProc.getWeather();
+
                             Intent i = new Intent(SplashTestActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
@@ -62,26 +69,29 @@ public class SplashTestActivity extends Activity {
     }
 
     public void OnCheckPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-
-            String[] permissionList = new String[]{
+            String[] permissionList = new String[] {
                     Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION};
+                    Manifest.permission.ACCESS_COARSE_LOCATION };
+
 
             ActivityCompat.requestPermissions((Activity) this,
                     permissionList,
                     1);
-            //}
-        }
-        else {
+            // }
+        } else {
             isAllow = true;
         }
     }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+            @NonNull int[] grantResults) {
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         isAllow = true;
     }
