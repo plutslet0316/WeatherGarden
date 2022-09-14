@@ -278,7 +278,8 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
 
                 time.setText(timeText);
                 temp.setText(tempText + " ℃");
-                int imageId = 0;
+                int imageId = R.drawable.ic_sun;
+
                 switch (rainType){
                     // 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
                     case "0":
