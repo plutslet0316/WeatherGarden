@@ -259,12 +259,7 @@ public class ShowGarden {
         weatherView.setFadeOutPercent(1.5f);
         // 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
         switch (weatherType){
-            //없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
-
-            case "0":
-                color = Color.parseColor("#b3f3f3");
-                weatherView.setWeatherData(PrecipType.CLEAR);
-                break;
+            //비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
             case "1":
                 color = Color.parseColor("#b2dfdb");
                 weatherView.setWeatherData(PrecipType.RAIN);
@@ -288,6 +283,10 @@ public class ShowGarden {
                 weatherView.setWeatherData(PrecipType.SNOW);
                 weatherView.setEmissionRate(2.5f);
                 weatherView.setSpeed(150);
+                break;
+            default:
+                color = Color.parseColor("#b3f3f3");
+                weatherView.setWeatherData(PrecipType.CLEAR);
                 break;
         }
         weatherView.setBackgroundColor(color);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gardenFragment">
+    tools:context=".GardenFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,239 +13,147 @@
 
         <com.github.matteobattilana.weather.WeatherView
             android:id="@+id/weather_view"
-            android:background="#b3f3f3"
+            android:background="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <HorizontalScrollView
-            android:id="@+id/garden_frame"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="40sp"
-            android:layout_marginBottom="160sp"
-            android:scrollbars="none"
-            android:overScrollMode="never">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <EditText
+                    android:id="@+id/time_differ"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:hint="시간"
+                    android:inputType="textPersonName"
+                    android:text="" />
 
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <Button
-                            android:id="@+id/ground1"
-                            android:background="#00ff0000"
-                            android:layout_margin="10sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="" />
-                        <TextView
-                            android:id="@+id/plant1"
-                            android:layout_margin="10sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:ems="10"
-                            android:textSize="18sp"
-                            android:gravity="start|top"
-                            android:inputType="textMultiLine" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:id="@+id/plant1_level"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text=""
-                                android:textSize="16sp"
-                                app:layout_constraintBottom_toTopOf="@+id/plant1_progressBar"
-                                app:layout_constraintStart_toStartOf="@+id/plant1_progressBar" />
-
-                            <ProgressBar
-                                android:id="@+id/plant1_progressBar"
-                                style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="76sp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="28dp"
-                                android:visibility="invisible"
-                                app:layout_constraintBottom_toTopOf="@+id/plant1_img"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/plant1_img"
-                                android:layout_width="100sp"
-                                android:layout_height="200sp"
-                                android:scaleType="fitEnd"
-                                app:layout_constraintBaseline_toBottomOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.496"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="1.0" />
-
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
+                <Button
+                    android:id="@+id/growup"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:text="성장" />
 
 
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <Button
-                            android:id="@+id/ground2"
-                            android:background="#00ff0000"
-                            android:layout_margin="10sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="" />
-                        <TextView
-                            android:id="@+id/plant2"
-                            android:layout_margin="10sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:ems="10"
-                            android:textSize="18sp"
-                            android:gravity="start|top"
-                            android:inputType="textMultiLine" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:id="@+id/plant2_level"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text=""
-                                android:textSize="16sp"
-                                app:layout_constraintBottom_toTopOf="@+id/plant2_progressBar"
-                                app:layout_constraintStart_toStartOf="@+id/plant2_progressBar" />
-
-                            <ProgressBar
-                                android:id="@+id/plant2_progressBar"
-                                style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="76sp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="28dp"
-                                android:visibility="invisible"
-                                app:layout_constraintBottom_toTopOf="@+id/plant2_img"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/plant2_img"
-                                android:layout_width="100sp"
-                                android:layout_height="200sp"
-                                android:scaleType="fitEnd"
-                                app:layout_constraintBaseline_toBottomOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.496"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="1.0" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
+                <EditText
+                    android:id="@+id/weather_text"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:hint="날씨"
+                    android:inputType="textPersonName"
+                    android:text="" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <Button
-                            android:id="@+id/ground3"
-                            android:background="#00ff0000"
-                            android:layout_margin="10sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="" />
-                        <TextView
-                            android:id="@+id/plant3"
-                            android:layout_margin="10sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:ems="10"
-                            android:textSize="18sp"
-                            android:gravity="start|top"
-                            android:inputType="textMultiLine" />
+                <Button
+                    android:id="@+id/weather_change"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:layout_weight="1"
+                    android:text="바꾸기" />
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:id="@+id/plant3_level"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text=""
-                                android:textSize="16sp"
-                                app:layout_constraintBottom_toTopOf="@+id/plant3_progressBar"
-                                app:layout_constraintStart_toStartOf="@+id/plant3_progressBar" />
-
-                            <ProgressBar
-                                android:id="@+id/plant3_progressBar"
-                                style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="76sp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="28dp"
-                                android:visibility="invisible"
-                                app:layout_constraintBottom_toTopOf="@+id/plant3_img"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/plant3_img"
-                                android:layout_width="100sp"
-                                android:layout_height="200sp"
-                                android:scaleType="fitEnd"
-                                app:layout_constraintBaseline_toBottomOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.496"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="1.0" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </RelativeLayout>
-                </LinearLayout>
             </LinearLayout>
-        </HorizontalScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="168sp"
-            android:layout_alignParentBottom="true"
-            android:background="#6f4f28"
-            android:orientation="horizontal" />
+            <TextView
+                android:id="@+id/info_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <RelativeLayout
+                    android:id="@+id/garden_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/ground1"
+                        android:background="#00ff0000"
+                        android:layout_margin="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="" />
+                    <TextView
+                        android:id="@+id/plant1"
+                        android:layout_margin="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:textSize="18sp"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/plant1_level"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text=""
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toTopOf="@+id/plant1_progressBar"
+                            app:layout_constraintStart_toStartOf="@+id/plant1_progressBar" />
+
+                        <ProgressBar
+                            android:id="@+id/plant1_progressBar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="76sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="28dp"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toTopOf="@+id/plant1_img"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/plant1_img"
+                            android:layout_width="100sp"
+                            android:layout_height="200sp"
+                            android:scaleType="fitEnd"
+                            app:layout_constraintBaseline_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.496"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="168sp"
+                android:layout_alignParentBottom="true"
+                android:background="#6f4f28"
+                android:orientation="horizontal" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 </FrameLayout>

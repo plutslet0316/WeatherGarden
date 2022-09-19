@@ -109,7 +109,7 @@ public class PopupCarePlant extends PopupWindow {
 
         // Show anchored to button
         popup.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        popup.showAtLocation(anchorView, Gravity.NO_GRAVITY, x + (anchorView.getHeight()/16), y + (anchorView.getWidth()/6));
+        popup.showAtLocation(anchorView, Gravity.NO_GRAVITY, x + (anchorView.getHeight()/20), y + (anchorView.getWidth()/12));
     }
 
     private void addWater() {

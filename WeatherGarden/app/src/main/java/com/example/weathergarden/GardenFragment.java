@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -21,22 +21,20 @@ import androidx.fragment.app.Fragment;
 
 import com.example.weathergarden.garden.GardenDao;
 import com.example.weathergarden.garden.GardenDatabase;
-import com.example.weathergarden.garden.GardenInfo;
 import com.example.weathergarden.garden.GroundInfo;
 import com.example.weathergarden.garden.GrowProc;
 import com.example.weathergarden.garden.PlantInfo;
 import com.example.weathergarden.garden.ShowGarden;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link gardenFragment#newInstance} factory method to
+ * Use the {@link GardenFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class gardenFragment extends Fragment {
-    View view = null, frame;
+public class GardenFragment extends Fragment implements View.OnClickListener {
+    View view = null, frame = null;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -48,8 +46,9 @@ public class gardenFragment extends Fragment {
 
     GestureDetector detector;
 
-    Button g1, g2, g3;
-    EditText differText;
+    Button ground, grow, weather;
+    EditText differText, weatherText;
+    TextView infoText;
 
     GardenDatabase gardenDatabase;
     GardenDao gardenDao;
@@ -62,10 +61,9 @@ public class gardenFragment extends Fragment {
 
     int index;
 
-
     boolean check = true;
 
-    public gardenFragment() {
+    public GardenFragment() {
         // Required empty public constructor
     }
 
@@ -154,20 +152,26 @@ public class gardenFragment extends Fragment {
         return check;
     }
 
-    void growing()
+    void growing(int differ)
     {
+        Log.d("a", differ + "");
         Thread thread = new Thread() {
             @Override
             public void run() {
                 super.run();
                 GrowProc gp = new GrowProc(view.getContext()).withDao(gardenDao);
-                gp.startGrowing(getContext());
+                if(gp.startGrowing(getContext(), differ) == 1){
+                    infoText.setText("식물을 성장시킵니다.");
+                }else {
+                    infoText.setText("식물이 성장하기엔 시간이 이릅니다.");
+                }
             }
         };
         thread.start();
 
         try {
             thread.join();
+            showGarden.show();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -183,8 +187,8 @@ public class gardenFragment extends Fragment {
      * @return A new instance of fragment gardenFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static gardenFragment newInstance(String param1, String param2) {
-        gardenFragment fragment = new gardenFragment();
+    public static GardenFragment newInstance(String param1, String param2) {
+        GardenFragment fragment = new GardenFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -210,13 +214,15 @@ public class gardenFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_garden, container, false);
         frame = view.findViewById(R.id.garden_frame);
 
+        infoText = view.findViewById(R.id.info_text);
         differText = view.findViewById(R.id.time_differ);
+        weatherText = view.findViewById(R.id.weather_text);
 
-        g1 = view.findViewById(R.id.ground1);
-        g2 = view.findViewById(R.id.ground2);
-        g3 = view.findViewById(R.id.ground3);
+        ground = view.findViewById(R.id.ground1);
+        grow = view.findViewById(R.id.growup);
+        weather = view.findViewById(R.id.weather_change);
 
-        g1.setOnTouchListener(new View.OnTouchListener() {
+        ground.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 index = 1;
@@ -224,22 +230,10 @@ public class gardenFragment extends Fragment {
                 return false;
             }
         });
-        g2.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                index = 2;
-                detector.onTouchEvent(motionEvent);
-                return false;
-            }
-        });
-        g3.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                index = 3;
-                detector.onTouchEvent(motionEvent);
-                return false;
-            }
-        });
+
+        grow.setOnClickListener(this);
+        weather.setOnClickListener(this);
+
         detector = new GestureDetector(view.getContext(), new GestureDetector.OnGestureListener() {
 
             @Override
@@ -259,7 +253,8 @@ public class gardenFragment extends Fragment {
                 //Log.d("Popup", e.getX() + " " + e.getY() + " " + index + " " + frame.getScrollX());
                 if (index == 0) return false;
 
-                int x = (int) e.getX() + (g1.getWidth() * (index-1)) - frame.getScrollX();
+                // 입력한 좌표값
+                int x = (int) e.getX() + (ground.getWidth() * (index-1)) - frame.getScrollX();
                 int y = (int) e.getY();
 
                 if (checkGround(index)) {
@@ -297,8 +292,6 @@ public class gardenFragment extends Fragment {
                     gardenDao = gardenDatabase.gardenDao();
                     growProc = new GrowProc().withDao(gardenDao);
 
-                    growing();
-
                     plantInfoList = (ArrayList<PlantInfo>) gardenDao.readPlantsList();
                 } catch (Exception e) {
                     Log.d("test", e.getMessage());
@@ -315,5 +308,24 @@ public class gardenFragment extends Fragment {
             e.printStackTrace();
         }
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        infoText.setText("");
+
+        switch (view.getId()) {
+            case R.id.growup:
+                try {
+                    growing(Integer.valueOf(differText.getText().toString()));
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(view.getContext(), "입력을 확인해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.weather_change:
+                showGarden.setWeather(weatherText.getText().toString());
+                break;
+        }
     }
 }

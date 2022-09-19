@@ -9,17 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link settingsFragment#newInstance} factory method to
+ * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class settingsFragment extends Fragment implements View.OnClickListener {
+public class SettingsFragment extends Fragment implements View.OnClickListener {
     //private Switch not_swi;
     private TextView loc_set, loc_tit, loc_swi_sma, loc_int, loc_int_sma, not_tit, not_swi_sma,
             not_wea, not_wea_sma, gui_tit, gui_menu, gui_sma;
@@ -77,7 +76,7 @@ public class settingsFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
 
-    public settingsFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -90,8 +89,8 @@ public class settingsFragment extends Fragment implements View.OnClickListener {
      * @return A new instance of fragment settingsFragment.
      */
 // TODO: Rename and change types and number of parameters
-    public static settingsFragment newInstance(String param1, String param2) {
-        settingsFragment fragment = new settingsFragment();
+    public static SettingsFragment newInstance(String param1, String param2) {
+        SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

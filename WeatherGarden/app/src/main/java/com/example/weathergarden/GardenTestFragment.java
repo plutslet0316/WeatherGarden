@@ -28,10 +28,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link gardenTestFragment#newInstance} factory method to
+ * Use the {@link GardenTestFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class gardenTestFragment extends Fragment implements View.OnClickListener {
+public class GardenTestFragment extends Fragment implements View.OnClickListener {
     View view = null;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,7 +43,7 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
     private String mParam2;
 
 
-    public gardenTestFragment() {
+    public GardenTestFragment() {
         // Required empty public constructor
     }
 
@@ -203,8 +203,8 @@ public class gardenTestFragment extends Fragment implements View.OnClickListener
      * @return A new instance of fragment gardenFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static gardenTestFragment newInstance(String param1, String param2) {
-        gardenTestFragment fragment = new gardenTestFragment();
+    public static GardenTestFragment newInstance(String param1, String param2) {
+        GardenTestFragment fragment = new GardenTestFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

@@ -38,10 +38,10 @@ import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link weatherFragment#newInstance} factory method to
+ * Use the {@link WeatherFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class weatherFragment extends Fragment implements View.OnClickListener {
+public class WeatherFragment extends Fragment implements View.OnClickListener {
     private View view;
     private TextView loc, day, tem, con;
     private ImageView wea;
@@ -73,7 +73,7 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
     private String mParam2;
 
 
-    public weatherFragment() {
+    public WeatherFragment() {
         // Required empty public constructor
     }
 
@@ -86,8 +86,8 @@ public class weatherFragment extends Fragment implements View.OnClickListener {
      * @return A new instance of fragment weatherFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static weatherFragment newInstance(String param1, String param2) {
-        weatherFragment fragment = new weatherFragment();
+    public static WeatherFragment newInstance(String param1, String param2) {
+        WeatherFragment fragment = new WeatherFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
