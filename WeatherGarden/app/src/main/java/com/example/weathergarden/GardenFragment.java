@@ -27,6 +27,8 @@ import com.example.weathergarden.garden.PlantInfo;
 import com.example.weathergarden.garden.ShowGarden;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,9 +48,13 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
     GestureDetector detector;
 
-    Button ground, grow, weather;
-    EditText differText, weatherText;
+    Button ground, stop, slow, fast, change;
+    EditText tempText, weatherText;
     TextView infoText;
+
+    int glowUp;
+    Timer timer;
+    TimerTask timerTask;
 
     GardenDatabase gardenDatabase;
     GardenDao gardenDao;
@@ -152,18 +158,20 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         return check;
     }
 
+    void setGlowTime(int time){
+        glowUp = time;
+    }
     void growing(int differ)
     {
-        Log.d("a", differ + "");
         Thread thread = new Thread() {
             @Override
             public void run() {
                 super.run();
                 GrowProc gp = new GrowProc(view.getContext()).withDao(gardenDao);
                 if(gp.startGrowing(getContext(), differ) == 1){
-                    infoText.setText("식물을 성장시킵니다.");
+                    infoText.setText("식물이 " + differ + "시간씩 성장합니다.");
                 }else {
-                    infoText.setText("식물이 성장하기엔 시간이 이릅니다.");
+                    infoText.setText("식물이 성장하지 않습니다.");
                 }
             }
         };
@@ -176,7 +184,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Use this factory method to create a new instance of
@@ -215,12 +222,24 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         frame = view.findViewById(R.id.garden_frame);
 
         infoText = view.findViewById(R.id.info_text);
-        differText = view.findViewById(R.id.time_differ);
+        tempText = view.findViewById(R.id.temp_text);
         weatherText = view.findViewById(R.id.weather_text);
 
         ground = view.findViewById(R.id.ground1);
-        grow = view.findViewById(R.id.growup);
-        weather = view.findViewById(R.id.weather_change);
+        stop = view.findViewById(R.id.stop_grow);
+        slow = view.findViewById(R.id.slow_grow);
+        fast = view.findViewById(R.id.fast_grow);
+        change = view.findViewById(R.id.change_button);
+
+        glowUp = 0;
+
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                growing(glowUp);
+            }
+        };
 
         ground.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -231,8 +250,10 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        grow.setOnClickListener(this);
-        weather.setOnClickListener(this);
+        stop.setOnClickListener(this);
+        slow.setOnClickListener(this);
+        fast.setOnClickListener(this);
+        change.setOnClickListener(this);
 
         detector = new GestureDetector(view.getContext(), new GestureDetector.OnGestureListener() {
 
@@ -304,6 +325,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             t.join();
             showGarden = new ShowGarden(view, (Activity) view.getContext(), gardenDao);
             showGarden.show();
+            timer.schedule(timerTask, 0, 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -315,15 +337,11 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         infoText.setText("");
 
         switch (view.getId()) {
-            case R.id.growup:
-                try {
-                    growing(Integer.valueOf(differText.getText().toString()));
-                }
-                catch (NumberFormatException e) {
-                    Toast.makeText(view.getContext(), "입력을 확인해주세요.", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.weather_change:
+            case R.id.stop_grow: glowUp = 0; break;
+            case R.id.slow_grow: glowUp = 1; break;
+            case R.id.fast_grow: glowUp = 12; break;
+            case R.id.change_button:
+                // 온도 및 날씨 변경하는 부분
                 showGarden.setWeather(weatherText.getText().toString());
                 break;
         }
