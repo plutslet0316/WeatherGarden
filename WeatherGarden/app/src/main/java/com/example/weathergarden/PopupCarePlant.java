@@ -7,14 +7,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.example.weathergarden.garden.GardenDao;
 import com.example.weathergarden.garden.GardenInfo;
@@ -72,9 +71,9 @@ public class PopupCarePlant extends PopupWindow {
         popup.setContentView(layout);
         View.OnClickListener cl;
         // 기능
-        Button watering = layout.findViewById(R.id.watering_test);
-        Button nutrient = layout.findViewById(R.id.nutrient_test);
-        Button pulling = layout.findViewById(R.id.pulling_test);
+        ImageButton watering = layout.findViewById(R.id.watering_test);
+        ImageButton nutrient = layout.findViewById(R.id.nutrient_test);
+        ImageButton pulling = layout.findViewById(R.id.pulling_test);
 
         cl = v ->{
             switch (v.getId()){
@@ -109,7 +108,7 @@ public class PopupCarePlant extends PopupWindow {
 
         // Show anchored to button
         popup.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        popup.showAtLocation(anchorView, Gravity.NO_GRAVITY, x + (anchorView.getHeight()/20), y + (anchorView.getWidth()/12));
+        popup.showAtLocation(anchorView, Gravity.NO_GRAVITY, x, y);
     }
 
     private void addWater() {

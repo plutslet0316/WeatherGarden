@@ -6,20 +6,23 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <Button
+    <ImageButton
         android:id="@+id/watering_test"
-        android:layout_width="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="물주기" />
-    <Button
+        android:src="@drawable/ic_watering_can" />
+    <ImageButton
         android:id="@+id/nutrient_test"
-        android:layout_width="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="영양제주기" />
-    <Button
+        android:src="@drawable/ic_nutrient" />
+    <ImageButton
         android:id="@+id/pulling_test"
-        android:layout_width="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="뽑아내기" />
+        android:src="@drawable/ic_trowel" />
 
 </LinearLayout>
