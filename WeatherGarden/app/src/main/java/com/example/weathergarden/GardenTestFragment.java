@@ -255,7 +255,7 @@ public class GardenTestFragment extends Fragment implements View.OnClickListener
                 try {
                     gardenDatabase = GardenDatabase.getInstance(getContext());
                     gardenDao = gardenDatabase.gardenDao();
-                    growProc = new GrowProc().withDao(gardenDao);
+                    growProc = new GrowProc(view.getContext()).withDao(gardenDao);
 
                     growing();
 

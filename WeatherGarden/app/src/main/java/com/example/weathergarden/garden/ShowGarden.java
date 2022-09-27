@@ -1,6 +1,8 @@
 package com.example.weathergarden.garden;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -15,6 +17,7 @@ import com.example.weathergarden.weather.WeatherProc;
 import com.example.weathergarden.weather.WeatherUltraFastInfo;
 import com.github.matteobattilana.weather.PrecipType;
 import com.github.matteobattilana.weather.WeatherView;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,11 +33,15 @@ public class ShowGarden {
     String info, plantState;
     int growMax, growMin, growPoint, limit;
 
+    ShowDao showDao;
+
     public ShowGarden(View view, Activity activity, GardenDao gardenDao) {
         this.view = view;
         this.activity = activity;
         this.gardenDao = gardenDao;
+
         weatherInfo = new WeatherProc(activity).getWeatherUltraFastInfo().get(0);
+        showDao = new ShowDao(activity);
     }
     public void show(){
         // 정원 정보 가져오기
@@ -199,23 +206,23 @@ public class ShowGarden {
     }
 
     public void setWeather(){
+        ShowInfo showInfo = showDao.getShowInfo();
+
         int weather = activity.getResources().getIdentifier("weather_view", "id", activity.getPackageName());
         WeatherView weatherView = view.findViewById(weather);
+
+        // 웨더뷰를 찾지 못할 경우 다른 방식으로 가져옴
         if(weatherView == null){
             weatherView = activity.findViewById(weather);
         }
-        Log.d("ShowGarden", "" + weather);
 
+        //Log.d("ShowGarden", "" + weather);
         int color = 0;
 
         weatherView.setFadeOutPercent(1.5f);
         // 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
-        switch (weatherInfo.rainType){
-            //없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
-            case "0":
-                color = Color.parseColor("#b3f3f3");
-                weatherView.setWeatherData(PrecipType.CLEAR);
-                break;
+        switch (showInfo.weather){
+            //비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
             case "1":
                 color = Color.parseColor("#b2dfdb");
                 weatherView.setWeatherData(PrecipType.RAIN);
@@ -229,10 +236,6 @@ public class ShowGarden {
                 weatherView.setWeatherData(PrecipType.SNOW);
                 break;
             case "5":
-                color = Color.parseColor("#b2dfdb");
-                weatherView.setWeatherData(PrecipType.RAIN);
-                weatherView.setEmissionRate(20f);
-                break;
             case "6":
                 color = Color.parseColor("#b2dfdb");
                 weatherView.setWeatherData(PrecipType.RAIN);
@@ -241,14 +244,26 @@ public class ShowGarden {
             case "7":
                 color = Color.parseColor("#e0f7fa");
                 weatherView.setWeatherData(PrecipType.SNOW);
-                weatherView.setEmissionRate(5f);
+                weatherView.setEmissionRate(2.5f);
+                weatherView.setSpeed(150);
+                break;
+            default:
+                color = Color.parseColor("#b3f3f3");
+                weatherView.setWeatherData(PrecipType.CLEAR);
                 break;
         }
         weatherView.setBackgroundColor(color);
     }
     public void setWeather(String weatherType){
+        ShowInfo showInfo = showDao.getShowInfo();
+
+        showInfo.weather = weatherType;
+        showDao.setShowInfo(showInfo);
+
         int weather = activity.getResources().getIdentifier("weather_view", "id", activity.getPackageName());
         WeatherView weatherView = view.findViewById(weather);
+
+        // 웨더뷰를 찾지 못할 경우 다른 방식으로 가져옴
         if(weatherView == null){
             weatherView = activity.findViewById(weather);
         }
@@ -258,7 +273,7 @@ public class ShowGarden {
 
         weatherView.setFadeOutPercent(1.5f);
         // 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
-        switch (weatherType){
+        switch (showInfo.weather){
             //비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
             case "1":
                 color = Color.parseColor("#b2dfdb");

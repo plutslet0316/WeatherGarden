@@ -28,11 +28,12 @@ import java.util.concurrent.TimeUnit;
 public class GrowProc {
     GardenDao dao;
     Context context;
+    ShowDao showDao;
 
     // 생성자
-    public GrowProc() {}
     public GrowProc(Context context) {
         this.context = context;
+        showDao = new ShowDao(context);
     }
 
     // dao와 같이 생성
@@ -161,7 +162,7 @@ public class GrowProc {
             return plantInfo.witherLimit <= groundInfo.wither;
         }
 
-        // 확인
+        // 조건 확인
         private float check(String type) {
             float result = 1;
             float var = 0;
@@ -169,11 +170,11 @@ public class GrowProc {
             int min = 0;
             int max = 0;
 
+            ShowInfo showInfo = showDao.getShowInfo();
             switch (type){
                 case "Temperature":
                     try {
-                        WeatherInfo weatherInfo = new WeatherProc((Activity) context).getWeatherInfo();
-                        var = Float.valueOf(weatherInfo.temp);
+                        var = Float.valueOf(showInfo.temp);
                         require = plantInfo.temperatureRequire;
                         min = plantInfo.temperatureMin;
                         max = plantInfo.temperatureMax;

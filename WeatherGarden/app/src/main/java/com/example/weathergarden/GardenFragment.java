@@ -24,7 +24,9 @@ import com.example.weathergarden.garden.GardenDatabase;
 import com.example.weathergarden.garden.GroundInfo;
 import com.example.weathergarden.garden.GrowProc;
 import com.example.weathergarden.garden.PlantInfo;
+import com.example.weathergarden.garden.ShowDao;
 import com.example.weathergarden.garden.ShowGarden;
+import com.example.weathergarden.garden.ShowInfo;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -60,6 +62,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
     GardenDao gardenDao;
     GrowProc growProc;
 
+    ShowDao showDao;
     ShowGarden showGarden;
     PopupCarePlant popupCarePlant;
 
@@ -215,11 +218,11 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_garden, container, false);
         frame = view.findViewById(R.id.garden_frame);
+        showDao = new ShowDao(view.getContext());
 
         infoText = view.findViewById(R.id.info_text);
         tempText = view.findViewById(R.id.temp_text);
@@ -232,14 +235,13 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         change = view.findViewById(R.id.change_button);
 
         glowUp = 0;
+        ShowInfo showInfo = showDao.getShowInfo();
+        tempText.setText(showInfo.temp);
+        weatherText.setText(showInfo.weather);
 
         timer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                growing(glowUp);
-            }
-        };
+        timerTask = getTimerTask();
+
 
         ground.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -311,7 +313,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 try {
                     gardenDatabase = GardenDatabase.getInstance(getContext());
                     gardenDao = gardenDatabase.gardenDao();
-                    growProc = new GrowProc().withDao(gardenDao);
+                    growProc = new GrowProc(view.getContext()).withDao(gardenDao);
 
                     plantInfoList = (ArrayList<PlantInfo>) gardenDao.readPlantsList();
                 } catch (Exception e) {
@@ -325,25 +327,51 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             t.join();
             showGarden = new ShowGarden(view, (Activity) view.getContext(), gardenDao);
             showGarden.show();
-            timer.schedule(timerTask, 0, 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return view;
     }
 
+    private TimerTask getTimerTask() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                growing(glowUp);
+            }
+        };
+    }
     @Override
     public void onClick(View view) {
         infoText.setText("");
 
         switch (view.getId()) {
-            case R.id.stop_grow: glowUp = 0; break;
-            case R.id.slow_grow: glowUp = 1; break;
-            case R.id.fast_grow: glowUp = 12; break;
+            case R.id.stop_grow:
+                glowUp = 0;
+                break;
+            case R.id.slow_grow:
+                glowUp = 1;
+                break;
+            case R.id.fast_grow:
+                glowUp = 12;
+                break;
             case R.id.change_button:
                 // 온도 및 날씨 변경하는 부분
-                showGarden.setWeather(weatherText.getText().toString());
+                ShowInfo showInfo = new ShowInfo();
+
+                showInfo.temp = tempText.getText().toString();
+                showInfo.weather = weatherText.getText().toString();
+
+                showDao.setShowInfo(showInfo);
+                showGarden.setWeather();
                 break;
+        }
+
+        if (glowUp == 0) timerTask.cancel();
+        else {
+            timerTask.cancel();
+            timerTask = getTimerTask();
+            timer.schedule(timerTask, 0, 1000);
         }
     }
 }
