@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".noticeFragment">
+    tools:context=".bookFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -13,6 +13,6 @@
         android:textSize="48dp"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:text="store_screen" />
+        android:text="book_screen" />
 
 </FrameLayout>
