@@ -11,4 +11,8 @@
         <item name="android:background">@drawable/app_widget_inner_view_background</item>
         <item name="android:clipToOutline">true</item>
     </style>
+
+    <style name="BaseUnityTheme" parent="android:Theme.Material.Light.NoActionBar.Fullscreen">
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
 </resources>

@@ -27,6 +27,8 @@ import com.example.weathergarden.garden.PlantInfo;
 import com.example.weathergarden.garden.ShowDao;
 import com.example.weathergarden.garden.ShowGarden;
 import com.example.weathergarden.garden.ShowInfo;
+import com.unity3d.player.UnityFragment;
+import com.unity3d.player.UnityPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -67,7 +69,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
     PopupCarePlant popupCarePlant;
 
     ArrayList<PlantInfo> plantInfoList;
-
+    UnityFragment unityFragment;
     int index;
 
     boolean check = true;
@@ -242,6 +244,8 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         timer = new Timer();
         timerTask = getTimerTask();
 
+        unityFragment = new UnityFragment();
+        getChildFragmentManager().beginTransaction().add(R.id.test_unity, unityFragment).commitAllowingStateLoss();
 
         ground.setOnTouchListener(new View.OnTouchListener() {
             @Override

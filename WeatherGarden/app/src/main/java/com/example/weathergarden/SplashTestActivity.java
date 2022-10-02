@@ -16,6 +16,7 @@ import androidx.core.splashscreen.SplashScreen;
 
 import com.example.weathergarden.weather.GPS;
 import com.example.weathergarden.weather.WeatherProc;
+import com.unity3d.player.UnityPlayerActivity;
 
 
 public class SplashTestActivity extends Activity {
@@ -82,7 +83,7 @@ public class SplashTestActivity extends Activity {
             ActivityCompat.requestPermissions((Activity) this,
                     permissionList,
                     1);
-            // }
+
         } else {
             isAllow = true;
         }
