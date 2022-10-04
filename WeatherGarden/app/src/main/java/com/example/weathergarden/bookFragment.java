@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link noticeFragment#newInstance} factory method to
+ * Use the {@link bookFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class noticeFragment extends Fragment {
+public class bookFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +23,7 @@ public class noticeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public noticeFragment() {
+    public bookFragment() {
         // Required empty public constructor
     }
 
@@ -36,8 +36,8 @@ public class noticeFragment extends Fragment {
      * @return A new instance of fragment noticeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static noticeFragment newInstance(String param1, String param2) {
-        noticeFragment fragment = new noticeFragment();
+    public static bookFragment newInstance(String param1, String param2) {
+        bookFragment fragment = new bookFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -58,6 +58,6 @@ public class noticeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notice, container, false);
+        return inflater.inflate(R.layout.fragment_book, container, false);
     }
 }

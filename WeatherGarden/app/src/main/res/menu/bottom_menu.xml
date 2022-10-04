@@ -7,22 +7,16 @@
         android:icon="@drawable/ic_baseline_cloud_24"
         android:title="" />
     <item
-        android:id="@+id/store"
-        android:enabled="true"
-        android:checked="true"
-        android:icon="@drawable/ic_baseline_shopping_basket_24"
-        android:title="" />
-    <item
         android:id="@+id/garden"
         android:enabled="true"
         android:checked="true"
         android:icon="@drawable/ic_baseline_local_florist_24"
         android:title="" />
     <item
-        android:id="@+id/notice"
+        android:id="@+id/book"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/notice"
+        android:icon="@drawable/ic_baseline_book_24"
         android:title="" />
     <item
         android:id="@+id/settings"
@@ -30,4 +24,6 @@
         android:checked="true"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="" />
+
+
 </menu>

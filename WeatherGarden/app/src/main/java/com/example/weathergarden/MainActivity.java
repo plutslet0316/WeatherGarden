@@ -52,14 +52,11 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main, new settingsFragment() )
                             .commit();
                     return true;
-                case R.id.notice:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main, new noticeFragment() )
+                case R.id.book:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main, new bookFragment() )
                             .commit();
                     return true;
-                case R.id.store:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main, new storeFragment() )
-                            .commit();
-                    return true;
+
             }
             return false;
         }
