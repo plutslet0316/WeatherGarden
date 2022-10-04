@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -36,7 +35,7 @@ public class settingsFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        loc_set = view.findViewById(R.id.location_set);
+       // loc_set = view.findViewById(R.id.location_set);
         loc_tit = view.findViewById(R.id.local_title);
         loc_swi_sma = view.findViewById(R.id.location_swich_small);
         loc_int = view.findViewById(R.id.local_interest);
@@ -51,7 +50,7 @@ public class settingsFragment extends Fragment implements View.OnClickListener {
 
         //not_swi = view.findViewById(R.id.noti_switch);
 
-        set_icon = view.findViewById(R.id.setting_icon);
+//        set_icon = view.findViewById(R.id.setting_icon);
 
         loc_box = view.findViewById(R.id.local_box);
         loc_line = view.findViewById(R.id.local_line);

@@ -7,31 +7,19 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
-        android:id="@+id/setting_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginBottom="23dp"
-        android:src="@drawable/ic_baseline_settings_24" />
-
-    <TextView
-        android:id="@+id/location_set"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/setting_icon"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="360dp"
-        android:layout_marginBottom="28dp"
-        android:text="설정"
-        android:textColor="@color/black"
-        android:textSize="26dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/location_set"-->
+<!--        android:layout_width="87dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:layout_marginEnd="304dp"-->
+<!--        android:layout_marginBottom="28dp"-->
+<!--        android:text="설정"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26dp" />-->
 
     <TextView
         android:id="@+id/local_title"
@@ -39,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/local_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="169dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="171dp"
         android:text="지역 관리"
         android:textColor="@color/black"
         android:textSize="24dp" />
@@ -52,11 +40,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="3dp"
         android:layout_marginLeft="60dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginEnd="2dp"
         android:layout_marginRight="120dp"
-        android:layout_marginBottom="487dp"
+        android:layout_marginBottom="557dp"
         android:background="@drawable/bg_settings"
         android:textColor="#ffffff" />
 
@@ -66,13 +54,12 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/local_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="22dp"
         android:switchPadding="10dp"
         android:text="위치정보 제공 동의"
         android:textColor="@color/black"
         android:textSize="20dp" />
-
 
     <TextView
         android:id="@+id/location_swich_small"
@@ -80,24 +67,22 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/local_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="54dp"
         android:text="현재 위치 GPS 가져오기"
         android:textColor="@color/black"
         android:textSize="14dp" />
 
-
-
     <View
         android:id="@+id/local_line"
-        android:layout_width="match_parent"
+        android:layout_width="470dp"
         android:layout_height="10px"
         android:layout_alignTop="@+id/local_box"
         android:layout_alignBottom="@+id/local_box"
+        android:layout_marginLeft="6dp"
         android:layout_marginTop="84dp"
-        android:layout_marginBottom="84dp"
-        android:background="@color/black" />
-
+        android:layout_marginBottom="83dp"
+        android:background="#c2c2c2" />
 
     <TextView
         android:id="@+id/local_interest"
@@ -105,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/local_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:layout_marginBottom="42dp"
         android:text="관심 지역"
         android:textColor="@color/black"
@@ -117,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/local_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="131dp"
         android:text="현재 위치 날씨 제외 날씨를 알고 싶은 지역 추가/삭제"
         android:textColor="@color/black"
@@ -130,11 +115,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="3dp"
         android:layout_marginLeft="60dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginEnd="2dp"
         android:layout_marginRight="120dp"
-        android:layout_marginBottom="278dp"
+        android:layout_marginBottom="349dp"
         android:background="@drawable/bg_settings"
         android:textColor="#ffffff" />
 
@@ -144,8 +129,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/noti_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="169dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="170dp"
         android:text="알림 설정"
         android:textColor="@color/black"
         android:textSize="24dp" />
@@ -156,10 +141,11 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/noti_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="22dp"
         android:switchPadding="10dp"
         android:text="상단바 알림"
+        android:textColor="@color/black"
         android:textSize="20dp"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -169,8 +155,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/noti_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="54dp"
         android:text="상단바에 상태 표시를 나타냄"
         android:textColor="@color/black"
         android:textSize="14dp" />
@@ -181,8 +167,8 @@
         android:layout_height="40dp"
         android:layout_alignTop="@+id/noti_switch"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-3dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="18dp"
         android:background="#00ff0000"
         android:text="OFF"
         android:textAlignment="center"
@@ -195,8 +181,8 @@
         android:layout_height="40dp"
         android:layout_alignTop="@+id/noti_switch"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-3dp"
-        android:layout_marginEnd="95dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="70dp"
         android:background="#00ff0000"
         android:text="ON"
         android:textAlignment="center"
@@ -205,13 +191,14 @@
 
     <View
         android:id="@+id/noti_line"
-        android:layout_width="match_parent"
+        android:layout_width="470dp"
         android:layout_height="10px"
         android:layout_alignTop="@+id/noti_box"
         android:layout_alignBottom="@+id/noti_box"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="84dp"
-        android:background="@color/black" />
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginBottom="82dp"
+        android:background="#c2c2c2" />
 
     <TextView
         android:id="@+id/noti_weather"
@@ -219,7 +206,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/noti_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:layout_marginBottom="42dp"
         android:text="날씨 알림"
         android:textColor="@color/black"
@@ -231,7 +218,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/noti_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="131dp"
         android:text="원하는 시간을 설정해 날씨 알림 받기"
         android:textColor="@color/black"
@@ -244,11 +231,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="3dp"
         android:layout_marginLeft="60dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginEnd="2dp"
         android:layout_marginRight="120dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="208dp"
         android:background="@drawable/bg_settings"
         android:textColor="#ffffff" />
 
@@ -258,7 +245,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/guide_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="18dp"
         android:layout_marginBottom="98dp"
         android:text="도움말"
         android:textColor="@color/black"
@@ -270,7 +257,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/guide_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="22dp"
         android:text="개요 및 이용 설명서"
         android:textColor="@color/black"
@@ -282,7 +269,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/guide_box"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="55dp"
         android:text="개발 스토리 및 날씨, 게임 이용법 설명"
         android:textColor="@color/black"
