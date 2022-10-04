@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.weathergarden.GardenFragment;
 import com.example.weathergarden.R;
 import com.example.weathergarden.weather.WeatherInfo;
 import com.example.weathergarden.weather.WeatherProc;
@@ -63,16 +64,15 @@ public class ShowGarden {
         }
 
         // 정보 표시.
+        setWeather();
         showInfo();
     }
-
+    
     // 받은 정보 가공해서 표시하기
     void showInfo() {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                setWeather();
-
                 for (GardenInfo gardenInfo : gardenList) {
                     GroundInfo groundInfo = gardenInfo.groundInfo;
                     PlantInfo plantInfo = gardenInfo.plantInfo;
@@ -86,51 +86,33 @@ public class ShowGarden {
                     growMin = 0;
                     limit = 0;
                     growPoint = 0;
-                    switch (groundInfo.growLevel) {
-                        case 4:
-                        case 3:
-                            growMax = plantInfo.growLimit;
-                            break;
-                        case 2:
-                            growMax += plantInfo.flowerRequire;
-                        case 1:
-                            growMax += plantInfo.stemRequire;
-                        case 0:
-                            growMax += plantInfo.seedRequire;
-                            break;
-                    }
-                    switch (groundInfo.growLevel) {
-                        case 4:
-                        case 3:
-                            growMin = plantInfo.flowerRequire;
-                            break;
-                        case 2:
-                            growMin = plantInfo.stemRequire;
-                            break;
-                        case 1:
-                            growMin = plantInfo.seedRequire;
-                            break;
-                        case 0:
-                            growMin = 0;
-                            break;
-                    }
-
                     plantState = "";
+
                     switch (groundInfo.growLevel) {
                         case 0:
                             plantState = "새싹";
+                            growMax += plantInfo.seedRequire;
+                            growMin = 0;
                             break;
                         case 1:
                             plantState = "성장기";
+                            growMax += plantInfo.stemRequire;
+                            growMin = plantInfo.seedRequire;
                             break;
                         case 2:
                             plantState = "꽃봉우리";
+                            growMax += plantInfo.flowerRequire;
+                            growMin = plantInfo.stemRequire;
                             break;
                         case 3:
                             plantState = "꽃";
+                            growMax = plantInfo.growLimit;
+                            growMin = plantInfo.flowerRequire;
                             break;
                         case 4:
                             plantState = "열매";
+                            growMax = plantInfo.growLimit;
+                            growMin = plantInfo.flowerRequire;
                             break;
                     }
 
