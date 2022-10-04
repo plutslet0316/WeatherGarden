@@ -1,6 +1,4 @@
-int id frame_layout_unity 0x0
 int id unitySurfaceView 0x0
-int layout fragment_unity 0x0
 int string FreeformWindowOrientation_landscape 0x0
 int string FreeformWindowOrientation_portrait 0x0
 int string FreeformWindowSize_maximize 0x0

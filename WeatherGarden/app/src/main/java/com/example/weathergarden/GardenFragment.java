@@ -245,6 +245,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         timerTask = getTimerTask();
 
         unityFragment = new UnityFragment();
+
         getChildFragmentManager().beginTransaction().add(R.id.test_unity, unityFragment).commitAllowingStateLoss();
 
         ground.setOnTouchListener(new View.OnTouchListener() {
@@ -352,6 +353,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.stop_grow:
                 glowUp = 0;
+                unityFragment.SendMessage("test message");
                 break;
             case R.id.slow_grow:
                 glowUp = 1;

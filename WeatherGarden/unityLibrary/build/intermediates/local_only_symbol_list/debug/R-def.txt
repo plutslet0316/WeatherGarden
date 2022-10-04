@@ -1,8 +1,6 @@
 R_DEF: Internal format may change without notice
 local
-id frame_layout_unity
 id unitySurfaceView
-layout fragment_unity
 string FreeformWindowOrientation_landscape
 string FreeformWindowOrientation_portrait
 string FreeformWindowSize_maximize

@@ -18,14 +18,12 @@ import androidx.fragment.app.Fragment;
 public class UnityFragment extends Fragment{
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
     FrameLayout frameLayout;
-    View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_unity, container, false);
-        mUnityPlayer = new UnityPlayer(view.getContext());
-        frameLayout = (FrameLayout) view.findViewById(R.id.frame_layout_unity);
+        mUnityPlayer = new UnityPlayer(getContext());
+        frameLayout = new FrameLayout(getContext());
         frameLayout.addView(mUnityPlayer.getView());
         mUnityPlayer.requestFocus();
         mUnityPlayer.windowFocusChanged(true);
@@ -64,5 +62,9 @@ public class UnityFragment extends Fragment{
     public void onResume() {
         super.onResume();
         mUnityPlayer.resume();
+    }
+
+    public void SendMessage(String msg){
+        mUnityPlayer.UnitySendMessage("GameManager", "Test", msg);
     }
 }

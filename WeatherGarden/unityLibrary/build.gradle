@@ -6,6 +6,7 @@ apply plugin: 'com.android.library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.fragment:fragment:1.5.3'
+
 }
 
 android {
