@@ -11,189 +11,105 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.github.matteobattilana.weather.WeatherView
-            android:id="@+id/weather_view"
-            android:background="#ffffff"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/stop_grow"
-                    android:layout_width="0sp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5sp"
-                    android:layout_weight="1"
-                    android:text="성장\n멈춤" />
-
-                <Button
-                    android:id="@+id/slow_grow"
-                    android:layout_width="0sp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5sp"
-                    android:layout_weight="1"
-                    android:text="느린\n성장" />
-
-                <Button
-                    android:id="@+id/fast_grow"
-                    android:layout_width="0sp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5sp"
-                    android:layout_weight="1"
-                    android:text="빠른\n성장" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50sp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5sp"
-                    android:gravity="center"
-                    android:text="랜덤\n성장" />
-
-                <ToggleButton
-                    android:layout_width="0sp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/temp_text"
-                    android:layout_width="0sp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5sp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:hint="온도"
-                    android:inputType="textPersonName"
-                    android:text="" />
-
-
-                <EditText
-                    android:id="@+id/weather_text"
-                    android:layout_width="0sp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5sp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:hint="날씨"
-                    android:inputType="textPersonName"
-                    android:text="" />
-
-                <Button
-                    android:id="@+id/change_button"
-                    android:layout_width="0sp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5sp"
-                    android:layout_weight="1"
-                    android:text="변경" />
-
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/info_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp"
-                android:layout_marginRight="10sp"
-                android:textSize="20sp" />
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/unity_frame"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/garden_frame"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/ground1"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/watering_button"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_margin="10sp"
-                        android:background="#00ff0000"
-                        android:text="" />
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_round_square_white"
+                        android:shadowRadius="20"
+                        android:shadowColor="#42000000"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:text="물주기" />
 
-                    <TextView
-                        android:id="@+id/plant1"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/temperature_button"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_margin="10sp"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:inputType="textMultiLine"
-                        android:textSize="18sp" />
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_round_square_white"
+                        android:text="온도조절" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/test_unity"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/planting_button"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/plant1_level"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text=""
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/plant1_progressBar"
-                            app:layout_constraintStart_toStartOf="@+id/plant1_progressBar" />
-
-                        <ProgressBar
-                            android:id="@+id/plant1_progressBar"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="76sp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="28dp"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toTopOf="@+id/plant1_img"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/plant1_img"
-                            android:layout_width="100sp"
-                            android:layout_height="200sp"
-                            android:scaleType="fitEnd"
-                            app:layout_constraintBaseline_toBottomOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.496"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="1.0" />
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_round_square_white"
+                        android:text="심기" />
 
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:orientation="vertical">
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/fertilizer_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_margin="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_round_square_white"
+                        android:text="영양주기" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/humidity_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_margin="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_round_square_white"
+                        android:text="습도조절" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/growing_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_margin="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_round_square_white"
+                        android:text="성장조절" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="168sp"
-                android:layout_alignParentBottom="true"
-                android:background="#6f4f28"
-                android:orientation="horizontal" />
+                android:layout_height="120sp" />
 
         </LinearLayout>
 

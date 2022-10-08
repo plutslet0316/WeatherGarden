@@ -124,7 +124,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         String rainType = "없음";
 
         TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
-        DateFormat sdFormat = new SimpleDateFormat("MM-dd hh:mm a");
+        DateFormat sdFormat = new SimpleDateFormat("MM월 dd일 hh:mm a");
         sdFormat.setTimeZone(timeZone);
         Date now = new Date(System.currentTimeMillis());
 
@@ -154,55 +154,45 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
                     case "1":
                         rainType = "맑음";
                         imageId = R.drawable.ic_sun;
-                        color = Color.parseColor("#ffccbc");
                         break;
                     case "3":
                         rainType = "구름많음";
                         imageId = R.drawable.ic_cloudy;
-                        color = Color.parseColor("#e0e0e0");
                         break;
                     case "4":
                         rainType = "흐림";
                         imageId = R.drawable.ic_cloud;
-                        color = Color.parseColor("#e0e0e0");
                         break;
                 }
                 break;
             case "1":
                 rainType = "비";
                 imageId = R.drawable.ic_rain;
-                color = Color.parseColor("#b2dfdb");
                 break;
             case "2":
                 rainType = "비/눈";
                 imageId = R.drawable.ic_rain;
-                color = Color.parseColor("#b2dfdb");
                 break;
             case "3":
                 rainType = "눈";
                 imageId = R.drawable.ic_snow;
-                color = Color.parseColor("#e0f7fa");
                 break;
             case "5":
                 rainType = "빗방울";
                 imageId = R.drawable.ic_rain;
-                color = Color.parseColor("#b2dfdb");
                 break;
             case "6":
                 rainType = "빗방울/눈날림";
                 imageId = R.drawable.ic_rain;
-                color = Color.parseColor("#b2dfdb");
                 break;
             case "7":
                 rainType = "눈날림";
                 imageId = R.drawable.ic_snow;
-                color = Color.parseColor("#e0f7fa");
                 break;
         }
 
         con.setText(rainType);
         wea.setImageResource(imageId);
-        view.setBackgroundColor(color);
     }
 
     public void setTomorrowWeather() {
@@ -343,10 +333,6 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         tem = view.findViewById(R.id.temperature);
         con = view.findViewById(R.id.condition);
         wea = view.findViewById(R.id.imageView5);
-
-        add = (ImageButton) view.findViewById(R.id.add);
-
-        add.setOnClickListener(this);
 
         weatherProc = new WeatherProc(view.getContext());
 

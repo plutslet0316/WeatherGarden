@@ -27,6 +27,7 @@ import com.example.weathergarden.garden.PlantInfo;
 import com.example.weathergarden.garden.ShowDao;
 import com.example.weathergarden.garden.ShowGarden;
 import com.example.weathergarden.garden.ShowInfo;
+import com.google.gson.Gson;
 import com.unity3d.player.UnityFragment;
 import com.unity3d.player.UnityPlayerActivity;
 
@@ -52,9 +53,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
     GestureDetector detector;
 
-    Button ground, stop, slow, fast, change;
-    EditText tempText, weatherText;
-    TextView infoText;
+    Button waterButton, fertiButton, tempButton, humButton, plantButton, growButton;
 
     int glowUp;
     Timer timer;
@@ -63,6 +62,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
     GardenDatabase gardenDatabase;
     GardenDao gardenDao;
     GrowProc growProc;
+    GrowProc.CarePlant carePlant;
 
     ShowDao showDao;
     ShowGarden showGarden;
@@ -70,6 +70,8 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
     ArrayList<PlantInfo> plantInfoList;
     UnityFragment unityFragment;
+    Gson gson;
+
     int index;
 
     boolean check = true;
@@ -101,7 +103,9 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                         thread.join();
 
                         // 기다렸다가 정원 갱신
-                        showGarden.show();
+//                        showGarden.show();
+//                        unityFragment.SendMessage("GamaManager", "setPlantInfo", gson.toJson(showGarden.getData()));
+
                     } catch (Exception e) {
                         Log.d("test", e.getMessage());
                     } finally {
@@ -126,7 +130,9 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                         thread.join();
 
                         // 기다렸다가 정원 갱신
-                        showGarden.show();
+//                        showGarden.show();
+//                        unityFragment.SendMessage("GamaManager", "setPlantInfo", gson.toJson(showGarden.getData()));
+
                     } catch (Exception e) {
                         Log.d("test", e.getMessage());
                     } finally {
@@ -135,19 +141,58 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
-
-    boolean checkGround(int groundNo) {
+    void plantGround(int groundNo){
         Intent intent = new Intent(view.getContext(), PopupPlantSelectTest.class);
         intent.putExtra("plant_info", plantInfoList);
-        check = true;
+        intent.putExtra("ground_no", groundNo);
+        mStartForResult.launch(intent);
+    }
 
+    void addWater(){
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                carePlant.addWater(1000);
+
+            }
+        };
+        thread.start();
+
+        try {
+            thread.join();
+            showGarden.show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addNutrient() {
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                carePlant.addNutrient(1000);
+            }
+        };
+        thread.start();
+
+        try {
+            thread.join();
+            showGarden.show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    boolean checkGround(int groundNo) {
+        check = true;
         Thread thread = new Thread() {
             @Override
             public void run() {
                 super.run();
                 if (gardenDao.readGroundWithGroundNo(groundNo) == null) {
-                    intent.putExtra("ground_no", groundNo);
-                    mStartForResult.launch(intent);
                     check = false;
                 }
             }
@@ -156,12 +201,13 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
         try {
             thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
         }
-
         return check;
     }
+
+
 
     void setGlowTime(int time){
         glowUp = time;
@@ -174,9 +220,9 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 super.run();
                 GrowProc gp = new GrowProc(view.getContext()).withDao(gardenDao);
                 if(gp.startGrowing(getContext(), differ) == 1){
-                    infoText.setText("식물이 " + differ + "시간씩 성장합니다.");
+//                    infoText.setText("식물이 " + differ + "시간씩 성장합니다.");
                 }else {
-                    infoText.setText("식물이 성장하지 않습니다.");
+//                    infoText.setText("식물이 성장하지 않습니다.");
                 }
             }
         };
@@ -184,7 +230,9 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
         try {
             thread.join();
-            showGarden.show();
+//            showGarden.show();
+//            unityFragment.SendMessage("GamaManager", "setPlantInfo", gson.toJson(showGarden.getData()));
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -223,32 +271,30 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_garden, container, false);
-        frame = view.findViewById(R.id.garden_frame);
+        frame = view.findViewById(R.id.unity_frame);
         showDao = new ShowDao(view.getContext());
+        gson = new Gson();
 
-        infoText = view.findViewById(R.id.info_text);
-        tempText = view.findViewById(R.id.temp_text);
-        weatherText = view.findViewById(R.id.weather_text);
+//    Button waterButton, fertiButton, tempButton, humiButton, plantButton, growButton;
+        waterButton = view.findViewById(R.id.watering_button);
+        fertiButton = view.findViewById(R.id.fertilizer_button);
+        tempButton = view.findViewById(R.id.temperature_button);
+        humButton = view.findViewById(R.id.humidity_button);
+        plantButton = view.findViewById(R.id.planting_button);
+        growButton = view.findViewById(R.id.growing_button);
 
-        ground = view.findViewById(R.id.ground1);
-        stop = view.findViewById(R.id.stop_grow);
-        slow = view.findViewById(R.id.slow_grow);
-        fast = view.findViewById(R.id.fast_grow);
-        change = view.findViewById(R.id.change_button);
 
         glowUp = 0;
         ShowInfo showInfo = showDao.getShowInfo();
-        tempText.setText(showInfo.temp);
-        weatherText.setText(showInfo.weather);
 
         timer = new Timer();
         timerTask = getTimerTask();
 
         unityFragment = new UnityFragment();
 
-        getChildFragmentManager().beginTransaction().add(R.id.test_unity, unityFragment).commitAllowingStateLoss();
+        getChildFragmentManager().beginTransaction().add(R.id.unity_frame, unityFragment).commitAllowingStateLoss();
 
-        ground.setOnTouchListener(new View.OnTouchListener() {
+        plantButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 index = 1;
@@ -257,10 +303,11 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        stop.setOnClickListener(this);
-        slow.setOnClickListener(this);
-        fast.setOnClickListener(this);
-        change.setOnClickListener(this);
+        waterButton.setOnClickListener(this);
+        fertiButton.setOnClickListener(this);
+        tempButton.setOnClickListener(this);
+        humButton.setOnClickListener(this);
+        growButton.setOnClickListener(this);
 
         detector = new GestureDetector(view.getContext(), new GestureDetector.OnGestureListener() {
 
@@ -278,17 +325,30 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             //화면이 한 손가락으로 눌렸다 떼어지는 경우
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                //Log.d("Popup", e.getX() + " " + e.getY() + " " + index + " " + frame.getScrollX());
                 if (index == 0) return false;
 
-                // 입력한 좌표값
-                int x = (int) e.getX() + (ground.getWidth() * (index-1)) - frame.getScrollX();
-                int y = (int) e.getY();
-
                 if (checkGround(index)) {
-                    popupCarePlant = new PopupCarePlant((Activity) view.getContext(), view, growProc, gardenDao, mStartForResult, index, x, y);
-                    popupCarePlant.displayPopupWindow();
+                    Thread thread = new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            carePlant.removePlant(index);
+                        }
+                    };
+                    thread.start();
+
+                    try {
+                        thread.join();
+                        // 식물 뽑기
+//                        unityFragment.SendMessage(gson.toJson(showInfo));
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                    }
                 }
+                else {
+                    plantGround(index);
+                }
+
                 return true;
             }
 
@@ -319,6 +379,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                     gardenDatabase = GardenDatabase.getInstance(getContext());
                     gardenDao = gardenDatabase.gardenDao();
                     growProc = new GrowProc(view.getContext()).withDao(gardenDao);
+                    carePlant = growProc.new CarePlant();
 
                     plantInfoList = (ArrayList<PlantInfo>) gardenDao.readPlantsList();
                 } catch (Exception e) {
@@ -331,7 +392,9 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         try {
             t.join();
             showGarden = new ShowGarden(view, (Activity) view.getContext(), gardenDao);
-            showGarden.show();
+//            showGarden.show();
+//            unityFragment.SendMessage("GamaManager", "setPlantInfo", gson.toJson(showGarden.getData()));
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -348,30 +411,37 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View view) {
-        infoText.setText("");
+        ShowInfo showInfo = showDao.getShowInfo();
 
         switch (view.getId()) {
-            case R.id.stop_grow:
-                glowUp = 0;
-                unityFragment.SendMessage("test message");
-                break;
-            case R.id.slow_grow:
-                glowUp = 1;
-                break;
-            case R.id.fast_grow:
-                glowUp = 12;
-                break;
-            case R.id.change_button:
-                // 온도 및 날씨 변경하는 부분
-                ShowInfo showInfo = new ShowInfo();
 
-                showInfo.temp = tempText.getText().toString();
-                showInfo.weather = weatherText.getText().toString();
+            case R.id.watering_button:
+                // 물 주는 부분
+                addWater();
+//            unityFragment.SendMessage("GameManager", "addWater", gson.toJson(showInfo));
+                break;
+            case R.id.fertilizer_button:
+                // 비료 주는 부분
+                addNutrient();
+//            unityFragment.SendMessage("GameManager", "addNutrient", gson.toJson(showInfo));
+                break;
+            case R.id.temperature_button:
+                // 온도 변경하는 부분
 
-                showDao.setShowInfo(showInfo);
-                showGarden.setWeather();
+//                showInfo.temp =
+                break;
+            case R.id.humidity_button:
+                // 습도
+
+//                showInfo.hum =
+                break;
+            case R.id.growing_button:
+                if(glowUp == 0) glowUp = 12;
+                else glowUp = 0;
                 break;
         }
+
+        showDao.setShowInfo(showInfo);
 
         if (glowUp == 0) timerTask.cancel();
         else {

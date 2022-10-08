@@ -44,6 +44,20 @@ public class ShowGarden {
         weatherInfo = new WeatherProc(activity).getWeatherUltraFastInfo().get(0);
         showDao = new ShowDao(activity);
     }
+
+    public PlantParameters getData(){
+        PlantParameters parameters = new PlantParameters();
+        GroundInfo groundInfo = gardenList.get(0).groundInfo;
+        PlantInfo plantInfo = gardenList.get(0).plantInfo;
+
+        parameters.plantName = plantInfo.name;
+        parameters.level = groundInfo.growLevel;
+        parameters.growPoint = groundInfo.growPoint;
+        parameters.wither = groundInfo.wither;
+        parameters.witherLimit = plantInfo.witherLimit;
+
+        return parameters;
+    }
     public void show(){
         // 정원 정보 가져오기
         // 항상 스레드를 써야한다.
