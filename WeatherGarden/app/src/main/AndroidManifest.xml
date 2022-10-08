@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Dialog"/>
+        <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Transparent.Dialog"/>
         <activity android:name=".PopupPlantDelete" android:theme="@style/Theme.WeatherGarden.Dialog"/>
         <activity android:name=".weather_gps" />
         <activity android:name=".weather_add"/>

@@ -26,6 +26,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16sp"
+
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -40,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_round_square_white"
+                        android:background="@drawable/shape_round_square_16_white"
                         android:shadowRadius="20"
                         android:shadowColor="#42000000"
                         android:shadowDx="0"
@@ -53,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_round_square_white"
+                        android:background="@drawable/shape_round_square_16_white"
                         android:text="온도조절" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -62,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_round_square_white"
+                        android:background="@drawable/shape_round_square_16_white"
                         android:text="심기" />
 
 
@@ -82,7 +84,7 @@
                         android:layout_height="0sp"
                         android:layout_margin="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_round_square_white"
+                        android:background="@drawable/shape_round_square_16_white"
                         android:text="영양주기" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -91,7 +93,7 @@
                         android:layout_height="0sp"
                         android:layout_margin="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_round_square_white"
+                        android:background="@drawable/shape_round_square_16_white"
                         android:text="습도조절" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -100,7 +102,7 @@
                         android:layout_height="0sp"
                         android:layout_margin="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_round_square_white"
+                        android:background="@drawable/shape_round_square_16_white"
                         android:text="성장조절" />
 
                 </LinearLayout>

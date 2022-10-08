@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#eeeeee"
+    android:background="@drawable/shape_round_square_16_white"
     android:orientation="vertical"
-    android:layout_width="400dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     style="">
 
@@ -12,12 +12,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:background="@drawable/shape_half_top_round_square_16"
         android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:background="#4BC5FF"
             android:gravity="center"
             android:text="식물을 선택하세요"
             android:textColor="#FFF"
@@ -52,6 +52,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:gravity="center"
+        android:background="@drawable/shape_half_bottom_round_square_16_white"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

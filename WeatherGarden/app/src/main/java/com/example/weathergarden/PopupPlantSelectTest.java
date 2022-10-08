@@ -2,6 +2,8 @@ package com.example.weathergarden;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -35,6 +37,17 @@ public class PopupPlantSelectTest extends Activity {
         Intent intentGet = getIntent();
         int groundNo = intentGet.getIntExtra("ground_no", 0);
 
+        int[][] states = new int[][] {
+                new int[] {-android.R.attr.state_checked},
+                new int[] {android.R.attr.state_checked}
+        };
+
+        int[] colors = new int[] {
+                Color.parseColor("#63BDE9"),
+                Color.parseColor("#5097B9")
+        };
+        ColorStateList myList = new ColorStateList(states, colors);
+
         plantInfoList = (ArrayList<PlantInfo>) intentGet.getSerializableExtra("plant_info");
 
         ChipGroup chipGroup = findViewById(R.id.plant_group);
@@ -43,6 +56,7 @@ public class PopupPlantSelectTest extends Activity {
             Chip chip = new Chip(this); // Must contain context in parameter
             chip.setText(plantInfo.name);
             chip.setCheckable(true);
+            chip.setChipBackgroundColor(myList);
             chip.setOnClickListener(v -> {
                 plantCode = plantInfo.plantCode;
             });

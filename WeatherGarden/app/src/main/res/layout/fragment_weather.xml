@@ -21,7 +21,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_half_round_square">
+                android:background="@drawable/shape_half_bottom_round_square">
 
                 <TextView
                     android:id="@+id/location"
