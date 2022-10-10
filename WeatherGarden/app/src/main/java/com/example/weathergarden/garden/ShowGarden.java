@@ -46,19 +46,50 @@ public class ShowGarden {
     }
 
     public PlantParameters getData(){
+        getGardenList();
         PlantParameters parameters = new PlantParameters();
-        GroundInfo groundInfo = gardenList.get(0).groundInfo;
-        PlantInfo plantInfo = gardenList.get(0).plantInfo;
 
-        parameters.plantName = plantInfo.name;
-        parameters.level = groundInfo.growLevel;
-        parameters.growPoint = groundInfo.growPoint;
-        parameters.wither = groundInfo.wither;
-        parameters.witherLimit = plantInfo.witherLimit;
+        if(gardenList.size() != 0) {
+            GroundInfo groundInfo = gardenList.get(0).groundInfo;
+            PlantInfo plantInfo = gardenList.get(0).plantInfo;
+            ShowInfo showInfo = showDao.getShowInfo();
+
+            parameters.name = plantInfo.img;
+            parameters.level = groundInfo.growLevel + 1;
+            parameters.growPoint = groundInfo.growPoint;
+
+//            switch (groundInfo.growLevel) {
+//                case 0:
+//                    growMax += plantInfo.seedRequire;
+//                    growMin = 0;
+//                    break;
+//                case 1:
+//                    growMax += plantInfo.stemRequire;
+//                    growMin = plantInfo.seedRequire;
+//                    break;
+//                case 2:
+//                    growMax += plantInfo.flowerRequire;
+//                    growMin = plantInfo.stemRequire;
+//                    break;
+//                case 3:
+//                    growMax = plantInfo.growLimit;
+//                    growMin = plantInfo.flowerRequire;
+//                    break;
+//                case 4:
+//                    growMax = plantInfo.growLimit;
+//                    growMin = plantInfo.growLimit;
+//                    break;
+//            }
+
+            parameters.wither = groundInfo.wither;
+            parameters.witherLimit = plantInfo.witherLimit;
+            parameters.time = showInfo.time;
+        }
 
         return parameters;
     }
-    public void show(){
+
+    public void getGardenList(){
         // 정원 정보 가져오기
         // 항상 스레드를 써야한다.
         Thread thread = new Thread() {
@@ -76,6 +107,12 @@ public class ShowGarden {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void show(){
+        // 정원 정보 가져오기
+        // 항상 스레드를 써야한다.
+        getGardenList();
 
         // 정보 표시.
         setWeather();

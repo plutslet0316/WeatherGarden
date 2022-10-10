@@ -64,7 +64,7 @@ public class UnityFragment extends Fragment{
         mUnityPlayer.resume();
     }
 
-    public void SendMessage(String msg){
-        mUnityPlayer.UnitySendMessage("GameManager", "Test", msg);
+    public void SendMessage(String object, String method, String msg){
+        mUnityPlayer.UnitySendMessage(object, method, msg);
     }
 }

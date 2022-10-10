@@ -4,6 +4,7 @@ public class ShowInfo {
     public String weather;
     public String temp;
     public String hum;
+    public int time;
 
     public void init(){
         weather = "0";

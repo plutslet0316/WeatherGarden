@@ -23,6 +23,35 @@
         android:required="false" />
 
     <application>
+        <activity
+            android:name="com.unity3d.player.UnityPlayerActivity"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
+            android:exported="true"
+            android:hardwareAccelerated="false"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/UnityThemeSelector" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="unityplayer.UnityActivity"
+                android:value="true" />
+            <meta-data
+                android:name="WindowManagerPreference:FreeformWindowSize"
+                android:value="@string/FreeformWindowSize_maximize" />
+            <meta-data
+                android:name="WindowManagerPreference:FreeformWindowOrientation"
+                android:value="@string/FreeformWindowOrientation_portrait" />
+            <meta-data
+                android:name="android.notch_support"
+                android:value="true" />
+        </activity>
+
         <meta-data
             android:name="unity.splash-mode"
             android:value="0" />
@@ -37,7 +66,7 @@
             android:value="portrait|landscape" />
         <meta-data
             android:name="unity.build-id"
-            android:value="a3c84fb6-f875-49ef-a08d-169bfcce8ebb" />
+            android:value="744156b4-0177-431e-bac0-11c36f71a875" />
     </application>
 
 </manifest>
