@@ -4,25 +4,25 @@
         android:id="@+id/weather"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/ic_baseline_cloud_24"
+        android:icon="@drawable/cloud"
         android:title="" />
     <item
         android:id="@+id/garden"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/ic_baseline_local_florist_24"
+        android:icon="@drawable/plant"
         android:title="" />
     <item
         android:id="@+id/book"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/ic_baseline_book_24"
+        android:icon="@drawable/book"
         android:title="" />
     <item
         android:id="@+id/settings"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:icon="@drawable/settings"
         android:title="" />
 
 

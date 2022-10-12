@@ -30,11 +30,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".MainActivityWidget"/>
+
         <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Dialog"/>
         <activity android:name=".PopupPlantDelete" android:theme="@style/Theme.WeatherGarden.Dialog"/>
+        <activity android:name=".TulipBook"/>
+        <activity android:name=".SunflowerBook"/>
+
         <activity android:name=".weather_gps" />
         <activity android:name=".weather_add"/>
+
 
         <service
             android:name="com.example.weathergarden.MyService"
