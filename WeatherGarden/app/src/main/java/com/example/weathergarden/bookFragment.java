@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 public class bookFragment extends Fragment {
     private View view;
     private ImageButton tulip, sunflower;
-    private ImageView circle, rectangle;
+    private ImageView circle, rectangle, sky_img, nature_img;
     private TextView title;
 
     @Nullable
@@ -31,6 +31,8 @@ public class bookFragment extends Fragment {
         sunflower = (ImageButton) view.findViewById(R.id.sunflower);
         circle = view.findViewById(R.id.circle);
         rectangle = view.findViewById(R.id.rectangle);
+        sky_img = view.findViewById(R.id.sky_img);
+        nature_img = view.findViewById(R.id.nature_img);
         title = view.findViewById(R.id.title);
 
         tulip.setOnClickListener(new View.OnClickListener() {

@@ -1,19 +1,29 @@
 package com.example.weathergarden;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class TulipBook extends Activity {
+    myDBHelper myHelper;
+    SQLiteDatabase sqlDB;
+
     ImageButton tulip1, sunflower1;
-    ImageView circle1, rectangle1;
-    TextView title2;
+    ImageView circle1, rectangle1, tul_img;
+    TextView title2, diffi, flow, origin, light, temp, water, soil, earth, coun;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +34,21 @@ public class TulipBook extends Activity {
         sunflower1 = (ImageButton) findViewById(R.id.sunflower1);
         circle1 = (ImageView) findViewById(R.id.circle1);
         rectangle1 = (ImageView) findViewById(R.id.rectangle1);
+        tul_img = (ImageView) findViewById(R.id.tul_img);
         title2 = (TextView) findViewById(R.id.title2);
+
+        diffi = (TextView) findViewById(R.id.diffi);
+        flow = (TextView) findViewById(R.id.flow);
+        origin = (TextView) findViewById(R.id.origin);
+        light = (TextView) findViewById(R.id.light);
+        temp = (TextView) findViewById(R.id.temp);
+        water = (TextView) findViewById(R.id.water);
+        soil = (TextView) findViewById(R.id.soil);
+        earth = (TextView) findViewById(R.id.earth);
+        coun = (TextView) findViewById(R.id.coun);
+
+
+        myHelper = new myDBHelper(this);
 
         sunflower1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,5 +57,77 @@ public class TulipBook extends Activity {
                 startActivity(intent);
             }
         });
+
+        tulip1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sqlDB = myHelper.getReadableDatabase();
+                Cursor cursor;
+                cursor = sqlDB.rawQuery("SELECT * FROM plants ORDER BY ROWID DESC LIMIT 1;", null);
+
+            /*
+            데이터 전체 출력
+            SELECT * FROM plants;
+            마지막 데이터만 출력
+            SELECT * FROM plants ORDER BY ROWID DESC LIMIT 1;   // 튤립
+            첫 행만 출력
+            SELECT * FROM plants ORDER BY ROWID LIMIT 1;    // 해바라기
+             */
+
+                String strDiff = "\n" + "난이도 : ";
+                String strFlower = "개화시기 :  " ;
+                String strOrigin = "\n" + "유래 : " ;
+                String strLight = "햇빛 :  ";
+                String strTemp = "온도 : " + "\r\n";
+                String strWater = "물주기 : " + "\r\n";
+                String strSoil = "흙 :  ";
+                String strEarth = "비료 및 분갈이 : " + "\n";
+                String strCoun = "원산지 : " ;
+
+                while (cursor.moveToNext()) {
+
+                    strDiff += cursor.getString(3);
+                    strFlower += cursor.getString(4);
+                    strOrigin += cursor.getString(5) + "\r\n";
+                    strLight += cursor.getString(6);
+                    strTemp += cursor.getString(7) + "\r\n";
+                    strWater += cursor.getString(8) + "\r\n";
+                    strSoil += cursor.getString(9);
+                    strEarth += cursor.getString(10) + "\r\n";
+                    strCoun += cursor.getString(11) + "\r\n";
+                }
+
+                diffi.setText(strDiff);
+                flow.setText(strFlower);
+                origin.setText(strOrigin);
+                light.setText(strLight);
+                temp.setText(strTemp);
+                water.setText(strWater);
+                soil.setText(strSoil);
+                earth.setText(strEarth);
+                coun.setText(strCoun);
+
+                cursor.close();
+                sqlDB.close();
+            }
+        });
     }
+
+    public class myDBHelper extends SQLiteOpenHelper {
+        public myDBHelper(Context context) {
+            super(context, "plantDB", null, 1);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL("CREATE TABLE plants (PLANT_CODE CHAR(20) PRIMARY KEY, PLANT_NAME TEXT, PLANT_IMG BLOB, PLANT_DIFF TEXT, PLANT_FLOWER TEXT, PLANT_ORI TEXT, PLANT_SUN TEXT, PLANT_TEMP TEXT, PLANT_WATER TEXT, PLANT_SOIL TEXT, PLANT_FERSUB TEXT, PLANT_COUORI TEXT);");
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            db.execSQL("DROP TABLE IF EXISTS plants");
+            onCreate(db);
+        }
+    }
+
 }

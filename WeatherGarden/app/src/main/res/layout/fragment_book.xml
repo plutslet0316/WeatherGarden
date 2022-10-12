@@ -26,8 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.083"
-            app:srcCompat="@drawable/tulip"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:src="@drawable/tulip" />
 
         <ImageButton
             android:id="@+id/sunflower"
@@ -41,8 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.229"
-            app:srcCompat="@drawable/sunflower"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:src="@drawable/sunflower" />
 
 
         <ImageView
@@ -69,23 +67,49 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <ImageView
+            android:id="@+id/sky_img"
+            android:layout_width="374dp"
+            android:layout_height="945dp"
+            android:src="@drawable/sky2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.496" />
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="277dp"
+            android:layout_height="144dp"
             android:layout_gravity="center"
-            android:text="Plant Book"
-            android:textSize="48sp"
+            android:text="    Plant
+            Dictionary"
+            android:textSize="48dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.716"
+            app:layout_constraintHorizontal_bias="0.921"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.195" />
+            app:layout_constraintVertical_bias="0.349" />
+
+        <ImageView
+            android:id="@+id/nature_img"
+            android:layout_width="145dp"
+            android:layout_height="137dp"
+            android:src="@drawable/nature"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.952"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.532" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
