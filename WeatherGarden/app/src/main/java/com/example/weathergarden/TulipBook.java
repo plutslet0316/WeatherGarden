@@ -16,8 +16,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weathergarden.plantdb.DBManager;
+
 public class TulipBook extends Activity {
-    myDBHelper myHelper;
+    DBManager dbManager;
     SQLiteDatabase sqlDB;
 
     ImageButton tulip1, sunflower1;
@@ -48,86 +50,69 @@ public class TulipBook extends Activity {
         coun = (TextView) findViewById(R.id.coun);
 
 
-        myHelper = new myDBHelper(this);
+        dbManager = new DBManager(this);
 
         sunflower1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TulipBook.this, SunflowerBook.class);
                 startActivity(intent);
+                finish();
             }
         });
 
-        tulip1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sqlDB = myHelper.getReadableDatabase();
-                Cursor cursor;
-                cursor = sqlDB.rawQuery("SELECT * FROM plants ORDER BY ROWID DESC LIMIT 1;", null);
 
-            /*
-            데이터 전체 출력
-            SELECT * FROM plants;
-            마지막 데이터만 출력
-            SELECT * FROM plants ORDER BY ROWID DESC LIMIT 1;   // 튤립
-            첫 행만 출력
-            SELECT * FROM plants ORDER BY ROWID LIMIT 1;    // 해바라기
-             */
+        dbManager.createDataBase();
+        dbManager.openDataBase();
+        dbManager.close();
+        sqlDB = dbManager.getReadableDatabase();
+        Cursor cursor;
+        cursor = sqlDB.rawQuery("SELECT * FROM plants ORDER BY ROWID DESC LIMIT 1;", null);
 
-                String strDiff = "\n" + "난이도 : ";
-                String strFlower = "개화시기 :  " ;
-                String strOrigin = "\n" + "유래 : " ;
-                String strLight = "햇빛 :  ";
-                String strTemp = "온도 : " + "\r\n";
-                String strWater = "물주기 : " + "\r\n";
-                String strSoil = "흙 :  ";
-                String strEarth = "비료 및 분갈이 : " + "\n";
-                String strCoun = "원산지 : " ;
+    /*
+    데이터 전체 출력
+    SELECT * FROM plants;
+    마지막 데이터만 출력
+    SELECT * FROM plants ORDER BY ROWID DESC LIMIT 1;   // 튤립
+    첫 행만 출력
+    SELECT * FROM plants ORDER BY ROWID LIMIT 1;    // 해바라기
+     */
 
-                while (cursor.moveToNext()) {
+        String strDiff = "\n" + "난이도 : ";
+        String strFlower = "개화시기 :  " ;
+        String strOrigin = "\n" + "유래 : " ;
+        String strLight = "햇빛 :  ";
+        String strTemp = "온도 : " + "\r\n";
+        String strWater = "물주기 : " + "\r\n";
+        String strSoil = "흙 :  ";
+        String strEarth = "비료 및 분갈이 : " + "\n";
+        String strCoun = "원산지 : " ;
 
-                    strDiff += cursor.getString(3);
-                    strFlower += cursor.getString(4);
-                    strOrigin += cursor.getString(5) + "\r\n";
-                    strLight += cursor.getString(6);
-                    strTemp += cursor.getString(7) + "\r\n";
-                    strWater += cursor.getString(8) + "\r\n";
-                    strSoil += cursor.getString(9);
-                    strEarth += cursor.getString(10) + "\r\n";
-                    strCoun += cursor.getString(11) + "\r\n";
-                }
+        while (cursor.moveToNext()) {
 
-                diffi.setText(strDiff);
-                flow.setText(strFlower);
-                origin.setText(strOrigin);
-                light.setText(strLight);
-                temp.setText(strTemp);
-                water.setText(strWater);
-                soil.setText(strSoil);
-                earth.setText(strEarth);
-                coun.setText(strCoun);
+            strDiff += cursor.getString(3);
+            strFlower += cursor.getString(4);
+            strOrigin += cursor.getString(5) + "\r\n";
+            strLight += cursor.getString(6);
+            strTemp += cursor.getString(7) + "\r\n";
+            strWater += cursor.getString(8) + "\r\n";
+            strSoil += cursor.getString(9);
+            strEarth += cursor.getString(10) + "\r\n";
+            strCoun += cursor.getString(11) + "\r\n";
+        }
 
-                cursor.close();
-                sqlDB.close();
-            }
-        });
+        diffi.setText(strDiff);
+        flow.setText(strFlower);
+        origin.setText(strOrigin);
+        light.setText(strLight);
+        temp.setText(strTemp);
+        water.setText(strWater);
+        soil.setText(strSoil);
+        earth.setText(strEarth);
+        coun.setText(strCoun);
+
+        cursor.close();
+        sqlDB.close();
+
     }
-
-    public class myDBHelper extends SQLiteOpenHelper {
-        public myDBHelper(Context context) {
-            super(context, "plantDB", null, 1);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE plants (PLANT_CODE CHAR(20) PRIMARY KEY, PLANT_NAME TEXT, PLANT_IMG BLOB, PLANT_DIFF TEXT, PLANT_FLOWER TEXT, PLANT_ORI TEXT, PLANT_SUN TEXT, PLANT_TEMP TEXT, PLANT_WATER TEXT, PLANT_SOIL TEXT, PLANT_FERSUB TEXT, PLANT_COUORI TEXT);");
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS plants");
-            onCreate(db);
-        }
-    }
-
 }
