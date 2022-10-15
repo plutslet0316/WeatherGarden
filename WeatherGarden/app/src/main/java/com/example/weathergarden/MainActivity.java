@@ -89,10 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.settings:
                         fragmentManager.beginTransaction().show(setting).commit();
                         return true;
-                    case R.id.notice:
-                        fragmentManager.beginTransaction().show(notice).commit();
-                        return true;
-                    case R.id.store:
+                    case R.id.book:
                         fragmentManager.beginTransaction().show(store).commit();
                         return true;
                 }
