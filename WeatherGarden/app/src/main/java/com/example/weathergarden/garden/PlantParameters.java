@@ -8,6 +8,7 @@ public class PlantParameters {
     public int wither;
     public int witherLimit;
     public int time;
+    public String info;
 
     public PlantParameters() {
         name = "";
@@ -17,5 +18,6 @@ public class PlantParameters {
         wither = 0;
         witherLimit = 0;
         time = 0;
+        info = "";
     }
 }

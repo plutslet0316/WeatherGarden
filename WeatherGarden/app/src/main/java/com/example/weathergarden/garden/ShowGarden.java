@@ -49,6 +49,8 @@ public class ShowGarden {
         getGardenList();
         PlantParameters parameters = new PlantParameters();
 
+        info = "식물 상태\n";
+
         if(gardenList.size() != 0) {
             GroundInfo groundInfo = gardenList.get(0).groundInfo;
             PlantInfo plantInfo = gardenList.get(0).plantInfo;
@@ -84,6 +86,13 @@ public class ShowGarden {
             parameters.wither = groundInfo.wither;
             parameters.witherLimit = plantInfo.witherLimit;
             parameters.time = showInfo.time;
+
+            info += "이름: " + plantInfo.name + "\n\n";
+            info += "수분이 " + check("Water", plantInfo, groundInfo) + "\n";
+            info += "영양이 " + check("Nutrient", plantInfo, groundInfo) + "\n";
+            info += checkWither(plantInfo, groundInfo);
+
+            parameters.info = info;
         }
 
         return parameters;
@@ -118,7 +127,7 @@ public class ShowGarden {
         setWeather();
         showInfo();
     }
-    
+
     // 받은 정보 가공해서 표시하기
     void showInfo() {
         activity.runOnUiThread(new Runnable() {
@@ -228,7 +237,7 @@ public class ShowGarden {
             result = "조금 시들었어요.";
         } else if (limit * 0.75 >= wither) {
             result = "많이 시들었어요.";
-        } else if (limit <= wither) {
+        } else if (limit >= wither) {
             if (groundInfo.growLevel == 4)
                 result = "모두 성장했어요.";
             else

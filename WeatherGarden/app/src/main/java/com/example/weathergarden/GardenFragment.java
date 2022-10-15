@@ -432,13 +432,13 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 // 물 주는 부분
                 if(checkGround(1)) addWater();
                 else Toast.makeText(view.getContext(), "아직 식물을 심지 않았습니다.", Toast.LENGTH_SHORT).show();
-//                unityFragment.SendMessage("GameManager", "addWater", gson.toJson(showInfo));
+                unityFragment.SendMessage("GameManager", "addWater", "");
                 break;
             case R.id.fertilizer_button:
                 // 비료 주는 부분
                 if(checkGround(1)) addNutrient();
                 else Toast.makeText(view.getContext(), "아직 식물을 심지 않았습니다.", Toast.LENGTH_SHORT).show();
-//                unityFragment.SendMessage("GameManager", "addNutrient", gson.toJson(showInfo));
+                unityFragment.SendMessage("GameManager", "addNutrient", "");
                 break;
             case R.id.temperature_button:
                 // 온도 변경하는 부분
@@ -462,6 +462,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 break;
         }
 
+        unityFragment.SendMessage("GameManager", "setPlantInfo", gson.toJson(showGarden.getData()));
         showDao.setShowInfo(showInfo);
 
         if (glowUp == 0)
