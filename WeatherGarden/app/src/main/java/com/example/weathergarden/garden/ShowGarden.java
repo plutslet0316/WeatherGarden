@@ -29,7 +29,6 @@ public class ShowGarden {
     Activity activity;
     GardenDao gardenDao;
     List<GardenInfo> gardenList;
-    WeatherUltraFastInfo weatherInfo;
 
     String info, plantState;
     int growMax, growMin, growPoint, limit;
@@ -41,7 +40,6 @@ public class ShowGarden {
         this.activity = activity;
         this.gardenDao = gardenDao;
 
-        weatherInfo = new WeatherProc(activity).getWeatherUltraFastInfo().get(0);
         showDao = new ShowDao(activity);
     }
 
