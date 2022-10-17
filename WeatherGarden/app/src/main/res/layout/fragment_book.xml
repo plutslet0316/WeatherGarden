@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#4BC5FF"
-    tools:context=".bookFragment">
+    tools:context=".BookFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,10 +19,9 @@
             android:src="@drawable/circle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.132"
+            app:layout_constraintHorizontal_bias="0.04"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.466" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <!-- TODO: Update blank fragment layout -->
@@ -39,34 +38,22 @@
 
         <ImageButton
             android:id="@+id/tulip"
-            android:layout_width="60sp"
-            android:layout_height="60sp"
-            android:layout_marginTop="16sp"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_marginTop="24sp"
             android:layout_marginBottom="16sp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.064"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.083"
             android:src="@drawable/tulip" />
 
         <ImageButton
             android:id="@+id/sunflower"
-            android:layout_width="60sp"
-            android:layout_height="60sp"
-            android:layout_marginTop="16sp"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_marginTop="24sp"
             android:layout_marginBottom="16sp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.064"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.229"
             android:src="@drawable/sunflower" />
 
         </LinearLayout>
@@ -76,6 +63,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/sky2"
             android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/nature_img"
                 android:layout_width="wrap_content"

@@ -15,7 +15,7 @@
         android:src="@drawable/circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,14 +27,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="24sp"
             android:layout_margin="16sp"
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/tulip1"
-                android:layout_width="60sp"
-                android:layout_height="60sp"
-                android:layout_marginTop="16sp"
+                android:layout_width="48sp"
+                android:layout_height="48sp"
+                android:layout_marginTop="24sp"
                 android:layout_marginBottom="16sp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
@@ -42,9 +43,9 @@
 
             <ImageButton
                 android:id="@+id/sunflower1"
-                android:layout_width="60sp"
-                android:layout_height="60sp"
-                android:layout_marginTop="16sp"
+                android:layout_width="48sp"
+                android:layout_height="48sp"
+                android:layout_marginTop="24sp"
                 android:layout_marginBottom="16sp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
@@ -68,15 +69,16 @@
                 android:src="@drawable/tulip_image" />
 
             <ScrollView
-                android:layout_width="369sp"
-                android:layout_height="543sp"
-                android:layout_marginBottom="4sp" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12sp"
+                android:layout_marginRight="12sp"
+                android:layout_marginBottom="4sp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20sp"
-                    android:layout_marginLeft="20sp"
                     android:orientation="vertical">
 
                     <TextView
@@ -164,9 +166,6 @@
                         android:textStyle="bold"
                         android:textSize="24sp"
                         android:text="" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="168sp"/>
 
                 </LinearLayout>
 
