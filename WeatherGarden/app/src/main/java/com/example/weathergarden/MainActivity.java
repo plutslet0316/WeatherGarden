@@ -23,14 +23,20 @@ public class MainActivity extends AppCompatActivity {
     private GardenFragment garden;
     private WeatherFragment weather;
     private SettingsFragment setting;
-    private NoticeFragment notice;
-    private StoreFragment store;
+    private bookFragment book;
 
     private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // FragmentTransaction transaction =
+        // getSupportFragmentManager().beginTransaction();
+        // FragmentTulip fragmentTulip = new FragmentTulip();
+        // transaction.replace(R.id.frameLayout, fragmentTulip);
+        // transaction.commit();
 
         init(); // 객체 정의
         SettingListener();
@@ -45,56 +51,56 @@ public class MainActivity extends AppCompatActivity {
         weather = new WeatherFragment();
         garden = new GardenFragment();
         setting = new SettingsFragment();
-        notice = new NoticeFragment();
-        store = new StoreFragment();
+        book = new bookFragment();
 
         fragmentManager.beginTransaction().add(R.id.main, weather).commit();
-//        transaction.hide(weather).commit();
+        // transaction.hide(weather).commit();
 
         fragmentManager.beginTransaction().add(R.id.main, garden).commit();
-//        transaction.hide(garden).commit();
+        // transaction.hide(garden).commit();
 
         fragmentManager.beginTransaction().add(R.id.main, setting).commit();
-//        transaction.hide(setting).commit();
+        // transaction.hide(setting).commit();
 
-        fragmentManager.beginTransaction().add(R.id.main, notice).commit();
-//        transaction.hide(notice).commit();
-
-        fragmentManager.beginTransaction().add(R.id.main, store).commit();
-//        transaction.hide(store).commit();
+        fragmentManager.beginTransaction().add(R.id.main, book).commit();
+        // transaction.hide(notice).commit();
 
     }
 
-    private void allHideFragment(){
-        if (weather != null) fragmentManager.beginTransaction().hide(weather).commit();
-        if (garden != null) fragmentManager.beginTransaction().hide(garden).commit();
-        if (setting != null) fragmentManager.beginTransaction().hide(setting).commit();
-        if (notice != null) fragmentManager.beginTransaction().hide(notice).commit();
-        if (store != null) fragmentManager.beginTransaction().hide(store).commit();
+    private void allHideFragment() {
+        if (weather != null)
+            fragmentManager.beginTransaction().hide(weather).commit();
+        if (garden != null)
+            fragmentManager.beginTransaction().hide(garden).commit();
+        if (setting != null)
+            fragmentManager.beginTransaction().hide(setting).commit();
+        if (book != null)
+            fragmentManager.beginTransaction().hide(book).commit();
     }
 
     private void SettingListener() {
         // 선택 리스너 등록
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                allHideFragment();
-                switch (item.getItemId() ) {
-                    case R.id.weather:
-                        fragmentManager.beginTransaction().show(weather).commit();
-                        return true;
-                    case R.id.garden:
-                        fragmentManager.beginTransaction().show(garden).commit();
-                        return true;
-                    case R.id.settings:
-                        fragmentManager.beginTransaction().show(setting).commit();
-                        return true;
-                    case R.id.book:
-                        fragmentManager.beginTransaction().show(store).commit();
-                        return true;
-                }
-                return false;
-            }
-        });
+        bottomNavigationView
+                .setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        allHideFragment();
+                        switch (item.getItemId()) {
+                            case R.id.weather:
+                                fragmentManager.beginTransaction().show(weather).commit();
+                                return true;
+                            case R.id.garden:
+                                fragmentManager.beginTransaction().show(garden).commit();
+                                return true;
+                            case R.id.settings:
+                                fragmentManager.beginTransaction().show(setting).commit();
+                                return true;
+                            case R.id.book:
+                                fragmentManager.beginTransaction().show(book).commit();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
     }
 }

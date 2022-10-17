@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment implements View.OnClickListener {
-    //private Switch not_swi;
+    // private Switch not_swi;
     private TextView loc_set, not_tit;
     private ImageView set_icon;
     private Button on, off;
@@ -36,11 +36,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         loc_set = view.findViewById(R.id.location_set);
         not_tit = view.findViewById(R.id.noti_title);
-        //not_swi_sma = view.findViewById(R.id.noti_switch_small);
+        // not_swi_sma = view.findViewById(R.id.noti_switch_small);
 
-        //not_swi = view.findViewById(R.id.noti_switch);
+        // not_swi = view.findViewById(R.id.noti_switch);
 
-        set_icon = view.findViewById(R.id.setting_icon);
+        // set_icon = view.findViewById(R.id.setting_icon);
 
         not_box = view.findViewById(R.id.noti_box);
 
@@ -54,7 +54,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     // TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -74,7 +74,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
      * @param param2 Parameter 2.
      * @return A new instance of fragment settingsFragment.
      */
-// TODO: Rename and change types and number of parameters
+    // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(String param1, String param2) {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
@@ -120,6 +120,5 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         activity.stopService(serviceIntent);
 
     }
-
 
 }

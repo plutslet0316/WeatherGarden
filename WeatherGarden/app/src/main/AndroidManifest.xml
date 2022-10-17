@@ -32,8 +32,8 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Transparent.Dialog"/>
         <activity android:name=".PopupPlantDelete" android:theme="@style/Theme.WeatherGarden.Dialog"/>
-        <activity android:name=".weather_gps" />
-        <activity android:name=".weather_add"/>
+        <activity android:name=".TulipBook"/>
+        <activity android:name=".SunflowerBook"/>
         <activity android:name="com.unity3d.player.UnityPlayerActivity"
             android:theme="@style/UnityThemeSelector"
             android:screenOrientation="portrait"
@@ -47,6 +47,7 @@
             <meta-data android:name="WindowManagerPreference:FreeformWindowOrientation" android:value="@string/FreeformWindowOrientation_portrait" />
             <meta-data android:name="android.notch_support" android:value="true" />
         </activity>
+
 
         <service
             android:name="com.example.weathergarden.MyService"
