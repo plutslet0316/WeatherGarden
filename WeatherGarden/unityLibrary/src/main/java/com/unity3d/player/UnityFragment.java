@@ -1,5 +1,6 @@
 package com.unity3d.player;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,8 +23,10 @@ public class UnityFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mUnityPlayer = new UnityPlayer(getContext());
-        frameLayout = new FrameLayout(getContext());
+        Context context = getContext().getApplicationContext();
+
+        mUnityPlayer = new UnityPlayer(context);
+        frameLayout = new FrameLayout(context);
         frameLayout.addView(mUnityPlayer.getView());
         mUnityPlayer.requestFocus();
         mUnityPlayer.windowFocusChanged(true);
