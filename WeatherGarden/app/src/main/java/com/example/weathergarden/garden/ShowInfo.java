@@ -10,5 +10,6 @@ public class ShowInfo {
         weather = "0";
         temp = "25";
         hum = "80";
+        time = 0;
     }
 }

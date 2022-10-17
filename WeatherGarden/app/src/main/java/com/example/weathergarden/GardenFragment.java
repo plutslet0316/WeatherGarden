@@ -354,9 +354,17 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
                     try {
                         thread.join();
-                        // 식물 뽑기시 성장 멈추고 텍스트 심기로 변경
+
+                        // 식물 뽑기시
+                        // 식물 기른 시간 초기화
+                        ShowInfo showInfo = showDao.getShowInfo();
+                        showInfo.time = 0;
+                        showDao.setShowInfo(showInfo);
+
+                        // 성장 멈추고 텍스트 심기로 변경
                         glowUp = 0;
                         plantButton.setText("심기");
+
                         unityFragment.SendMessage("GameManager", "setPlantInfo", gson.toJson(showGarden.getData()));
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
@@ -457,6 +465,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 listener = (dialogInterface, i) -> {
                     showInfo.temp = bar.getProgress()+"";
                     showDao.setShowInfo(showInfo);
+                    unityFragment.SendMessage("GameManager", "setPlantInfo", gson.toJson(showGarden.getData()));
                 };
                 break;
             case "hum":
@@ -473,6 +482,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 listener = (dialogInterface, i) -> {
                     showInfo.hum = bar.getProgress()+"";
                     showDao.setShowInfo(showInfo);
+                    unityFragment.SendMessage("GameManager", "setPlantInfo", gson.toJson(showGarden.getData()));
                 };
                 break;
         }
