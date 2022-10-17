@@ -17781,6 +17781,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MarshalDirectiveException__ctor_mDF8CD5B
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
+// System.Double System.Math::Acos(System.Double)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR double Math_Acos_mCE92862240D45C1616A0D79135DA7B240CD8FDAB (double ___d0, const RuntimeMethod* method)
+{
+	return acos(___d0);
+}
 // System.Double System.Math::Atan(System.Double)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR double Math_Atan_m9CE14812A2A92AB78C0F853DF25539AFF59687E6 (double ___d0, const RuntimeMethod* method)
 {

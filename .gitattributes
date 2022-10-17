@@ -1,0 +1,5 @@
+WeatherGarden/unityLibrary/build/il2cpp_arm64-v8a_Release/il2cpp_cache/linkresult_5A5068E9E36091B57CDD1464814FF16F/libil2cpp.dbg.so filter=lfs diff=lfs merge=lfs -text
+WeatherGarden/unityLibrary/build/il2cpp_arm64-v8a_Release/il2cpp_cache/linkresult_5A5068E9E36091B57CDD1464814FF16F/libil2cpp.sym.so filter=lfs diff=lfs merge=lfs -text
+WeatherGarden/unityLibrary/build/il2cpp_armeabi-v7a_Release/il2cpp_cache/linkresult_69F0E111F6CB732D5EB81A4B53188CF1/libil2cpp.dbg.so filter=lfs diff=lfs merge=lfs -text
+WeatherGarden/unityLibrary/symbols/armeabi-v7a/libil2cpp.so filter=lfs diff=lfs merge=lfs -text
+WeatherGarden/unityLibrary/symbols/arm64-v8a/libil2cpp.so filter=lfs diff=lfs merge=lfs -text
