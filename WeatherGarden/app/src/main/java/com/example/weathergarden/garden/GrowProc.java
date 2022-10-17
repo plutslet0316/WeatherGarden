@@ -138,7 +138,10 @@ public class GrowProc {
 
         // 물 소모
         public void consumeWater() {
-            groundInfo.water -= plantInfo.waterConsume;
+            ShowInfo showInfo = showDao.getShowInfo();
+
+            // 습도에 따라 물 소모량 조절
+            groundInfo.water -= plantInfo.waterConsume - (plantInfo.waterConsume * ((Float.valueOf(showInfo.hum) * 0.01f) - 0.2f));
 
             if(groundInfo.water <= 0) {
                 groundInfo.water = 0;

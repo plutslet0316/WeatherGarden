@@ -8,6 +8,7 @@ public class ShowInfo {
 
     public void init(){
         weather = "0";
-        temp = "25.0";
+        temp = "25";
+        hum = "80";
     }
 }

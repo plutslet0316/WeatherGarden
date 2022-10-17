@@ -24,7 +24,7 @@ public class GroundInfo implements Serializable {
     @ColumnInfo(name = "plant_code") @NonNull
     public String plantCode;
     @ColumnInfo(name = "water") @NonNull
-    public int water;
+    public float water;
     @ColumnInfo(name = "nutrient") @NonNull
     public int nutrient;
     @ColumnInfo(name = "wither") @NonNull

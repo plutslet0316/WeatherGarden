@@ -2,7 +2,10 @@ package com.example.weathergarden;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,11 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.weathergarden.garden.GardenDao;
@@ -42,7 +48,7 @@ import java.util.TimerTask;
  * create an instance of this fragment.
  */
 public class GardenFragment extends Fragment implements View.OnClickListener {
-    View view = null, frame = null;
+    View view = null, frame = null, dialogView =null;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,6 +61,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
     GestureDetector detector;
 
     Button waterButton, fertiButton, tempButton, humButton, plantButton, growButton;
+    AlertDialog.Builder dig;
 
     int glowUp;
     Timer timer;
@@ -156,7 +163,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             public void run() {
                 super.run();
                 carePlant = growProc.new CarePlant().withGroundNo(1);
-                carePlant.addWater(1000);
+                carePlant.addWater(500);
             }
         };
         thread.start();
@@ -174,7 +181,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             public void run() {
                 super.run();
                 carePlant = growProc.new CarePlant().withGroundNo(1);
-                carePlant.addNutrient(1000);
+                carePlant.addNutrient(500);
             }
         };
         thread.start();
@@ -347,7 +354,8 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
                     try {
                         thread.join();
-                        // 식물 뽑기
+                        // 식물 뽑기시 성장 멈추고 텍스트 심기로 변경
+                        glowUp = 0;
                         plantButton.setText("심기");
                         unityFragment.SendMessage("GameManager", "setPlantInfo", gson.toJson(showGarden.getData()));
                     } catch (InterruptedException interruptedException) {
@@ -422,9 +430,78 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             }
         };
     }
+
+    private void newDialog(String type) {
+        dig = new AlertDialog.Builder(view.getContext());
+        dialogView = View.inflate(view.getContext(), R.layout.dialog_input, null);
+
+        ShowInfo showInfo = showDao.getShowInfo();
+        TextView min = dialogView.findViewById(R.id.dialog_min);
+        TextView max = dialogView.findViewById(R.id.dialog_max);
+        TextView cur = dialogView.findViewById(R.id.dialog_current);
+        SeekBar bar = dialogView.findViewById(R.id.seekBar);
+        DialogInterface.OnClickListener listener = null;
+
+        switch (type) {
+            case "temp":
+                dig.setTitle("온도 조절");
+                min.setText("0℃");
+                max.setText("45℃");
+                bar.setProgress(Integer.valueOf(showInfo.temp));
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    bar.setMin(0);
+                }
+                bar.setMax(45);
+
+                listener = (dialogInterface, i) -> {
+                    showInfo.temp = bar.getProgress()+"";
+                    showDao.setShowInfo(showInfo);
+                };
+                break;
+            case "hum":
+                dig.setTitle("습도 조절");
+                min.setText("20%");
+                max.setText("100%");
+                bar.setProgress(Integer.valueOf(showInfo.hum));
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    bar.setMin(20);
+                }
+                bar.setMax(100);
+
+                listener = (dialogInterface, i) -> {
+                    showInfo.hum = bar.getProgress()+"";
+                    showDao.setShowInfo(showInfo);
+                };
+                break;
+        }
+
+        cur.setText(String.format("%d", bar.getProgress()));
+        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                cur.setText(String.format("%d", seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                cur.setText(String.format("%d", seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                cur.setText(String.format("%d", seekBar.getProgress()));
+            }
+        });
+
+        dig.setView(dialogView);
+        dig.setPositiveButton("확인", listener);
+        dig.setNegativeButton("취소", null);
+    }
+
     @Override
     public void onClick(View view) {
-        ShowInfo showInfo = showDao.getShowInfo();
 
         switch (view.getId()) {
 
@@ -442,13 +519,13 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.temperature_button:
                 // 온도 변경하는 부분
-
-//                showInfo.temp =
+                newDialog("temp");
+                dig.show();
                 break;
             case R.id.humidity_button:
                 // 습도 변경하는 부분
-
-//                showInfo.hum =
+                newDialog("hum");
+                dig.show();
                 break;
             case R.id.growing_button:
                 if(checkGround(1)) {
@@ -463,7 +540,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
         }
 
         unityFragment.SendMessage("GameManager", "setPlantInfo", gson.toJson(showGarden.getData()));
-        showDao.setShowInfo(showInfo);
 
         if (glowUp == 0)
             timerTask.cancel();

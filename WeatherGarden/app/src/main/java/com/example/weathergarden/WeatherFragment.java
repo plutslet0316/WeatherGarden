@@ -337,13 +337,6 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         weatherProc = new WeatherProc(view.getContext());
 
         Handler handler = new Handler();
-        weatherList = weatherProc.getWeatherUltraFastInfo();
-        if (weatherList != null)
-            setWeather();
-
-        tomorrowWeatherList = weatherProc.getWeatherFastInfo();
-        if (tomorrowWeatherList != null)
-            setTomorrowWeather();
 
         new Thread() {
             @Override
@@ -375,6 +368,13 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
             }
         }.start();
 
+        weatherList = weatherProc.getWeatherUltraFastInfo();
+        if (weatherList != null)
+            setWeather();
+
+        tomorrowWeatherList = weatherProc.getWeatherFastInfo();
+        if (tomorrowWeatherList != null)
+            setTomorrowWeather();
         return view;
     }
 

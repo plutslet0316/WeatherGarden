@@ -59,33 +59,15 @@ public class ShowGarden {
             parameters.name = plantInfo.img;
             parameters.level = groundInfo.growLevel + 1;
             parameters.growPoint = groundInfo.growPoint;
-
-//            switch (groundInfo.growLevel) {
-//                case 0:
-//                    growMax += plantInfo.seedRequire;
-//                    growMin = 0;
-//                    break;
-//                case 1:
-//                    growMax += plantInfo.stemRequire;
-//                    growMin = plantInfo.seedRequire;
-//                    break;
-//                case 2:
-//                    growMax += plantInfo.flowerRequire;
-//                    growMin = plantInfo.stemRequire;
-//                    break;
-//                case 3:
-//                    growMax = plantInfo.growLimit;
-//                    growMin = plantInfo.flowerRequire;
-//                    break;
-//                case 4:
-//                    growMax = plantInfo.growLimit;
-//                    growMin = plantInfo.growLimit;
-//                    break;
-//            }
-
+            parameters.water = groundInfo.water;
+            parameters.waterLimit = plantInfo.waterRequire;
+            parameters.nutrient = groundInfo.nutrient;
+            parameters.nutrientLimit = plantInfo.nutrientRequire;
             parameters.wither = groundInfo.wither;
             parameters.witherLimit = plantInfo.witherLimit;
             parameters.time = showInfo.time;
+            parameters.temp = showInfo.temp;
+            parameters.hum = showInfo.hum;
 
             info += "이름: " + plantInfo.name + "\n\n";
             info += "수분이 " + check("Water", plantInfo, groundInfo) + "\n";
