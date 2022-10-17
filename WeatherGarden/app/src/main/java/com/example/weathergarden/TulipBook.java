@@ -35,7 +35,6 @@ public class TulipBook extends Activity {
         tulip1 = (ImageButton) findViewById(R.id.tulip1);
         sunflower1 = (ImageButton) findViewById(R.id.sunflower1);
         circle1 = (ImageView) findViewById(R.id.circle1);
-        rectangle1 = (ImageView) findViewById(R.id.rectangle1);
         tul_img = (ImageView) findViewById(R.id.tul_img);
         title2 = (TextView) findViewById(R.id.title2);
 

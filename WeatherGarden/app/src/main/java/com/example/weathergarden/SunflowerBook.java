@@ -22,7 +22,7 @@ public class SunflowerBook extends Activity {
     SQLiteDatabase sqlDB2;
 
     ImageButton tulip2, sunflower2;
-    ImageView circle2, rectangle2;
+    ImageView circle2;
     TextView title3, diffi2, flow2, origin2, light2, temp2, water2, soil2, earth2, coun2;
 
 
@@ -34,7 +34,6 @@ public class SunflowerBook extends Activity {
         tulip2 = (ImageButton) findViewById(R.id.tulip2);
         sunflower2 = (ImageButton) findViewById(R.id.sunflower2);
         circle2 = (ImageView) findViewById(R.id.circle2);
-        rectangle2 = (ImageView) findViewById(R.id.rectangle2);
 
         title3 = (TextView) findViewById(R.id.title3);
 

@@ -30,8 +30,6 @@ public class bookFragment extends Fragment {
         tulip = (ImageButton) view.findViewById(R.id.tulip);
         sunflower = (ImageButton) view.findViewById(R.id.sunflower);
         circle = view.findViewById(R.id.circle);
-        rectangle = view.findViewById(R.id.rectangle);
-        sky_img = view.findViewById(R.id.sky_img);
         nature_img = view.findViewById(R.id.nature_img);
         title = view.findViewById(R.id.title);
 

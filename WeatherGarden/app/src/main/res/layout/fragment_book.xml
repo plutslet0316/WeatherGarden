@@ -9,15 +9,40 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/circle"
+            android:layout_width="109sp"
+            android:layout_height="165sp"
+            android:scaleType="fitXY"
+            android:src="@drawable/circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.132"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.466" />
 
 
         <!-- TODO: Update blank fragment layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="16sp"
+            android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/tulip"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:layout_marginTop="16sp"
+            android:layout_marginBottom="16sp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,8 +55,10 @@
 
         <ImageButton
             android:id="@+id/sunflower"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:layout_marginTop="16sp"
+            android:layout_marginBottom="16sp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,75 +69,47 @@
             app:layout_constraintVertical_bias="0.229"
             android:src="@drawable/sunflower" />
 
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/circle"
-            android:layout_width="109dp"
-            android:layout_height="165dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/circle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.132"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.466" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/sky2"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/nature_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/nature"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.952"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.532" />
 
-        <ImageView
-            android:id="@+id/rectangle"
-            android:layout_width="371dp"
-            android:layout_height="978dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/rectangle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-
-        <ImageView
-            android:id="@+id/sky_img"
-            android:layout_width="374dp"
-            android:layout_height="945dp"
-            android:src="@drawable/sky2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.496" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="277dp"
-            android:layout_height="144dp"
-            android:layout_gravity="center"
-            android:text="    Plant
-            Dictionary"
-            android:textSize="48dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.921"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.349" />
-
-        <ImageView
-            android:id="@+id/nature_img"
-            android:layout_width="145dp"
-            android:layout_height="137dp"
-            android:src="@drawable/nature"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.952"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.532" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:text="    Plant
+                Dictionary"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.921"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.349" />
 
 
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
