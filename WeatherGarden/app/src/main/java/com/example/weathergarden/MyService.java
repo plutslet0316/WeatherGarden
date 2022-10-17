@@ -83,7 +83,7 @@ public class MyService extends Service {
         // 버전 오레오 이상일 경우
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1");
         // 알림창 아이콘 사이즈 24x24
-        builder.setSmallIcon(R.drawable.cloud_weather_icon);
+        builder.setSmallIcon(R.drawable.ic_cloudy);
 
         NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
         // !! 81번줄 현재 위치 들어갈 부분입니다!!

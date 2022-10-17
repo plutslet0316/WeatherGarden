@@ -1,19 +1,14 @@
 package com.example.weathergarden;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.unity3d.player.UnityFragment;
-import com.unity3d.player.UnityPlayerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private GardenFragment garden;
     private WeatherFragment weather;
     private SettingsFragment setting;
-    private bookFragment book;
+    private BookFragment book;
 
     private FragmentManager fragmentManager;
 
@@ -51,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         weather = new WeatherFragment();
         garden = new GardenFragment();
         setting = new SettingsFragment();
-        book = new bookFragment();
+        book = new BookFragment();
 
         fragmentManager.beginTransaction().add(R.id.main, weather).commit();
         // transaction.hide(weather).commit();

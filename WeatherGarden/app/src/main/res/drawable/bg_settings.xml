@@ -13,8 +13,5 @@
         android:color="#c2c2c2"
         android:width="2sp"/>
 </shape>
-
-        android:dashWidth="47dp"/>
-</shape>
 <!--<stroke>-->
     <!--        android:dashGap="1dp"-->

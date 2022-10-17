@@ -41,7 +41,7 @@ import java.util.TimeZone;
  * Use the {@link WeatherFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WeatherFragment extends Fragment implements View.OnClickListener {
+public class WeatherFragment extends Fragment {
     private View view;
     private TextView loc, day, tem, con;
     private ImageView wea;
@@ -376,12 +376,5 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         if (tomorrowWeatherList != null)
             setTomorrowWeather();
         return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(getActivity(),weather_gps.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
     }
 }

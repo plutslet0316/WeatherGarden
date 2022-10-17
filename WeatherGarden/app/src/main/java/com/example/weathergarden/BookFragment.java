@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 
 
 
-public class bookFragment extends Fragment {
+public class BookFragment extends Fragment {
     private View view;
     private ImageButton tulip, sunflower;
     private ImageView circle, rectangle, sky_img, nature_img;
