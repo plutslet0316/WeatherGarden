@@ -127,7 +127,7 @@ public class NewAppWidget extends AppWidgetProvider {
             // !!현재 위치 지역명 들어가는 곳입니다.!!
             remoteViews.setTextViewText(R.id.location_tv, (addresses.get(1).getThoroughfare() != null ? addresses.get(1).getThoroughfare(): (addresses.get(1).getSubLocality() != null ? addresses.get(1).getSubLocality():(addresses.get(1).getLocality() != null ? addresses.get(1).getLocality() : addresses.get(1).getAdminArea()))));
             //remoteViews.setTextViewText(R.id.temp, String.format("℃"));
-            remoteViews.setTextViewText(R.id.temp, String.format(weatherInfo.temp + "º"));
+            remoteViews.setTextViewText(R.id.temp, String.format(weatherInfo.temp + "℃"));
 
             Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.example.weathergarden");
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

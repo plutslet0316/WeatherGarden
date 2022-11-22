@@ -4,30 +4,26 @@
         android:id="@+id/weather"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/ic_baseline_cloud_24"
-        android:title="" />
-    <item
-        android:id="@+id/store"
-        android:enabled="true"
-        android:checked="true"
-        android:icon="@drawable/ic_baseline_shopping_basket_24"
+        android:icon="@drawable/img_weather"
         android:title="" />
     <item
         android:id="@+id/garden"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/ic_baseline_local_florist_24"
+        android:icon="@drawable/img_garden"
         android:title="" />
     <item
-        android:id="@+id/notice"
+        android:id="@+id/book"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/notice"
+        android:icon="@drawable/img_book"
         android:title="" />
     <item
         android:id="@+id/settings"
         android:enabled="true"
         android:checked="true"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:icon="@drawable/img_setting"
         android:title="" />
+
+
 </menu>

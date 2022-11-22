@@ -3,4 +3,6 @@
     <string name="appwidget_text">위젯</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description"> </string>
+    <string name="game_view_content_description">Game view</string>
+
 </resources>

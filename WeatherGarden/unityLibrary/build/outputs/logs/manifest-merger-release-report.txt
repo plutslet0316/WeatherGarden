@@ -1,0 +1,161 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+	package
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:70-98
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:99-145
+	android:versionCode
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:1-27:12
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:3:11-69
+application
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:4:3-21:17
+activity#com.unity3d.player.UnityPlayerActivity
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:5-15:16
+	android:screenOrientation
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:111-147
+	android:launchMode
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:148-179
+	android:hardwareAccelerated
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:396-431
+	android:exported
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:432-455
+	android:resizeableActivity
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:362-395
+	android:configChanges
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:180-361
+	android:theme
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:69-110
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:5:15-68
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:6:7-9:23
+action#android.intent.action.MAIN
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:7:9-61
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:7:17-58
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:8:9-69
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:8:19-66
+meta-data#unityplayer.UnityActivity
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:10:7-82
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:10:59-79
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:10:18-58
+meta-data#WindowManagerPreference:FreeformWindowSize
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:11:7-127
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:11:76-124
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:11:18-75
+meta-data#WindowManagerPreference:FreeformWindowOrientation
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:12:7-144
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:12:83-141
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:12:18-82
+layout
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:13:7-129
+	android:minWidth
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:13:102-126
+	android:minHeight
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:13:76-101
+	android:defaultHeight
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:13:15-45
+	android:defaultWidth
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:13:46-75
+meta-data#android.notch_support
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:14:7-78
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:14:55-75
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:14:18-54
+meta-data#unity.splash-mode
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:16:5-69
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:16:49-66
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:16:16-48
+meta-data#unity.splash-enable
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:17:5-74
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:17:51-71
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:17:16-50
+meta-data#unity.allow-resizable-window
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:18:5-83
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:18:60-80
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:18:16-59
+meta-data#notch.config
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:19:5-81
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:19:44-78
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:19:16-43
+meta-data#unity.build-id
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:20:5-101
+	android:value
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:20:46-98
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:20:16-45
+uses-feature#0x00030000
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:22:3-52
+	android:glEsVersion
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:22:17-49
+uses-feature#android.hardware.vulkan.version
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:23:3-91
+	android:required
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:23:64-88
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:23:17-63
+uses-feature#android.hardware.touchscreen
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:24:3-88
+	android:required
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:24:61-85
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:24:17-60
+uses-feature#android.hardware.touchscreen.multitouch
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:25:3-99
+	android:required
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:25:72-96
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:25:17-71
+uses-feature#android.hardware.touchscreen.multitouch.distinct
+ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:26:3-108
+	android:required
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:26:81-105
+	android:name
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml:26:17-80
+uses-sdk
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\J.Jeong\Desktop\unity test\unityLibrary\src\main\AndroidManifest.xml

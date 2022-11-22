@@ -59,82 +59,63 @@ public class WeatherProc {
 
     public int getWeather() {
         try {
+            // 시간을 한국 시간대로 설정
             TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
+
+            // 날짜/시간 데이터 포멧설정
             DateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
             DateFormat timeFormat = new SimpleDateFormat("HH");
 
+            // 날짜/시간 포멧의 시간대를 한국으로
             sdFormat.setTimeZone(timeZone);
             timeFormat.setTimeZone(timeZone);
 
+            // 날짜를 가져올 캘린더 생성
             Calendar calendar = Calendar.getInstance();
 
-            calendar.setTime(new Date());
-            calendar.add(Calendar.MINUTE, -40);
+            calendar.setTime(new Date());          // 캘린더의 시간을 현재 시간으로 설정
+            calendar.add(Calendar.MINUTE, -40); // API 제공이 40 이후 제공되므로 그만큼 제외
 
+            // 날짜/시간 포멧에 맞게 가져옴
             String tempDate = sdFormat.format(calendar.getTime());
             String tempTime = timeFormat.format(calendar.getTime());
 
-
-            //Log.d("Weather", tempDate + tempTime);
-            // JSON데이터를 요청하는 URLstr을 만듭니다.
+            // JSON데이터를 요청하는 URLstr을 만들기
             String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
-            // 홈페이지에서 받은 키
+            // 홈페이지에서 받은 API 키 / 노출되지 않도록 따로 정의해둠 
             String serviceKey = context.getResources().getString(R.string.shot_weather_api);
 
             String pageNo = "1";
             String numOfRows = "10"; // 한 페이지 결과 수
-            String data_type = "JSON"; // 타입 xml, json 등등 ..
-            String baseDate = tempDate; // "20200821"이런식으로 api에서 제공하는 형식 그대로 적으시면 됩니당.
-            String baseTime = tempTime + "00"; // API 제공 시간을 입력하면 됨
+            String data_type = "JSON"; // 요청 결과를 JSON 타입으로 설정
+            String baseDate = tempDate; // API 제공 날짜
+            String baseTime = tempTime + "00"; // API 제공 시간 / 1500 처럼 시분
             String nx = "60"; // 위도
             String ny = "120"; // 경도
 
-            //String weatherString = preferences.getString("current_weather", "");
-
-            Log.d("Weather", baseDate + baseTime);
-
+            // 위치 정보 가져오기
             LocationData locationData = gson.fromJson(preferences.getString("location_data", ""), LocationData.class);
             if (locationData != null) {
-
-                nx = locationData.nx;
+                // 가져온 위치 값에서 위도 경도 대입
+                nx = locationData.nx;   
                 ny = locationData.ny;
-                ;
-
             }
-            Log.d("Weather", nx + " " + ny);
+
+            // 날씨 정보를 담을 클래스
             WeatherInfo weatherInfo = new WeatherInfo();
-/*
-            if (weatherString != "") {
-                weatherInfo = gson.fromJson(weatherString, WeatherInfo.class);
-
-                if (weatherInfo.time.equals(baseDate + baseTime)) {
-                    Log.d("Weather", weatherInfo.time + " " + baseDate + baseTime);
-
-
-                    return 2;
-                }
-            } else {
-                weatherInfo = new WeatherInfo();
-            }
-*/
-
-            // 전날 23시 부터 153개의 데이터를 조회하면 오늘과 내일의 날씨를 알 수 있음
-
+            
+            // url 만들기 쉽게 위해 StringBuilder 사용 
             StringBuilder urlBuilder = new StringBuilder(apiUrl);
 
-            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);   // API 키
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
-            urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=" + URLEncoder.encode(data_type, "UTF-8")); /* 타입 */
-            urlBuilder.append("&" + URLEncoder.encode("base_date", "UTF-8") + "=" + URLEncoder.encode(baseDate, "UTF-8")); /* 조회하고싶은 날짜 */
-            urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "=" + URLEncoder.encode(baseTime, "UTF-8")); /* 조회하고싶은 시간 AM 02시부터 3시간 단위 */
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8")); // 한 페이지 결과 수
+            urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=" + URLEncoder.encode(data_type, "UTF-8")); // 타입
+            urlBuilder.append("&" + URLEncoder.encode("base_date", "UTF-8") + "=" + URLEncoder.encode(baseDate, "UTF-8")); // 조회하고싶은 날짜
+            urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "=" + URLEncoder.encode(baseTime, "UTF-8")); // 조회하고싶은 시간 AM 02시부터 3시간 단위
             urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "=" + URLEncoder.encode(nx, "UTF-8")); // 경도
             urlBuilder.append("&" + URLEncoder.encode("ny", "UTF-8") + "=" + URLEncoder.encode(ny, "UTF-8") + "&"); // 위도
 
-
-            /* GET방식으로 전송해서 파라미터 받아오기*/
-
-            // 어떻게 넘어가는지 확인하고 싶으면 아래 출력분 주석 해제
             URL url;
             String result;
 
@@ -142,9 +123,7 @@ public class WeatherProc {
             HttpURLConnection conn = null;
 
             url = new URL(urlBuilder.toString());
-            Log.d("Weather", url.toString());
-
-
+            
             conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("GET");
@@ -211,7 +190,7 @@ public class WeatherProc {
                 jsonObj = jsonArray.getJSONObject(i);
                 String category = jsonObj.getString("category");
                 String obsrValue = jsonObj.getString("obsrValue");
-                // Log.d("Weather", category + " " + obsrValue);
+
                 /*
                     강수형태 PTY 0 rainType
                     강수량 RN1 0 rainAmount
@@ -237,15 +216,11 @@ public class WeatherProc {
                         break;
                 }
             }
-            // Log.d("Weather", weather + tmperature + "");
-
 
             String weatherJson = gson.toJson(weatherInfo);
 
             editor.putString("current_weather", weatherJson);
             editor.apply();
-
-            //Log.d("Weather", preferences.getString("current_weather", ""));
 
             return 1;
         } catch (UnsupportedEncodingException e) {

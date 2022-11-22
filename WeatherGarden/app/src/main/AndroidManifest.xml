@@ -20,7 +20,7 @@
         android:theme="@style/Theme.WeatherGarden">
 
         <activity
-            android:name=".SplashTestActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.WeatherGarden.Splash">
             <intent-filter>
@@ -29,12 +29,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity"/>
-        <activity android:name=".MainActivityWidget"/>
-        <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Dialog"/>
+        <activity android:name=".PopupPlantSelect" android:theme="@style/Theme.WeatherGarden.Transparent.Dialog"/>
         <activity android:name=".PopupPlantDelete" android:theme="@style/Theme.WeatherGarden.Dialog"/>
-        <activity android:name=".weather_gps" />
-        <activity android:name=".weather_add"/>
+        <activity android:name=".TulipBook"/>
+        <activity android:name=".SunflowerBook"/>
+
+        <activity android:name="com.unity3d.player.UnityPlayerActivity"
+            android:theme="@style/UnityThemeSelector"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
+            android:resizeableActivity="true"
+            android:hardwareAccelerated="false">
+
+            <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+            <meta-data android:name="WindowManagerPreference:FreeformWindowSize" android:value="@string/FreeformWindowSize_maximize" />
+            <meta-data android:name="WindowManagerPreference:FreeformWindowOrientation" android:value="@string/FreeformWindowOrientation_portrait" />
+            <meta-data android:name="android.notch_support" android:value="true" />
+        </activity>
+
 
         <service
             android:name="com.example.weathergarden.MyService"
@@ -55,7 +70,11 @@
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
 
-
     </application>
 
+    <uses-feature android:glEsVersion="0x00030000" />
+    <uses-feature android:name="android.hardware.vulkan.version" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen.multitouch.distinct" android:required="false" />
 </manifest>

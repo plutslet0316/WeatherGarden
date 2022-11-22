@@ -9,10 +9,7 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 
-import com.example.weathergarden.garden.GroundInfo;
 import com.example.weathergarden.garden.PlantInfo;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 
@@ -33,7 +30,7 @@ public class PopupPlantDelete extends Activity {
         yes = findViewById(R.id.delete_yes);
         no = findViewById(R.id.delete_no);
 
-        Intent intent = new Intent(this, gardenFragment.class);
+        Intent intent = new Intent(this, GardenFragment.class);
 
         cl = v -> {
             switch (v.getId())
