@@ -16,10 +16,9 @@ import androidx.core.splashscreen.SplashScreen;
 
 import com.example.weathergarden.weather.GPS;
 import com.example.weathergarden.weather.WeatherProc;
-import com.unity3d.player.UnityPlayerActivity;
 
 
-public class SplashTestActivity extends Activity {
+public class SplashActivity extends Activity {
     GPS gps;
     boolean isAllow;
     SplashScreen splashScreen;
@@ -47,7 +46,7 @@ public class SplashTestActivity extends Activity {
                             Log.d("SplashActivity", "위치 가져옴");
                             weatherProc.getWeather();
 
-                            Intent i = new Intent(SplashTestActivity.this, MainActivity.class);
+                            Intent i = new Intent(SplashActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
                             content.getViewTreeObserver().removeOnPreDrawListener(this);

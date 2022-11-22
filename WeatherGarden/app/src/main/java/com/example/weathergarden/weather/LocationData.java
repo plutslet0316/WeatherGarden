@@ -11,6 +11,5 @@ public class LocationData {
         this.y = String.valueOf(y);
         this.nx = String.valueOf(nx);
         this.ny = String.valueOf(ny);
-
     }
 }

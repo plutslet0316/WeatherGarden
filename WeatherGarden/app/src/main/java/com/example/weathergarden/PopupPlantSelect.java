@@ -18,7 +18,7 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 
-public class PopupPlantSelectTest extends Activity {
+public class PopupPlantSelect extends Activity {
 
     Button submit;
     View.OnClickListener cl;
@@ -66,7 +66,7 @@ public class PopupPlantSelectTest extends Activity {
 
         cl = v -> {
             if(plantCode != "") {
-                Intent intent = new Intent(this, GardenTestFragment.class);
+                Intent intent = new Intent(this, GardenFragment.class);
 
                 GroundInfo groundInfo = new GroundInfo();
                 groundInfo.setGroundInfo(groundNo, plantCode, 0, 0, 0, 0, 0, 0);

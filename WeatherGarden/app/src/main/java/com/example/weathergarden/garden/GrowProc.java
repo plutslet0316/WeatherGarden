@@ -46,26 +46,35 @@ public class GrowProc {
         GroundInfo groundInfo;
         PlantInfo plantInfo;
 
-        public CarePlant() {}
+        public CarePlant() {
+        }
 
         public CarePlant withGroundNo(int groundNo) {
             groundInfo = dao.readGroundWithGroundNo(groundNo);
             plantInfo = dao.readPlantWithPlantCode(groundInfo.plantCode);
             return this;
         }
-        
-        // 식물 성장
+
+        // 식물 성장 메서드 / 매개로 받은 만큼 성장시킨다.
         private void Growing(float value) {
+            // 설계상 하루을 기준으로 성장하도록 만들었기 때문에
+            // 시간 단위로 성장시키기 위해서 24로 나눠준다.
             groundInfo.growPoint += (value / 24);
 
             // 요구치 가져오기
             int growRequire = 0;
             switch (groundInfo.growLevel) {
-                case 3: growRequire = plantInfo.growLimit;
+                case 3:
+                    growRequire = plantInfo.growLimit;      // 성장 제한
                     break;
-                case 2: growRequire += plantInfo.flowerRequire;
-                case 1: growRequire += plantInfo.stemRequire;
-                case 0: growRequire += plantInfo.seedRequire;
+
+                // 요구치가 가중된다.
+                case 2:
+                    growRequire += plantInfo.flowerRequire; // 꽃
+                case 1:
+                    growRequire += plantInfo.stemRequire;   // 성장기
+                case 0:
+                    growRequire += plantInfo.seedRequire;   // 씨앗
                     break;
             }
 
@@ -76,7 +85,7 @@ public class GrowProc {
             if (checkRequire) {
                 groundInfo.growLevel++;
             }
-            if(groundInfo.growLevel >= 4){
+            if (groundInfo.growLevel >= 4) {
                 groundInfo.growLevel = 4;
                 Withering(100);
             }
@@ -125,12 +134,13 @@ public class GrowProc {
         // 식물 시듦
         private void Withering(float value) {
             groundInfo.wither += value;
-            
+
             // 0보다 낮아지면 0으로 고정
             if (groundInfo.wither < 0) groundInfo.wither = 0;
-            
+
             // 제한보다 높아지만 제한으로 고정
-            if (groundInfo.wither > plantInfo.witherLimit) groundInfo.wither = plantInfo.witherLimit;
+            if (groundInfo.wither > plantInfo.witherLimit)
+                groundInfo.wither = plantInfo.witherLimit;
 
             dao.updateGroundInfo(groundInfo);
         }
@@ -143,12 +153,13 @@ public class GrowProc {
             // 습도에 따라 물 소모량 조절
             groundInfo.water -= plantInfo.waterConsume - (plantInfo.waterConsume * ((Float.valueOf(showInfo.hum) * 0.01f) - 0.2f));
 
-            if(groundInfo.water <= 0) {
+            if (groundInfo.water <= 0) {
                 groundInfo.water = 0;
             }
 
             dao.updateGroundInfo(groundInfo);
         }
+
         // 양분 소모
         public void consumeNutrient() {
             groundInfo.nutrient -= plantInfo.nutrientConsume;
@@ -161,7 +172,7 @@ public class GrowProc {
         }
 
         // 시듦 확인
-        public boolean checkWither(){
+        public boolean checkWither() {
             return plantInfo.witherLimit <= groundInfo.wither;
         }
 
@@ -174,14 +185,14 @@ public class GrowProc {
             int max = 0;
 
             ShowInfo showInfo = showDao.getShowInfo();
-            switch (type){
+            switch (type) {
                 case "Temperature":
                     try {
                         var = Float.valueOf(showInfo.temp);
                         require = plantInfo.temperatureRequire;
                         min = plantInfo.temperatureMin;
                         max = plantInfo.temperatureMax;
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         Log.d("GrowProc", e.getMessage());
                         return 1;
                     }
@@ -203,7 +214,7 @@ public class GrowProc {
             float minRange = require - ((require - min) / 2);
             float maxRange = require + ((max - require) / 2);
             float rawMin = (minRange / var) / (minRange / require);
-            float rawMax =  (require / maxRange) / (var / maxRange);
+            float rawMax = (require / maxRange) / (var / maxRange);
 
 
             // 이탈
@@ -212,8 +223,7 @@ public class GrowProc {
                 Withering(1);
                 //Log.d("GrowProc", "max: "+result);
                 return result;
-            } else
-            if (var <= min) {
+            } else if (var <= min) {
                 result = (var / min) * 0.1f;
                 Withering(1);
                 //Log.d("GrowProc", "min: "+result);
@@ -227,26 +237,24 @@ public class GrowProc {
                 result = (var / minRange);
                 //Log.d("GrowProc", "minRange: "+result);
                 return result;
-            } else
-            if (maxRange <= var) {
+            } else if (maxRange <= var) {
                 result = (maxRange / var);
                 //Log.d("GrowProc", "maxRange: "+result);
                 return result;
             } else
 
-            // 범위 내
-            if (var <= maxRange) {
-                result = 0.9f + ((rawMin * rawMax) * 0.2f);
-                //Log.d("GrowProc", "range: "+result);
-                return result;
-            } else
-            if (minRange <= var){
-                result = 0.9f + (0.2f / (rawMin * rawMax));
-                //Log.d("GrowProc", "range: "+result);
-                return result;
-            } else
+                // 범위 내
+                if (var <= maxRange) {
+                    result = 0.9f + ((rawMin * rawMax) * 0.2f);
+                    //Log.d("GrowProc", "range: "+result);
+                    return result;
+                } else if (minRange <= var) {
+                    result = 0.9f + (0.2f / (rawMin * rawMax));
+                    //Log.d("GrowProc", "range: "+result);
+                    return result;
+                } else
 
-            return result;
+                    return result;
         }
     }
 
@@ -285,7 +293,7 @@ public class GrowProc {
 
         Log.d("Grow", "Time Differ : " + differ + " " + nowDate + " " + lastDate);
 
-        if(differ < 0){
+        if (differ < 0) {
             editor.putString("last_date", nowDate);
             editor.apply();
 
@@ -304,46 +312,41 @@ public class GrowProc {
         return 0;
     }
 
-    // 식물 성장 시작
+    // 접속 이후 시간이 흐른 만큼 식물이 성장하는 메서드
     public int startGrowing(Context context) {
         // 시간차이를 가져온다.
         int differ = checkGrowTime();
-        // Log.d("test", String.valueOf(differ));
 
         // 차이가 없거나 적으면 0을 리턴 / 성장하지 않는다.
         if (differ <= 0) return 0;
 
-        // 리스트에서 하나씩 확인해서 각각 상황에 맞게 성장시킨다.
-        List<Integer> groundNoList = dao.readAllGroundNo();
+        // 땅이 여래 개를 상정하고 만들었기 때문에 리스트로 정보를 가져옴
+        List<Integer> groundList = dao.readAllGroundNo();
 
         // 리스트만큼 반복한다.
-        for (int groundNo : groundNoList) {
-            CarePlant carePlant = new CarePlant().withGroundNo(groundNo);
+        for (int ground : groundList) {
+            // 성장을 관리하는 메서드를 땅 번호로 불러옴
+            CarePlant carePlant = new CarePlant().withGroundNo(ground);
 
             // 시간차이만큼 반복
             for (int i = 0; i < differ; i++) {
-                // 과습, 과영양, 시듦
+                // 시듦 상태 체크
                 boolean isWither = carePlant.checkWither();
 
-                // 각각 물, 영양, 시듦 상태를 확인해서 boolean 형식으로 가져온다.
+                // 각각 물, 영양, 시듦 수치를 확인해서 float 형식으로 가져온다.
                 float temperature = carePlant.check("Temperature");
                 float water = carePlant.check("Water");
                 float nutrient = carePlant.check("Nutrient");
 
+                // 모든 수치를 곱해 하나의 값으로 만듦
                 float value = temperature * water * nutrient;
 
                 // 식물 성장
                 carePlant.Growing(value);
 
-                // 소모
+                // 수분과 영양 소모
                 carePlant.consumeWater();
                 carePlant.consumeNutrient();
-
-
-                // 시듦상태를 확인하고 맞다면
-                if (isWither) {
-
-                }
             }
         }
 
@@ -351,44 +354,34 @@ public class GrowProc {
         return 1;
     }
 
-    public int startGrowing(Context context, int differ) {
-        // 시간차이를 가져온다.
-        // Log.d("test", String.valueOf(differ));
+    public int startGrowing(Context context, int time) {
+        // 성장 시간이 없거나 적으면 0을 리턴 / 성장하지 않는다.
+        if (time <= 0) return 0;
 
-        // 차이가 없거나 적으면 0을 리턴 / 성장하지 않는다.
-        if (differ <= 0) return 0;
-
-        // 리스트에서 하나씩 확인해서 각각 상황에 맞게 성장시킨다.
-        List<Integer> groundNoList = dao.readAllGroundNo();
+        // 땅이 여래 개를 상정하고 만들었기 때문에 리스트로 정보를 가져옴
+        List<Integer> groundList = dao.readAllGroundNo();
 
         // 리스트만큼 반복한다.
-        for (int groundNo : groundNoList) {
-            CarePlant carePlant = new CarePlant().withGroundNo(groundNo);
+        for (int ground : groundList) {
+            // 성장을 관리하는 메서드를 땅 번호로 불러옴
+            CarePlant carePlant = new CarePlant().withGroundNo(ground);
 
             // 시간차이만큼 반복
-            for (int i = 0; i < differ; i++) {
-                // 과습, 과영양, 시듦
-                boolean isWither = carePlant.checkWither();
-
-                // 각각 물, 영양, 시듦 상태를 확인해서 boolean 형식으로 가져온다.
+            for (int i = 0; i < time; i++) {
+                // 각각 물, 영양, 시듦 수치를 확인해서 float 형식으로 가져온다.
                 float temperature = carePlant.check("Temperature");
                 float water = carePlant.check("Water");
                 float nutrient = carePlant.check("Nutrient");
 
+                // 모든 수치를 곱해 하나의 값으로 만듦
                 float value = temperature * water * nutrient;
 
                 // 식물 성장
                 carePlant.Growing(value);
 
-                // 소모
+                // 수분과 영양 소모
                 carePlant.consumeWater();
                 carePlant.consumeNutrient();
-
-
-                // 시듦상태를 확인하고 맞다면
-                if (isWither) {
-
-                }
             }
         }
 

@@ -196,57 +196,67 @@ public class WeatherFragment extends Fragment {
     }
 
     public void setTomorrowWeather() {
+        // 한국 시간 포멧을 위한 정의
         TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
         DateFormat timeFormat = new SimpleDateFormat("HH");
         timeFormat.setTimeZone(timeZone);
         Calendar calendar = Calendar.getInstance();
 
+        // 동적 생성을 담을 프레임 불러오기
         LinearLayout tomorrowFrame = view.findViewById(R.id.tomorrow_frame);
-        tomorrowFrame.removeAllViews();
+        tomorrowFrame.removeAllViews(); // 프래임 초기화
 
-
+        // 비교를 위해 현재 시간 가져옴
         int hour = Integer.parseInt(timeFormat.format(calendar.getTime()));
-        int index = (Integer.valueOf(hour) % 3) + 6;
-        int i = 0;
-        int k = 0;
-        //Log.d("weatherFragment", tomorrowWeatherList.size() + "");
+        int index = (Integer.valueOf(hour) % 3) + 6; // 인덱스 갯수
+        int i = 0;  // 날짜 반복을 위한 변수
+        int k = 0;  // 시간 반복을 위한 변수
 
+        // 동정 생성을 위한 반복
         do {
-            String date = "";
-            if(i < index - (Integer.valueOf(hour) % 3)){
+            String date = ""; // 날짜 담을 변수
+            
+            // 인덱스가 3시간 이내 일 경우 초단기 예보의 날짜를 가져옴
+            if(i < index - (Integer.valueOf(hour) % 3))
                 date = weatherList.get(i).fcstDate;
-            }else{
-                date = tomorrowWeatherList.get(i).fcstDate;
-            }
 
+            // 아니라면 단기 예보의 날짜를 가져옴
+            else
+                date = tomorrowWeatherList.get(i).fcstDate;
+
+            // 날씨의 날짜별 프레임 생성
+            // 날짜 텍스트 및 날씨 목록 프레임 생성 
             View tomorrowView = view.inflate(view.getContext(), R.layout.tomorrow_weather, null);
             TextView weatherDate = tomorrowView.findViewById(R.id.tomorrow_date);
             LinearLayout tomorrowList = tomorrowView.findViewById(R.id.tomorrow_weather_list);
 
+            // 현재 날짜로 텍스트 설정  
             weatherDate.setText(date.substring(4,5).replace("0","") + date.substring(5,6) +
                     "." + date.substring(6,7).replace("0", "") + date.substring(7));
+            
+            // 날짜 목록 생성을 위한 반복
             for (k = i; k < tomorrowWeatherList.size(); k++) {
+                // 목록 구성을 위한 초기화
                 String sky = "";
                 String rainType = "";
                 String timeText = "";
                 String tempText = "";
 
+                // 3시간 이내일 경우
                 if(k < index - (hour % 3)){
+                    // 지금 시간일 경우
                     if(k == 0)
                         timeText = "지금";
+                    
+                    // 아닐 경우 각 시간으로 텍스트 지정
                     else
                         timeText = weatherList.get(k).fcstTime;
 
-                    sky = weatherList.get(k).sky;
-                    rainType = weatherList.get(k).rainType;
-                    tempText = weatherList.get(k).temp;
-                    //Log.d("weather", sky + " " + rainType + " " + tempText);
-                    if(!date.equals(weatherList.get(k).fcstDate)) {
-                        Log.d("weather", date);
-                        break;
-                    }
+                    sky = weatherList.get(k).sky; // 하늘 상태
+                    rainType = weatherList.get(k).rainType; // 강수 형태
+                    tempText = weatherList.get(k).temp; // 온도
                 }
-                else if(k < index) continue;
+                else if(k < index) continue; // 인덱스 벗어나면
                 else{
                     sky = tomorrowWeatherList.get(k).sky;
                     rainType = tomorrowWeatherList.get(k).rainType;

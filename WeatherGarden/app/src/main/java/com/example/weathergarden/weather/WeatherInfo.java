@@ -1,19 +1,10 @@
 package com.example.weathergarden.weather;
 
 public class WeatherInfo {
-    
-    /*
-        강수형태 rainType
-        강수량 rainAmount
-        기온 temp
-        습도 hum
-        풍속 wind
-     */
-
-    public String time;
-    public String rainType;
-    public String rainAmount;
-    public String temp;
-    public String hum;
-    public String wind;
+    public String time;         // 발표 시간
+    public String rainType;     // 강수형태
+    public String rainAmount;   // 강수량
+    public String temp;         // 기온
+    public String hum;          // 습도
+    public String wind;         // 풍속
 }

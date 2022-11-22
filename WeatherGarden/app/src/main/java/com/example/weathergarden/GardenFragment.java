@@ -15,15 +15,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.weathergarden.garden.GardenDao;
@@ -36,7 +33,6 @@ import com.example.weathergarden.garden.ShowGarden;
 import com.example.weathergarden.garden.ShowInfo;
 import com.google.gson.Gson;
 import com.unity3d.player.UnityFragment;
-import com.unity3d.player.UnityPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -151,48 +147,35 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
             });
 
     void plantGround(int groundNo){
-        Intent intent = new Intent(view.getContext(), PopupPlantSelectTest.class);
+        Intent intent = new Intent(view.getContext(), PopupPlantSelect.class);
         intent.putExtra("plant_info", plantInfoList);
         intent.putExtra("ground_no", groundNo);
         mStartForResult.launch(intent);
     }
 
-    void addWater(){
+    // 물/영양주기 메서드
+    void addValue(String type){
+        // 스레드 생성
         Thread thread = new Thread(){
             @Override
             public void run() {
                 super.run();
-                carePlant = growProc.new CarePlant().withGroundNo(1);
-                carePlant.addWater(500);
+                carePlant = growProc.new CarePlant().withGroundNo(1); // 화분 관리하는 클래스 생성
+                if(type.equals("water"))
+                    carePlant.addWater(500);    // 수분 500만큼 추가
+                else if(type.equals("nutri"))
+                    carePlant.addNutrient(500); // 영양 500만큼 추가
+
             }
         };
-        thread.start();
+        thread.start(); // 스레드 시작
 
         try {
-            thread.join();
+            thread.join(); // 스레드 종료까지 기다림
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
-    private void addNutrient() {
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                carePlant = growProc.new CarePlant().withGroundNo(1);
-                carePlant.addNutrient(500);
-            }
-        };
-        thread.start();
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     boolean checkGround(int groundNo) {
         check = true;
@@ -457,9 +440,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 max.setText("45℃");
                 bar.setProgress(Integer.valueOf(showInfo.temp));
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    bar.setMin(0);
-                }
                 bar.setMax(45);
 
                 listener = (dialogInterface, i) -> {
@@ -517,13 +497,13 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
 
             case R.id.watering_button:
                 // 물 주는 부분
-                if(checkGround(1)) addWater();
+                if(checkGround(1)) addValue("water");
                 else Toast.makeText(view.getContext(), "아직 식물을 심지 않았습니다.", Toast.LENGTH_SHORT).show();
                 unityFragment.SendMessage("GameManager", "addWater", "");
                 break;
             case R.id.fertilizer_button:
                 // 비료 주는 부분
-                if(checkGround(1)) addNutrient();
+                if(checkGround(1)) addValue("nutri");
                 else Toast.makeText(view.getContext(), "아직 식물을 심지 않았습니다.", Toast.LENGTH_SHORT).show();
                 unityFragment.SendMessage("GameManager", "addNutrient", "");
                 break;
@@ -539,7 +519,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.growing_button:
                 if(checkGround(1)) {
-                    if(glowUp == 0) glowUp = 12;
+                    if(glowUp == 0) glowUp = 36;
                     else glowUp = 0;
                 }
                 else {

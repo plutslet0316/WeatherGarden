@@ -23,6 +23,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GPS extends ViewModel {
 
     Context context;
@@ -43,53 +46,75 @@ public class GPS extends ViewModel {
         isGetLocation = false;
     }
 
+
+    private Map<String, Integer> convertGrid(Double x, Double y) {
+        Double RE = 6371.00877; // 지구 반경(km)
+        Double GRID = 5.0; // 격자 간격(km)
+        Double SLAT1 = 30.0; // 투영 위도1(degree)
+        Double SLAT2 = 60.0; // 투영 위도2(degree)
+        Double OLON = 126.0; // 기준점 경도(degree)
+        Double OLAT = 38.0; // 기준점 위도(degree)
+        int XO = 43; // 기준점 X좌표(GRID)
+        int YO = 136; // 기준점 Y좌표(GRID)
+
+        Double DEGRAD = Math.PI / 180.0;
+        Double re = RE / GRID;
+        Double slat1 = SLAT1 * DEGRAD;
+        Double slat2 = SLAT2 * DEGRAD;
+        Double olon = OLON * DEGRAD;
+        Double olat = OLAT * DEGRAD;
+
+        Double sn = Math.tan(Math.PI * 0.25 + slat2 * 0.5) / Math.tan(Math.PI * 0.25 + slat1 * 0.5);
+        Double sf = Math.tan(Math.PI * 0.25 + slat1 * 0.5);
+        Double ro = Math.tan(Math.PI * 0.25 + olat * 0.5);
+
+        sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn);
+        sf = Math.pow(sf, sn) * Math.cos(slat1) / sn;
+        ro = re * sf / Math.pow(ro, sn);
+
+        Double ra = Math.tan(Math.PI * 0.25 + (x) * DEGRAD * 0.5);
+        ra = re * sf / Math.pow(ra, sn);
+
+        Double theta = y * DEGRAD - olon;
+
+        if (theta > Math.PI)
+            theta -= 2.0 * Math.PI;
+        if (theta < -Math.PI)
+            theta += 2.0 * Math.PI;
+
+        theta *= sn;
+
+        int nx = (int) (ra * Math.sin(theta) + XO + 0.5);
+        int ny = (int) (ro - ra * Math.cos(theta) + YO + 0.5);
+
+        Map<String, Integer> grid = new HashMap<>();
+
+        grid.put("nx", nx);
+        grid.put("ny", ny);
+
+        return grid;
+    }
+
     private void setGridXY(Double x, Double y) {
         try {
-            Double RE = 6371.00877; // 지구 반경(km)
-            Double GRID = 5.0; // 격자 간격(km)
-            Double SLAT1 = 30.0; // 투영 위도1(degree)
-            Double SLAT2 = 60.0; // 투영 위도2(degree)
-            Double OLON = 126.0; // 기준점 경도(degree)
-            Double OLAT = 38.0; // 기준점 위도(degree)
-            int XO = 43; // 기준점 X좌표(GRID)
-            int YO = 136; // 기준점 Y좌표(GRID)
+            // 좌표값을 API 요구에 맞게 변환 후 저장
+            Map<String, Integer> grid = convertGrid(x, y);
 
-            Double DEGRAD = Math.PI / 180.0;
-            Double re = RE / GRID;
-            Double slat1 = SLAT1 * DEGRAD;
-            Double slat2 = SLAT2 * DEGRAD;
-            Double olon = OLON * DEGRAD;
-            Double olat = OLAT * DEGRAD;
-
-            Double sn = Math.tan(Math.PI * 0.25 + slat2 * 0.5) / Math.tan(Math.PI * 0.25 + slat1 * 0.5);
-            sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn);
-            Double sf = Math.tan(Math.PI * 0.25 + slat1 * 0.5);
-            sf = Math.pow(sf, sn) * Math.cos(slat1) / sn;
-            Double ro = Math.tan(Math.PI * 0.25 + olat * 0.5);
-            ro = re * sf / Math.pow(ro, sn);
-
-            Double ra = Math.tan(Math.PI * 0.25 + (x) * DEGRAD * 0.5);
-            ra = re * sf / Math.pow(ra, sn);
-            Double theta = y * DEGRAD - olon;
-            if (theta > Math.PI)
-                theta -= 2.0 * Math.PI;
-            if (theta < -Math.PI)
-                theta += 2.0 * Math.PI;
-
-            theta *= sn;
-
-            int nx = (int) (ra * Math.sin(theta) + XO + 0.5);
-            int ny = (int) (ro - ra * Math.cos(theta) + YO + 0.5);
-
+            // Json 파싱해주는 Gson
             Gson gson = new Gson();
-            LocationData locationData = new LocationData(x, y, nx, ny);
-            String locationString = gson.toJson(locationData);
-            Log.d("Gps", locationString);
 
+            // 위치값 저장
+            LocationData locationData = new LocationData(
+                    x, y, grid.get("nx"), grid.get("ny"));
+
+            // 위치값을 Gson으로 문자열 변환
+            String locationString = gson.toJson(locationData);
+
+            // 위치 문자열을 SharedPreferences를 이용해 로컬 저장
             editor.putString("location_data", locationString);
             editor.apply();
         } finally {
-            isGetLocation = true;
+            isGetLocation = true; // 위치 가져오기 종료
             Log.d("Gps", "좌표값 변환 완료");
 
         }
@@ -111,40 +136,44 @@ public class GPS extends ViewModel {
                 ;
             }
 
+            // 구글 플레이에서 제공하는 GPS 위치 정보 서비스
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
+            // 취소 토큰
             CancellationTokenSource cts = new CancellationTokenSource();
 
+            // 위치 가져오기
             fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, cts.getToken())
+
+                    // 위치 가져오기 성공시
                     .addOnSuccessListener(new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-                            Log.d("Gps", (location != null) + "");
-
+                            // 위치 정보 여부 확인
                             if (location != null) {
+                                // 좌표값을 전달해 API 좌표로 변환 후 저장
                                 setGridXY(location.getLatitude(), location.getLongitude());
                             }
                         }
                     })
+
+                    // 위치 가져오기 중지
                     .addOnCanceledListener(new OnCanceledListener() {
                         @Override
                         public void onCanceled() {
-                            Log.d("Gps", "취소됨");
+                            // 서울 특별시 좌표를 넘긴다.
                             setGridXY(37.5666805, 126.9784147);
 
                         }
                     })
+
+                    // 위치 가져오기 실패
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("Gps", "실패: " + e.getMessage());
+                            // 서울 특별시 좌표를 넘긴다.
                             setGridXY(37.5666805, 126.9784147);
 
-                        }
-                    })
-                    .addOnCompleteListener(new OnCompleteListener<Location>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Location> task) {
                         }
                     });
 

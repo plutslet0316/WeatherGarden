@@ -20,7 +20,7 @@
         android:theme="@style/Theme.WeatherGarden">
 
         <activity
-            android:name=".SplashTestActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.WeatherGarden.Splash">
             <intent-filter>
@@ -29,11 +29,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity"/>
-        <activity android:name=".PopupPlantSelectTest" android:theme="@style/Theme.WeatherGarden.Transparent.Dialog"/>
+        <activity android:name=".PopupPlantSelect" android:theme="@style/Theme.WeatherGarden.Transparent.Dialog"/>
         <activity android:name=".PopupPlantDelete" android:theme="@style/Theme.WeatherGarden.Dialog"/>
         <activity android:name=".TulipBook"/>
         <activity android:name=".SunflowerBook"/>
+
         <activity android:name="com.unity3d.player.UnityPlayerActivity"
             android:theme="@style/UnityThemeSelector"
             android:screenOrientation="portrait"
